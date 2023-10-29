@@ -41,5 +41,4 @@ public class Client {
         return id + '\t' + name + '\t'+ adress + '\n';
     }
 
-
 }
