@@ -1,11 +1,13 @@
+package UI;
+
 import java.util.Scanner;
 
-public class Main {
+public class UI {
     private static final String ANA_PASSWORD = "Ania1234";
     private static final String STEF_PASSWORD = "Stef2205";
     private static final String BOGDAN_PASSWORD = "hokedo"; // Parola pentru Bogdan
 
-    public static void main(String[] args)
+    public static void main_menu()
     {
         System.out.println("Welcome to BioLite!");
         System.out.println("Please select your identity:");
@@ -14,6 +16,7 @@ public class Main {
         System.out.println("2. Manager");
 
         Scanner scanner = new Scanner(System.in);
+
         int option = scanner.nextInt();
 
         if (option == 1)
@@ -79,14 +82,14 @@ public class Main {
         System.out.println("4. Body Cream");
     }
 
-    private static void displayMenProducts()
+/*    private static void displayMenProducts()
     {
         System.out.println("Only Men can understand:");
         System.out.println("1. Shower Gel");
         System.out.println("2. Sponge");
         System.out.println("3. Spray for your car");
         System.out.println("4. Fairy");
-    }
+    }*/
 
     private static void displayFaceProducts()
     {

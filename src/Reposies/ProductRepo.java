@@ -10,7 +10,8 @@ public class ProductRepo implements Repository {
 //    public ProductRepo(String datei) {
 //        super(datei);
 //    }
-
+//O sa avem o metoda de filtrat produse dupa tipul lor
+    // hair, body, face
     public String convertToString(List<Product> liste) {
         List<String> lines = new ArrayList<>();
         for (Product prod : liste) {
