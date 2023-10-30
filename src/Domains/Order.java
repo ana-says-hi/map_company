@@ -4,15 +4,15 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
-    private Employee employee;
-    private Client client;
+    private int employee;
+    private int client;
     private ArrayList<Domains.Product> products;
     private float totalPrice;
-    private Date date;
+    private String date;
     private Status status;
     private Delivery delivery;
 
-    public Order(Client client,Employee employee, Date date, Status status) {
+    public Order(int client,int employee, String date, Status status) {
         this.employee = employee;
         this.client=client;
         //this.products = products; TODO LE IA DIN REPO
@@ -23,15 +23,19 @@ public class Order {
         //TODO TOTAL PRICE= PRODUSE+TAXA TRANSPORT
     }
 
+    public void addProduct(Product prod1){
+        products.add(prod1);
+    }
+
     //TODO ADD PRODUCT+ TOTAL PRICE
     //change order
     //validdare produse pe stoc
 
-    public Employee getEmployee() {
+    public int getEmployee() {
         return employee;
     }
 
-    public void setEmployee(Employee employee) {
+    public void setEmployee(int employee) {
         this.employee = employee;
     }
 
@@ -51,11 +55,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
@@ -82,7 +86,7 @@ public class Order {
                 }
             }
         }
-        return employee.getId() + "," + client.getId() + "," + productIds + ","+ totalPrice + "," + date + "," + status + ","+ delivery.getId();
+        return employee+ "," + client + "," + productIds + ","+ totalPrice + "," + date + "," + status + ","+ delivery.getId();
     }
 
 }

@@ -1,6 +1,8 @@
 package Reposies;
 
+import java.util.List;
+
 public interface Repository {
-//    void covertToString();
-//    void convertFromString();
+    //String covertToString(List<Object> liste);
+   // void convertFromString(String string);
 }

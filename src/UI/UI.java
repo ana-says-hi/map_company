@@ -7,6 +7,9 @@ public class UI {
     private static final String STEF_PASSWORD = "Stef2205";
     private static final String BOGDAN_PASSWORD = "hokedo"; // Parola pentru Bogdan
 
+    public UI() {
+    }
+
     public static void main_menu()
     {
         System.out.println("Welcome to BioLite!");
@@ -174,8 +177,10 @@ public class UI {
     private static void displayProductsSubMenu(Scanner scanner)
     {
         System.out.println("Products Submenu:");
-        System.out.println("1. Modify Product");
-        System.out.println("2. Delete Product");
+        System.out.println("1. Add Product");
+        System.out.println("2. Modify Product");
+        System.out.println("3. See Product");
+        System.out.println("4. Delete Product");
     }
 
     private static boolean validatePassword(String enteredPassword, String correctPassword)

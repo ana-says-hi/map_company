@@ -6,11 +6,13 @@ import java.util.Date;
 public class Return extends Order {
     private Date returnDate;
     private float moneyBack;
-    public Return(Employee employee, ArrayList<Product> products, Date date, Status status) {
-        //retr date= date+ o luna idk
-        //money back= idk
-        super(employee, products, date, status);
+
+    public Return(int client, int employee, String date, Status status, Date returnDate, float moneyBack) {
+        super(client, employee, date, status);
+        this.returnDate = returnDate;
+        this.moneyBack = moneyBack;
     }
+
 
     public Date getReturnDate() {
         return returnDate;
