@@ -11,9 +11,13 @@ public class ProductController implements Controller{
     private String datei;
     private ArrayList<Product> stuff;
 
+    public ArrayList<Product> getStuff() {
+        return stuff;
+    }
+
+    //TODO convert from string ce e in datei si mutat in lista
     public ProductController() throws IOException {
-        this.datei ="Products.txt";
-        //TODO convert from string ce e in datei si mutat in lista
+        this.datei = "src/Files/Products.txt";
         FileReader fileReader = new FileReader(datei);
         BufferedReader bufferedReader = new BufferedReader(fileReader);
         String line;
@@ -31,7 +35,9 @@ public class ProductController implements Controller{
             for (String line : lines) {
                 String[] parts = line.split(",");
                 if (parts.length == 5) {
-                    Product prod = new Product(Integer.parseInt(parts[0]), parts[1], Float.parseFloat(parts[2]), ProductType.valueOf(parts[3]),Integer.parseInt(parts[4]));
+                    Product prod = new Product(Integer.parseInt(parts[0]), parts[1],
+                            Float.parseFloat(parts[2]), ProductType.valueOf(parts[3]),
+                            Integer.parseInt(parts[4]));
                     liste.add(prod);
                 }
             }

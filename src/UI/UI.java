@@ -1,5 +1,8 @@
 package UI;
 
+import Controll.ProductController;
+
+import java.io.IOException;
 import java.util.Scanner;
 
 public class UI {
@@ -12,6 +15,8 @@ public class UI {
 
     public static void main_menu()
     {
+        test_validatePassword();
+
         System.out.println("Welcome to BioLite!");
         System.out.println("Please select your identity:");
 
@@ -158,7 +163,11 @@ public class UI {
                 displayOrdersSubMenu(scanner);
                 break;
             case 2:
-                displayProductsSubMenu(scanner);
+                try {
+                    displayProductsSubMenu(scanner);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
             default:
                 System.out.println("Invalid option.");
@@ -174,17 +183,32 @@ public class UI {
         System.out.println("4. Returns");
     }
 
-    private static void displayProductsSubMenu(Scanner scanner)
-    {
+    private static void displayProductsSubMenu(Scanner scanner) throws IOException {
         System.out.println("Products Submenu:");
         System.out.println("1. Add Product");
         System.out.println("2. Modify Product");
         System.out.println("3. See Product");
         System.out.println("4. Delete Product");
+
+        ProductController ctrl= new ProductController();
+
+        Scanner scanner1= new Scanner(System.in);
+        int choice = scanner1.nextInt();
+        scanner1.nextLine();
+        if(choice==3)
+            System.out.println(ctrl.getStuff());
+
     }
 
     private static boolean validatePassword(String enteredPassword, String correctPassword)
     {
         return enteredPassword.equals(correctPassword);
+    }
+
+    private static void test_validatePassword()
+    {
+        String pas1="ok";
+        String pas2="ok";
+        assert validatePassword(pas1,pas2);
     }
 }
