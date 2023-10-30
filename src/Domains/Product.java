@@ -7,12 +7,18 @@ public class Product {
     private ProductType type;
     private int stoc;
 
-    public Product(int id, String name, float price, ProductType type) {
+    public Product(int id, String name, float price, ProductType type, int stoc) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.type = type;
+        this.stoc = stoc;
     }
+    @Override
+    public String toString() {
+        return id + ',' + name + ',' + price + ',' + type + ',' + stoc;
+    }
+
 
     public int getId() {
         return id;
@@ -46,8 +52,11 @@ public class Product {
         this.type = type;
     }
 
-    @Override
-    public String toString() {
-        return id + '\t' + name + '\t' + price + '\t' + type + '\t' + stoc;
+    public int getStoc() {
+        return stoc;
+    }
+
+    public void setStoc(int stoc) {
+        this.stoc = stoc;
     }
 }
