@@ -1,0 +1,10 @@
+321,Elias,Street Plopilor Number 5
+322,Andreea,Street Horea Number 40-42
+323,Marius,Street Bogdan Petriceicu Number 45
+1,Alina,Street Buftea Number 7
+99,Ileana,Street Mieilor Number 15
+899,Ardonis,Street Universitatii Number 459
+749,Maya,Street Rude Number 54
+458,Rihana,Street Ilie Macelaru Number 2
+48,Alex,Street Ioan Slavici Number 96
+418,Kevin,Street Fabricii de Zahar Number 15

@@ -1,6 +1,7 @@
 package Reposies;
 
 import Domains.Product;
+import Domains.ProductType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,8 +15,6 @@ public class ProductRepo implements Repository {
         List<String> lines = new ArrayList<>();
         for (Product prod : liste) {
             lines.add(prod.toString());
-//            String line = prod.getId() + "|" + prod.getName() + "|" + prod.getPortionsgroesse() + "|" + prod.getPreis() + "|" + prod.getZubereitungszeit();
-//            lines.add(line);
         }
         return String.join("\n", lines);
     }
@@ -25,9 +24,9 @@ public class ProductRepo implements Repository {
         if (!string.isEmpty()) {
             String[] lines = string.split("\n");
             for (String line : lines) {
-                String[] parts = line.split("\\|");
+                String[] parts = line.split(",");
                 if (parts.length == 5) {
-                    Product prod = new Product(parts[0], parts[1], parts[2], parts[3], parts[4]);
+                    Product prod = new Product(Integer.parseInt(parts[0]), parts[1], Float.parseFloat(parts[2]), ProductType.valueOf(parts[3]),Integer.parseInt(parts[4]));
                     liste.add(prod);
                 }
             }
