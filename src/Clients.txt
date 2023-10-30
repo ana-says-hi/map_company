@@ -1,0 +1,10 @@
+20321,Elias,Street Plopilor Number 5
+20322,Andreea,Street Horea Number 40-42
+20323,Marius,Street Bogdan Petriceicu Number 45
+20105,Alina,Street Buftea Number 7
+20299,Ileana,Street Mieilor Number 15
+20399,Ardonis,Street Universitatii Number 459
+20149,Maya,Street Rude Number 54
+20458,Rihana,Street Ilie Macelaru Number 2
+20480,Alex,Street Ioan Slavici Number 96
+20418,Kevin,Street Fabricii de Zahar Number 15

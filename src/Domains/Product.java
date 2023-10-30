@@ -6,19 +6,17 @@ public class Product {
     private float price;
     private ProductType type;
     private int stoc;
-
+    //produsele au cifra de inceput 3 +numarul de 4
+    //clientii au cifra de inceput 2 +numarul de 4
+    // angajatii au cifra de inceput 1+numarul de 4
+    //BAGAM DESCRIERE DE PRODUSE
     public Product(int id, String name, float price, ProductType type, int stoc) {
         this.id = id;
         this.name = name;
         this.price = price;
         this.type = type;
-        this.stoc = stoc;
+        this.stoc=stoc;
     }
-    @Override
-    public String toString() {
-        return id + ',' + name + ',' + price + ',' + type + ',' + stoc;
-    }
-
 
     public int getId() {
         return id;
@@ -52,11 +50,8 @@ public class Product {
         this.type = type;
     }
 
-    public int getStoc() {
-        return stoc;
-    }
-
-    public void setStoc(int stoc) {
-        this.stoc = stoc;
+    @Override
+    public String toString() {
+        return id + ',' + name + ',' + price + ',' + type + ',' + stoc;
     }
 }

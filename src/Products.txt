@@ -1,0 +1,10 @@
+300000,BioLite CurlyHair,78,Hair,5019
+300001,BioLite Curly Hair Shampoo,78,Hair,20
+300002,BioLite Curly Hair Conditioner,65,Hair,5021
+300003,BioLite Curly Hair Mask,95,Hair,502
+300004,BioLite Soft Bath Towel,30,Hair,1023
+300005,BioLite Organic Argan Oil,50,Hair,5024
+300006,BioLite Leave-In Hair Spray,40,Hair,25
+300007,BioLite Moisturizing Cream for All Skin Types,25,Face,5026
+300008,BioLite Scented Body Cream,20,Body,570
+300009, BioLite Soft Bath Sponge,5,Body,153

@@ -73,13 +73,16 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
-                "employee=" + employee +
-                ", products=" + products +
-                ", totalPrice=" + totalPrice +
-                ", date=" + date +
-                ", status=" + status +
-                ", delivery=" + delivery +
-                '}';
+        String productIds = "";
+        if (products != null && !products.isEmpty()) {
+            for (int i = 0; i < products.size(); i++) {
+                productIds += products.get(i).getId();
+                if (i < products.size() - 1) {
+                    productIds += "&";
+                }
+            }
+        }
+        return employee.getId() + "," + client.getId() + "," + productIds + ","+ totalPrice + "," + date + "," + status + ","+ delivery.getId();
     }
+
 }

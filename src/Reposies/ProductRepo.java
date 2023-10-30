@@ -7,16 +7,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ProductRepo implements Repository {
-//    public ProductRepo(String datei) {
+    //    public ProductRepo(String datei) {
 //        super(datei);
 //    }
-
+//O sa avem o metoda de filtrat produse dupa tipul lor
+    // hair, body, face
     public String convertToString(List<Product> liste) {
         List<String> lines = new ArrayList<>();
         for (Product prod : liste) {
             lines.add(prod.toString());
-//            String line = prod.getId() + "|" + prod.getName() + "|" + prod.getPortionsgroesse() + "|" + prod.getPreis() + "|" + prod.getZubereitungszeit();
-//            lines.add(line);
         }
         return String.join("\n", lines);
     }
