@@ -1,6 +1,6 @@
 package Reposies;
 
 public interface Repository {
-    void covertToString();
-    void convertFromString();
+//    void covertToString();
+//    void convertFromString();
 }
