@@ -5,22 +5,27 @@ import java.util.Date;
 
 public class Order {
     private Employee employee;
-//    private Client client;
+    private Client client;
     private ArrayList<Domains.Product> products;
     private float totalPrice;
     private Date date;
     private Status status;
     private Delivery delivery;
 
-    public Order(Employee employee, ArrayList<Product> products, Date date, Status status) {
+    public Order(Client client,Employee employee, Date date, Status status) {
         this.employee = employee;
-        this.products = products;
+        this.client=client;
+        //this.products = products; TODO LE IA DIN REPO
         this.date = date;
         this.status = status;
         //TODO initializat un delivery aici
         //this.delivery = delivery;
         //TODO TOTAL PRICE= PRODUSE+TAXA TRANSPORT
     }
+
+    //TODO ADD PRODUCT+ TOTAL PRICE
+    //change order
+    //validdare produse pe stoc
 
     public Employee getEmployee() {
         return employee;
@@ -34,9 +39,9 @@ public class Order {
         return products;
     }
 
-    public void setProducts(ArrayList<Product> products) {
-        this.products = products;
-    }
+//    public void setProducts(ArrayList<Product> products) {
+//        this.products = products;
+//    }
 
     public float getTotalPrice() {
         return totalPrice;
@@ -66,4 +71,15 @@ public class Order {
         return delivery;
     }
 
+    @Override
+    public String toString() {
+        return "Order{" +
+                "employee=" + employee +
+                ", products=" + products +
+                ", totalPrice=" + totalPrice +
+                ", date=" + date +
+                ", status=" + status +
+                ", delivery=" + delivery +
+                '}';
+    }
 }
