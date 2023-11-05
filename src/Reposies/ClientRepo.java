@@ -7,6 +7,19 @@ import java.util.List;
 
 public class ClientRepo implements Repository {
 
+    private ArrayList<Client> c_repo;
+
+    public void add_to_repo(Client c){
+        c_repo.add(c);
+    }
+
+    public void remove_from_repo(Client c){
+        c_repo.remove(c);
+    }
+
+    public ArrayList<Client> getC_repo() {
+        return c_repo;
+    }
 
     public String covertToString(List<Client> liste) {
         List<String> lines = new ArrayList<>();

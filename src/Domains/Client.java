@@ -5,10 +5,10 @@ public class Client {
     String name;
     String adress;
 
-    public Client(int id, String name, String adress) {
+    public Client(int id, String name, String address) {
         this.id = id;
         this.name = name;
-        this.adress = adress;
+        this.adress = address;
     }
     //Domains.Order order;
 
@@ -38,7 +38,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return id + ',' + name + ','+ adress;
+        return "CLIENT: " + id + ',' + name + ','+ adress;
     }
 
 }

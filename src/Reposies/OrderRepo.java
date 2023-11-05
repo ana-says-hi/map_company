@@ -1,5 +1,6 @@
 package Reposies;
 
+import Domains.Client;
 import Domains.Order;
 import Domains.Status;
 
@@ -9,6 +10,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderRepo implements Repository{
+
+    private ArrayList<Order> o_repo;
+
+
     public String covertToString(List<Order> liste) {
         List<String> lines = new ArrayList<>();
         for (Order order : liste) {

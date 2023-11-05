@@ -86,7 +86,7 @@ public class Order {
                 }
             }
         }
-        return employee+ "," + client + "," + productIds + ","+ totalPrice + "," + date + "," + status + ","+ delivery.getId();
+        return "ORDER: " + employee+ "," + client + "," + productIds + ","+ totalPrice + "," + date + "," + status + ","+ delivery.getId();
     }
 
 }
