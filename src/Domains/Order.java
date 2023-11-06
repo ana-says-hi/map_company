@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Order {
-    private int employee;
-    private int client;
+    int id;
+    private Employee employee;
+    private Client client;
     private ArrayList<Domains.Product> products;
     private float totalPrice;
     private String date;
     private Status status;
     private Delivery delivery;
 
-    public Order(int client,int employee, String date, Status status) {
+    public Order(int id,Client client,Employee employee, String date, Status status) {
+        this.id=id;
         this.employee = employee;
         this.client=client;
         //this.products = products; TODO LE IA DIN REPO
@@ -31,11 +33,11 @@ public class Order {
     //change order
     //validdare produse pe stoc
 
-    public int getEmployee() {
+    public Employee getEmployee() {
         return employee;
     }
 
-    public void setEmployee(int employee) {
+    public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
@@ -86,7 +88,14 @@ public class Order {
                 }
             }
         }
-        return "ORDER: " + employee+ "," + client + "," + productIds + ","+ totalPrice + "," + date + "," + status + ","+ delivery.getId();
+        return "ORDER: " + employee.getId()+ "," + client.getId() + "," + productIds + ","+ totalPrice + "," + date + "," + status + ","+ delivery.getId();
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 }

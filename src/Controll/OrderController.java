@@ -1,8 +1,7 @@
 package Controll;
 
-import Domains.Order;
-import Domains.Product;
-import Domains.Status;
+import Domains.*;
+import Reposies.OrderRepo;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -13,61 +12,34 @@ import java.util.List;
 
 public class OrderController implements Controller{
 
-    private String datei;
-    private ArrayList<Order> stuff;
+    private OrderRepo orderRepo;
 
-    public OrderController(String datei, ArrayList<Order> stuff) {
-        this.datei ="Order.txt";
-        FileReader fileReader = null;
-        try {
-            fileReader = new FileReader(datei);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        BufferedReader bufferedReader = new BufferedReader(fileReader);
-        String line;
-        while (true) {
-            try {
-                if (!((line = bufferedReader.readLine()) != null)) break;
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            stuff=convertFromString(line);
-        }
-        try {
-            bufferedReader.close();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public ArrayList<Order> convertFromString(String string) {
-        List<Order> liste = new ArrayList<>();
-        if (!string.isEmpty()) {
-            String[] lines = string.split("\n");
-            for (String line : lines) {
-                String[] parts = line.split(",");
-                if (parts.length == 7) {
-                    Order order = new Order(Integer.parseInt(parts[0]), Integer.parseInt(parts[1]), parts[5], Status.valueOf(parts[6])); // Float.parseFloat(parts[2]), Integer.parseInt(parts[3]),Float.parseFloat(parts[4]),Integer.parseInt(parts[7]) pt deliveryyyy
-                    liste.add(order);
-                }
-            }
-        }
-        return (ArrayList<Order>) liste;
-    }
-
-    public void create() {
-
+    public OrderController(OrderRepo orderRepo) {
+        this.orderRepo = orderRepo;
     }
 
 
-    public void update() {
-
+    public void create(int id,Client client, Employee employee, String date, Status status) {
+        Order o=new Order(id,client, employee,date, status);
+        orderRepo.add_to_repo(o);
     }
 
+
+    public void update(int id,Client client, Employee employee, String date, Status status) {
+        delete(id);
+        create(id,client, employee,date, status);
+    }
+
+    public Order find(int id){
+        for(Order ord: orderRepo.getO_repo())
+            if(ord.getId()==id)
+                return ord;
+        return null;
+    }
 
     @Override
     public void delete(int id) {
-
+        Order ord= find(id);
+        orderRepo.remove_from_repo(ord);
     }
 }

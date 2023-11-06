@@ -10,6 +10,7 @@ public class Product {
     //clientii au cifra de inceput 2 +numarul de 4
     // angajatii au cifra de inceput 1+numarul de 4
     //BAGAM DESCRIERE DE PRODUSE
+    // factory pattern pt produsse
     public Product(int id, String name, float price, ProductType type, int stoc) {
         this.id = id;
         this.name = name;
