@@ -1,6 +1,7 @@
 package UI;
 
 import Controll.ProductController;
+import Reposies.ProductRepo;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -190,13 +191,12 @@ public class UI {
         System.out.println("3. See Product");
         System.out.println("4. Delete Product");
 
-        ProductController ctrl= new ProductController();
-
         Scanner scanner1= new Scanner(System.in);
         int choice = scanner1.nextInt();
         scanner1.nextLine();
         if(choice==3)
-            System.out.println(ctrl.getStuff());
+            //singleton apelat
+            System.out.println(ProductController.getInstance().getStuff());
 
     }
 

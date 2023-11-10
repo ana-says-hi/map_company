@@ -9,8 +9,11 @@ public class Product {
     //produsele au cifra de inceput 3 +numarul de 4
     //clientii au cifra de inceput 2 +numarul de 4
     // angajatii au cifra de inceput 1+numarul de 4
+    //si pt orders??
     //BAGAM DESCRIERE DE PRODUSE
-    // factory pattern pt produsse
+    //TODO OBSERVER PT STOC SI PRET
+    //reduceri??
+
     public Product(int id, String name, float price, ProductType type, int stoc) {
         this.id = id;
         this.name = name;

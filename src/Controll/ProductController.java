@@ -3,18 +3,28 @@ package Controll;
 import Domains.Product;
 import Domains.ProductType;
 import Reposies.ProductRepo;
-import java.io.*;
+
 import java.util.ArrayList;
-import java.util.List;
 
 public class ProductController implements Controller{
-
+    //singleton pe aici
+    static ProductController p_instance;
     private ProductRepo productRepo;
 
-    public ProductController(ProductRepo productRepo) {
-        this.productRepo = productRepo;
+    private ProductController() {
+        productRepo = new ProductRepo();
     }
 
+    public static ProductController getInstance(){
+        if(p_instance==null)
+            p_instance=new ProductController();
+        return p_instance;
+    }
+
+    public ArrayList<Product> getStuff()
+    {
+        return getProductRepo().getP_repo();
+    }
 
     public void create(int id, String name, float price, ProductType type, int stoc){
         Product p = new Product(id, name, price, type, stoc);
@@ -27,7 +37,7 @@ public class ProductController implements Controller{
     }
 
     public Product find(int id) {
-        for(Product prod: productRepo.getC_repo())
+        for(Product prod: productRepo.getP_repo())
             if(prod.getId()==id)
                 return prod;
         return null;

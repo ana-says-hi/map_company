@@ -7,8 +7,8 @@ public class Return extends Order {
     private Date returnDate;
     private float moneyBack;
 
-    public Return(int client, int employee, String date, Status status, Date returnDate, float moneyBack) {
-        super(client, employee, date, status);
+    public Return(int id, Client client, Employee employee, String date, Status status, Date returnDate, float moneyBack) {
+        super(id, client, employee, date, status);
         this.returnDate = returnDate;
         this.moneyBack = moneyBack;
     }
