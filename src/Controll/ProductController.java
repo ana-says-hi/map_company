@@ -2,11 +2,13 @@ package Controll;
 
 import Domains.Product;
 import Domains.ProductType;
+import ObserverPattern.Observable;
+import ObserverPattern.Observer;
 import Reposies.ProductRepo;
 
 import java.util.ArrayList;
 
-public class ProductController implements Controller{
+public class ProductController implements Controller<Product>{
     //singleton pe aici
     static ProductController p_instance;
     private ProductRepo productRepo;
@@ -75,4 +77,5 @@ public class ProductController implements Controller{
     public ProductRepo getProductRepo() {
         return productRepo;
     }
+
 }

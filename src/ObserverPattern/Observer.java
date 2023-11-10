@@ -1,7 +1,7 @@
 package ObserverPattern;
 
-public interface Observer {
+public interface Observer<T> {
 
-    void update();
+    void update(T thing);
 
 }

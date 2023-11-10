@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderController implements Controller{
+public class OrderController implements Controller<Order>{
 
     private OrderRepo orderRepo;
 

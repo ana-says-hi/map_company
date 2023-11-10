@@ -6,7 +6,7 @@ import Reposies.ClientRepo;
 
 import java.util.ArrayList;
 
-public class ClientController implements Controller{
+public class ClientController implements Controller<Client>{
     //ca sa nu facem acum implementare de comenzi bagam mesaj cum ca suntem
     //inafara progrramului/se fac renovari/modificari la sistem si revenim in 2 saptamani
 

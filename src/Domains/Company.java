@@ -2,20 +2,23 @@ package Domains;
 
 import java.util.ArrayList;
 
+import Controll.ProductController;
+import ObserverPattern.Observer;
 import Reposies.ProductRepo;
 
-public class Company {
+public class Company implements Observer<Product> {
     String name;
     ArrayList<Employee> employees;
     String about_us;
-    ArrayList<Product> products;
+    //ArrayList<Product> products;
 
     public Company(String name, ArrayList<Employee> employees, String about_us) {
         this.name = name;
         this.employees = employees;
         this.about_us = about_us;
-        ProductRepo productRepo=new ProductRepo();
-        this.products=productRepo.getP_repo();
+//        ProductRepo productRepo=new ProductRepo();
+//        this.products=productRepo.getP_repo();
+        //this.products=ProductController.getInstance().getStuff();
     }
 
     public String getName() {
@@ -36,5 +39,11 @@ public class Company {
 
     public String getAbout_us() {
         return about_us;
+    }
+
+    @Override
+    public void update(Product product) {
+        System.out.println("MAI CUMPARA CHESTII FRA");
+        //TODO contrsct curier sau ce era cu order niu ig
     }
 }
