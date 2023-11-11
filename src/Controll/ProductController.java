@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class ProductController implements Controller<Product>{
     //singleton pe aici
-    static ProductController p_instance;
+    private static ProductController p_instance;
     private ProductRepo productRepo;
 
     private ProductController() {

@@ -9,11 +9,11 @@ public class Order {
     private Client client;
     private ArrayList<Domains.Product> products;
     private float totalPrice;
-    private String date;
+    private Date date;
     private Status status;
     private Delivery delivery;
 
-    public Order(int id,Client client,Employee employee, String date, Status status) {
+    public Order(int id,Client client,Employee employee, Date date, Status status) {
         this.id=id;
         this.employee = employee;
         this.client=client;
@@ -57,11 +57,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public String getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

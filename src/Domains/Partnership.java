@@ -1,7 +1,7 @@
 package Domains;
 
-public interface Partnership {
+public abstract class Partnership {
 
-    public void finalization(int id);
+    public abstract void finalization(int id);
 
 }
