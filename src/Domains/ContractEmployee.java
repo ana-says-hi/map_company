@@ -1,6 +1,6 @@
 package Domains;
 
-public class ContractEmployee implements Partnership{
+public class ContractEmployee extends Partnership{
     private int id;
     private String data_in;
     private int vechime;

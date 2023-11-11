@@ -1,6 +1,6 @@
 package Domains;
 
-public class ContractCourier implements Partnership{
+public class ContractCourier extends Partnership{
 
     private int id;
     private String data_in;
