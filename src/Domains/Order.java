@@ -1,25 +1,26 @@
 package Domains;
 
+import ObserverPattern.Observer;
+
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Observable;
 
 public class Order {
     int id;
     private Employee employee;
     private Client client;
     private ArrayList<Domains.Product> products;
-    private float totalPrice;
+    private float totalPrice=0;
     private Date date;
-    private Status status;
+    private Status status=Status.PENDING;
     private Delivery delivery;
 
-    public Order(int id,Client client,Employee employee, Date date, Status status) {
+    public Order(int id,Client client,Employee employee, Date date) {
         this.id=id;
         this.employee = employee;
         this.client=client;
-        //this.products = products; TODO LE IA DIN REPO
         this.date = date;
-        this.status = status;
         //TODO initializat un delivery aici
         //this.delivery = delivery;
         //TODO TOTAL PRICE= PRODUSE+TAXA TRANSPORT
@@ -27,11 +28,17 @@ public class Order {
 
     public void addProduct(Product prod1){
         products.add(prod1);
+        totalPrice+= prod1.getPrice();
+    }
+    public void deleteProduct(Product prod1){
+        if(products.contains(prod1)) {
+            products.remove(prod1);
+            totalPrice-= prod1.getPrice();
+        }
     }
 
-    //TODO ADD PRODUCT+ TOTAL PRICE
     //change order
-    //validdare produse pe stoc
+    //TODO validdare produse pe stoc
 
     public Employee getEmployee() {
         return employee;
@@ -44,10 +51,6 @@ public class Order {
     public ArrayList<Product> getProducts() {
         return products;
     }
-
-//    public void setProducts(ArrayList<Product> products) {
-//        this.products = products;
-//    }
 
     public float getTotalPrice() {
         return totalPrice;
@@ -63,14 +66,6 @@ public class Order {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public Delivery getDelivery() {
@@ -98,4 +93,5 @@ public class Order {
     public void setId(int id) {
         this.id = id;
     }
+
 }

@@ -3,28 +3,44 @@ package Controll;
 import Domains.Client;
 import Domains.Product;
 import Reposies.ClientRepo;
-
+import FactoryPattern.ClientFactory;
 import java.util.ArrayList;
 
 public class ClientController implements Controller<Client>{
     //ca sa nu facem acum implementare de comenzi bagam mesaj cum ca suntem
     //inafara progrramului/se fac renovari/modificari la sistem si revenim in 2 saptamani
 
-    ClientRepo clientRepo;
+    private static ClientController c_instance;
 
-    public ClientController(ClientRepo clientRepo) {
-        this.clientRepo = clientRepo;
+    private ClientRepo clientRepo;
+
+    private ClientController() {
+        clientRepo = new ClientRepo();
     }
 
-    public void create(int id, String name, String address) {
-        Client client=new Client(id,name,address);
+    public ArrayList<Client> getClients(){return getClientRepo().getC_repo();}
+
+    public static ClientController getInstance(){
+        if(c_instance==null)
+            c_instance=new ClientController();
+        return c_instance;
+    }
+
+    public ClientRepo getClientRepo() {
+        return clientRepo;
+    }
+
+
+    public void create(String name, String address) {
+        Client client=ClientFactory.getInstance().make_cl(name, address);
         clientRepo.add_to_repo(client);
     }
 
-
     public void update(int id, String name, String address) {
         delete(id);
-        create(id,name,address);
+        //create(name,address);
+        Client client= new Client(id,name,address);
+        clientRepo.add_to_repo(client);
     }
 
 

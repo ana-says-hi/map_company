@@ -9,8 +9,7 @@ public class ProductFactory {
     static ProductFactory pf_instance;
     private int id=300000;
 
-    private ProductFactory() {
-    }
+    private ProductFactory() {}
 
     public static ProductFactory getInstance(){
         if(pf_instance==null)

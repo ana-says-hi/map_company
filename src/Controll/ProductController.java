@@ -5,7 +5,7 @@ import Domains.ProductType;
 import ObserverPattern.Observable;
 import ObserverPattern.Observer;
 import Reposies.ProductRepo;
-
+import FactoryPattern.ProductFactory;
 import java.util.ArrayList;
 
 public class ProductController implements Controller<Product>{
@@ -28,14 +28,17 @@ public class ProductController implements Controller<Product>{
         return getProductRepo().getP_repo();
     }
 
-    public void create(int id, String name, float price, ProductType type, int stoc){
-        Product p = new Product(id, name, price, type, stoc);
+    public void create(String name, float price, ProductType type, int stoc){
+        Product p =  ProductFactory.getInstance().make_prod(name, price, type, stoc);
         productRepo.add_to_repo(p);
     }
 
+
     public void update(int id, String name, float price, ProductType type, int stoc) {
         delete(id);
-        create(id,name,price,type,stoc);
+        //create(name,price,type,stoc);
+        Product p = new Product(id, name, price, type, stoc);
+        productRepo.add_to_repo(p);
     }
 
     public Product find(int id) {

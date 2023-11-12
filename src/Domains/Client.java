@@ -3,21 +3,21 @@ package Domains;
 public class Client {
     int id;
     String name;
-    String adress;
+    String address;
 
     public Client(int id, String name, String address) {
         this.id = id;
         this.name = name;
-        this.adress = address;
+        this.address = address;
     }
     //Domains.Order order;
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public int getId() {
@@ -38,7 +38,7 @@ public class Client {
 
     @Override
     public String toString() {
-        return "CLIENT: " + id + ',' + name + ','+ adress;
+        return "CLIENT: " + id + ',' + name + ','+ address;
     }
 
 }
