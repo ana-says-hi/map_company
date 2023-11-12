@@ -3,16 +3,13 @@ package Domains;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+public class ContractEmployee extends Partnership {
 
-public class ContractCourier extends Partnership {
+    private EmployeeType employeeType;
 
-    private Couriers courier;
-    private String companyName; // Numele firmei
-
-    public ContractCourier(int id, String startDate, String endDate, Couriers courier, String companyName) {
+    public ContractEmployee(int id, String startDate, String endDate, EmployeeType employeeType) {
         super(id, startDate, endDate);
-        this.courier = courier;
-        this.companyName = companyName;
+        this.employeeType = employeeType;
     }
 
     @Override
@@ -42,7 +39,6 @@ public class ContractCourier extends Partnership {
 
         return endYear - startYear;
     }
-
     @Override
     public void updateSeniority() {
         calculateSeniority();
@@ -50,13 +46,12 @@ public class ContractCourier extends Partnership {
 
     @Override
     public void displayDetails() {
-        System.out.println("Courier Contract Details:");
+        System.out.println("Employee Contract Details:");
         System.out.println("ID: " + id);
         System.out.println("Start Date: " + startDate);
         System.out.println("End Date: " + endDate);
         System.out.println("Seniority: " + getSeniority());
-        System.out.println("Courier: " + courier);
-        System.out.println("Company Name: " + companyName);
+        System.out.println("Employee Type: " + employeeType);
         System.out.println("Contract History: " + getContractHistory());
     }
 }
