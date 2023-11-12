@@ -20,15 +20,15 @@ public class OrderController implements Controller<Order>{
     }
 
 
-    public void create(int id, Client client, Employee employee, Date date, Status status) {
-        Order o=new Order(id,client, employee,date, status);
+    public void create(int id, Client client, Employee employee, Date date) {
+        Order o=new Order(id,client, employee,date);
         orderRepo.add_to_repo(o);
     }
 
-
+//TODO SCHIMBAT UPDATE, SA RAMANA CUMVA PRODUSELE SI SA SE SCHIMBE STATUSUL
     public void update(int id,Client client, Employee employee, Date date, Status status) {
         delete(id);
-        create(id,client,employee,date, status);
+        create(id,client,employee,date);
     }
 
     public Order find(int id){
