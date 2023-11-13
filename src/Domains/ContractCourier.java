@@ -2,6 +2,9 @@ package Domains;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 public class ContractCourier extends Partnership {
@@ -23,26 +26,16 @@ public class ContractCourier extends Partnership {
             Date currentDate = new Date();
             Date startDate = sdf.parse(this.startDate);
 
-            // Transformăm datele în string-uri pentru a le putea compara
-            String strCurrentDate = sdf.format(currentDate);
-            String strStartDate = sdf.format(startDate);
+            LocalDate localCurrentDate = LocalDate.ofInstant(currentDate.toInstant(), ZoneId.systemDefault());
+            LocalDate localStartDate = LocalDate.ofInstant(startDate.toInstant(), ZoneId.systemDefault());
 
             // Calculăm diferența de ani între data curentă și data de început a contractului
-            int diffInYears = calculateDiffInYears(strStartDate, strCurrentDate);
-
-            this.seniority = diffInYears;
+            long diffInYears = ChronoUnit.YEARS.between(localStartDate, localCurrentDate);
+            this.seniority = (int) diffInYears;
         } catch (ParseException e) {
             e.printStackTrace();
         }
     }
-    // Funcție pentru calcularea diferenței de ani între două date sub formă de string-uri "yyyy-MM-dd"
-    private int calculateDiffInYears(String startDate, String endDate) {
-        int startYear = Integer.parseInt(startDate.substring(0, 4));
-        int endYear = Integer.parseInt(endDate.substring(0, 4));
-
-        return endYear - startYear;
-    }
-
     @Override
     public void updateSeniority() {
         calculateSeniority();
