@@ -1,7 +1,9 @@
 package Domains;
 
 import ObserverPattern.Observer;
+import FactoryPattern.DeliveryFactory;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
@@ -11,18 +13,21 @@ public class Order {
     private Employee employee;
     private Client client;
     private ArrayList<Domains.Product> products;
-    private float totalPrice=0;
-    private Date date;
-    private Status status=Status.PENDING;
+    private float totalPrice;
+    private LocalDate date;
+    private Status status;
     private Delivery delivery;
 
-    public Order(int id,Client client,Employee employee, Date date) {
+    public Order(int id,Client client,Employee employee, LocalDate date) {
         this.id=id;
         this.employee = employee;
         this.client=client;
         this.date = date;
+        this.products= new ArrayList<>();
+        this.status=Status.PENDING;
         //TODO initializat un delivery aici
-        //this.delivery = delivery;
+        this.delivery = DeliveryFactory.getInstance().make_deliv(date.plusWeeks(2));
+        this.totalPrice=delivery.getShippinfFee();
         //TODO TOTAL PRICE= PRODUSE+TAXA TRANSPORT
     }
 
@@ -36,9 +41,6 @@ public class Order {
             totalPrice-= prod1.getPrice();
         }
     }
-
-    //change order
-    //TODO validdare produse pe stoc
 
     public Employee getEmployee() {
         return employee;
@@ -60,11 +62,11 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -94,4 +96,27 @@ public class Order {
         this.id = id;
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+    public void finishOrder(){
+        //se calculeaza iar shipping fee
+    }
 }

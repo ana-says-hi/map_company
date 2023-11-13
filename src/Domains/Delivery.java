@@ -1,5 +1,6 @@
 package Domains;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Delivery {
@@ -8,14 +9,21 @@ public class Delivery {
     private int id;
     private Couriers curier;
     private float shippinfFee;
-    private Date expectedDate;
+    private LocalDate expectedDate;
 
-    public Delivery(int id, Couriers curier, float shippinfFee, Date expectedDate) {
+    public Delivery(int id, Couriers curier, float shippinfFee, LocalDate expectedDate) {
         this.id=id;
         this.curier = curier;
         this.shippinfFee = shippinfFee;
         this.expectedDate = expectedDate;
     }
+
+//    public Delivery same_day_deliv(){
+//        curier=Couriers.DHL;
+//        shippinfFee+=4;
+//        expectedDate=expectedDate.minusWeeks(2);
+//    return this;
+//    }
 
     public Couriers getCurier() {
         return curier;
@@ -33,24 +41,20 @@ public class Delivery {
         this.shippinfFee = shippinfFee;
     }
 
-    public Date getExpectedDate() {
+    public LocalDate getExpectedDate() {
         return expectedDate;
     }
 
-    public void setExpectedDate(Date expectedDate) {
+    public void setExpectedDate(LocalDate expectedDate) {
         this.expectedDate = expectedDate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override
     public String toString() {
         return id + "\t" + curier + "\t" + shippinfFee + "\t" + expectedDate;
+    }
+
+    public int getId() {
+        return id;
     }
 }
