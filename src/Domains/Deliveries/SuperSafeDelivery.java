@@ -7,10 +7,10 @@ import java.util.Random;
 
 public class SuperSafeDelivery extends Delivery{
     private String tracking_code;
-    public SuperSafeDelivery(int id, Couriers curier, float shippinfFee, LocalDate expectedDate) {
-        super(id, curier, shippinfFee, expectedDate);
+    public SuperSafeDelivery(int id, LocalDate expectedDate) {
+        super(id, expectedDate);
         tracking_code=generate_tracking_code(6);
-        setCurier(Couriers.FedEx);
+        curier=Couriers.FedEx;
         shippinfFee+=15;
         expectedDate=expectedDate.plusWeeks(2);
     }
@@ -22,7 +22,7 @@ public class SuperSafeDelivery extends Delivery{
     private static String generate_tracking_code(int length) {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         StringBuilder randomString = new StringBuilder();
-
+//ca sa verificam partea cu codul de 6 chestii o sa verificam daca comanda de safety are un cod de lg 6
         Random random = new Random();
         for (int i = 0; i < length; i++) {
             int index = random.nextInt(characters.length());

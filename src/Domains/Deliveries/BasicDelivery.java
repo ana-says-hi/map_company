@@ -5,9 +5,9 @@ import Domains.Couriers;
 import java.time.LocalDate;
 
 public class BasicDelivery extends Delivery{
-    public BasicDelivery(int id, Couriers curier, float shippinfFee, LocalDate expectedDate) {
-        super(id, curier, shippinfFee, expectedDate);
-        setCurier(Couriers.FanCurier);
+    public BasicDelivery(int id, LocalDate expectedDate) {
+        super(id, expectedDate);
         expectedDate=expectedDate.plusWeeks(2);
+        curier=Couriers.FanCurier;
     }
 }

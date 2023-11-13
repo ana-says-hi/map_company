@@ -8,15 +8,15 @@ import java.util.Date;
 public class Delivery {
 
     //private Order order;
-    private int id;
-    private Couriers curier;
-    private float shippinfFee;
-    private LocalDate expectedDate;
+    protected int id;
+    protected Couriers curier;
+    protected float shippinfFee=15;
+    protected LocalDate expectedDate;
 
-    public Delivery(int id, Couriers curier, float shippinfFee, LocalDate expectedDate) {
+    public Delivery(int id, LocalDate expectedDate) {
         this.id=id;
-        this.curier = curier;
-        this.shippinfFee = shippinfFee;
+        //this.curier = curier;
+        //this.shippinfFee = shippinfFee;
         this.expectedDate = expectedDate;
     }
 

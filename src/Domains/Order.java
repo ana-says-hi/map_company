@@ -27,15 +27,20 @@ public class Order {
         this.totalPrice=0;
     }
 
-    public Order(int id,Client client,Employee employee, LocalDate date, Status status) {
+    public Order(int id,Client client,Employee employee,ArrayList<Product> products,Delivery delivery,LocalDate date, Status status) {
         this.id=id;
         this.employee = employee;
         this.client=client;
         this.date = date;
-        this.products= new ArrayList<>();
+        this.products= products;
         this.status = status;
-        this.delivery = DeliveryFactory.getInstance().make_deliv(date);
+        this.delivery = delivery;
         this.totalPrice=0;
+        for(Product product:products)
+        {
+            totalPrice+=product.getPrice();
+        }
+        totalPrice+=delivery.getShippinfFee();
     }
 
     public void addProduct(Product prod1){
@@ -127,6 +132,7 @@ public class Order {
     //probabil la controller
     public void finishOrder(){
         //se calculeaza iar shipping fee
-        this.totalPrice=delivery.getShippinfFee();
+        this.totalPrice+=delivery.getShippinfFee();
+        this.status=Status.CONFIRMED;
     }
 }
