@@ -60,6 +60,28 @@ public class UI {
                 System.out.println("Invalid option.");
         }
     }
+/*
+ o sa avem nevoie sa bagam pentru delivery un meniu cu intrebare
+ Doriti o livrare preferentiala? 1.da/2.nu
+ 1 - merge in mod automat la normal
+ 2 - merge la meniul asta:
+      1.fragil
+      2.same day
+      3.ultra safe
+Odata terminat procesul de ales produse+metode de livrare poti fie
+    -sa vezi pretul
+    -sa termini cumparaturile
+  odata ce vezi pretul apara asta:
+  Doresti sa plasezi comanda? 1.da/2.nu
+  -da -> se trimite mai departe la controller ca e gata comanda
+  -nu -> te lasa sa stergi produse sau sa mai adaugi ceva si putem folosi update de la comanda
+  care include atat remove/delete cat si add products
+ */
+
+ /*
+
+  */
+
 
     private static void displayHairProducts()
     {
