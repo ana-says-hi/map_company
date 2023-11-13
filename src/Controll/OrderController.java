@@ -7,6 +7,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,15 +21,16 @@ public class OrderController implements Controller<Order>{
     }
 
 
-    public void create(int id, Client client, Employee employee, Date date) {
-        Order o=new Order(id,client, employee,date);
+    public void create(int id, Client client, Employee employee, LocalDate date) {
+        Order o=new Order(id,client,employee,date);
         orderRepo.add_to_repo(o);
     }
 
 //TODO SCHIMBAT UPDATE, SA RAMANA CUMVA PRODUSELE SI SA SE SCHIMBE STATUSUL
-    public void update(int id,Client client, Employee employee, Date date, Status status) {
+    public void update(int id,Client client, Employee employee, LocalDate date, Status status) {
         delete(id);
-        create(id,client,employee,date);
+        Order o=new Order(id,client,employee,date,status);
+        orderRepo.add_to_repo(o);
     }
 
     public Order find(int id){

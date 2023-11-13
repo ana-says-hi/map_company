@@ -1,12 +1,9 @@
 package FactoryPattern;
 
 import Domains.Couriers;
-import Domains.Delivery;
-import Domains.Product;
-import Domains.ProductType;
+import Domains.Deliveries.Delivery;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class DeliveryFactory {
     static  DeliveryFactory df_instance;

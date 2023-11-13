@@ -1,5 +1,5 @@
 package Domains;
 
 public enum Status {
-    PENDING, DELIVERING, HERE, RETURNING;
+    PENDING, DELIVERING, HERE, RETURNING, CANCELED;
 }

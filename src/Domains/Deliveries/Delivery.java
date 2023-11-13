@@ -1,4 +1,6 @@
-package Domains;
+package Domains.Deliveries;
+
+import Domains.Couriers;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -17,13 +19,6 @@ public class Delivery {
         this.shippinfFee = shippinfFee;
         this.expectedDate = expectedDate;
     }
-
-//    public Delivery same_day_deliv(){
-//        curier=Couriers.DHL;
-//        shippinfFee+=4;
-//        expectedDate=expectedDate.minusWeeks(2);
-//    return this;
-//    }
 
     public Couriers getCurier() {
         return curier;

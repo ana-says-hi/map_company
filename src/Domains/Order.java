@@ -1,12 +1,10 @@
 package Domains;
 
-import ObserverPattern.Observer;
+import Domains.Deliveries.Delivery;
 import FactoryPattern.DeliveryFactory;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Observable;
 
 public class Order {
     int id;
@@ -24,11 +22,20 @@ public class Order {
         this.client=client;
         this.date = date;
         this.products= new ArrayList<>();
-        this.status=Status.PENDING;
-        //TODO initializat un delivery aici
-        this.delivery = DeliveryFactory.getInstance().make_deliv(date.plusWeeks(2));
-        this.totalPrice=delivery.getShippinfFee();
-        //TODO TOTAL PRICE= PRODUSE+TAXA TRANSPORT
+        this.status = Status.PENDING;
+        this.delivery = DeliveryFactory.getInstance().make_deliv(date);
+        this.totalPrice=0;
+    }
+
+    public Order(int id,Client client,Employee employee, LocalDate date, Status status) {
+        this.id=id;
+        this.employee = employee;
+        this.client=client;
+        this.date = date;
+        this.products= new ArrayList<>();
+        this.status = status;
+        this.delivery = DeliveryFactory.getInstance().make_deliv(date);
+        this.totalPrice=0;
     }
 
     public void addProduct(Product prod1){
@@ -116,7 +123,10 @@ public class Order {
         this.delivery = delivery;
     }
 
+
+    //probabil la controller
     public void finishOrder(){
         //se calculeaza iar shipping fee
+        this.totalPrice=delivery.getShippinfFee();
     }
 }
