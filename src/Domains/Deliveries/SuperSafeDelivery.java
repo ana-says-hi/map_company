@@ -11,12 +11,18 @@ public class SuperSafeDelivery extends Delivery{
         super(id, expectedDate);
         tracking_code=generate_tracking_code(6);
         curier=Couriers.FedEx;
-        shippinfFee+=15;
-        expectedDate=expectedDate.plusWeeks(2);
     }
 
     public String getTracking_code() {
         return tracking_code;
+    }
+
+    public float getShippinfFee(){
+        return super.getShippinfFee()+15;
+    }
+
+    public LocalDate getExpectedDate() {
+        return super.getExpectedDate().plusWeeks(2);
     }
 
     private static String generate_tracking_code(int length) {

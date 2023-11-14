@@ -1,6 +1,7 @@
 package Domains.Deliveries;
 
 import Domains.Couriers;
+import Domains.Order;
 
 import java.time.LocalDate;
 import java.util.Date;
@@ -13,6 +14,7 @@ public class Delivery {
     protected float shippinfFee=15;
     protected LocalDate expectedDate;
 
+    //ID SI DATEinitial ACELEASI CA LA ORDER
     public Delivery(int id, LocalDate expectedDate) {
         this.id=id;
         //this.curier = curier;
@@ -49,7 +51,4 @@ public class Delivery {
         return id + "\t" + curier + "\t" + shippinfFee + "\t" + expectedDate;
     }
 
-    public int getId() {
-        return id;
-    }
 }

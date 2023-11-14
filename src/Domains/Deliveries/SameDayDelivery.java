@@ -7,8 +7,14 @@ import java.time.LocalDate;
 public class SameDayDelivery extends Delivery{
     public SameDayDelivery(int id,LocalDate expectedDate) {
         super(id, expectedDate);
-        expectedDate.minusWeeks(2);
-        setShippinfFee(getShippinfFee()+10);
         setCurier(Couriers.DHL);
+    }
+
+    public float getShippinfFee(){
+        return super.getShippinfFee()+10;
+    }
+
+    public LocalDate getExpectedDate() {
+        return super.getExpectedDate();
     }
 }
