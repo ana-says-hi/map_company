@@ -11,7 +11,7 @@ public class UI {
         mainMenu();
     }
 
-    private static void mainMenu() {
+    public static void mainMenu() {
         System.out.println("Welcome to BioLite!");
         System.out.println("Please select your identity:");
 

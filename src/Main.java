@@ -6,6 +6,6 @@ public class Main {
         TinyTest t= new TinyTest();
         t.test_delivery();
         UI ui= new UI();
-        ui.main_menu();
+        ui.mainMenu();
     }
 }
