@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ClientRepo implements Repository {
 
-    private ArrayList<Client> c_repo;
+    private ArrayList<Client> c_repo=new ArrayList<>();
 
     public void add_to_repo(Client c){
         c_repo.add(c);

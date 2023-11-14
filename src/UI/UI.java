@@ -1,5 +1,11 @@
 package UI;
 
+import Controll.OrderController;
+import Controll.ProductController;
+import Domains.Product;
+import Domains.ProductType;
+import FactoryPattern.ProductFactory;
+
 import java.util.Scanner;
 
 public class UI {
@@ -62,6 +68,7 @@ public class UI {
         System.out.println("1. Hair");
         System.out.println("2. Body");
         System.out.println("3. Face");
+        System.out.println("4. ALL");
 
         int categoryChoice = scanner.nextInt();
         scanner.nextLine();
@@ -76,9 +83,18 @@ public class UI {
             case 3:
                 displayFaceProducts();
                 break;
+            case 4:
+                displayAllProducts();
+                break;
             default:
                 System.out.println("Invalid option.");
         }
+    }
+
+    private static void displayAllProducts(){
+        System.out.println("All products:");
+        for(Product product: ProductController.getInstance().getProductRepo().getP_repo())
+            System.out.println(product);
     }
 
     private static void displayHairProducts() {
@@ -104,6 +120,7 @@ public class UI {
     private static void placeOrder(Scanner scanner) {
         // Implementează logica pentru plasarea unei comenzi
         System.out.println("Placing an order...");
+
     }
 
     private static void managerLogin(Scanner scanner) {
@@ -211,32 +228,59 @@ public class UI {
 
     private static void displayProductsSubMenu(Scanner scanner) {
         System.out.println("Products Submenu:");
-        System.out.println("1. Modify Product");
-        System.out.println("2. Delete Product");
-
+        System.out.println("1. Add Product");
+        System.out.println("2. Modify Product");
+        System.out.println("3. Delete Product");
         int productsChoice = scanner.nextInt();
         scanner.nextLine();
 
         switch (productsChoice) {
-            case 1:
+            case 2:
                 modifyProduct();
                 break;
-            case 2:
+            case 3:
                 deleteProduct();
+                break;
+            case 1:
+                addProduct();
                 break;
             default:
                 System.out.println("Invalid option.");
         }
     }
 
+    private static void addProduct(){
+        System.out.println("Adding product...\nEnter an id:\t");
+        System.out.println("new name:\t");
+        Scanner scannerN = new Scanner(System.in);
+        String new_name = scannerN.nextLine();
+        System.out.println("new price:\t");
+        Scanner scannerP = new Scanner(System.in);
+        float new_price = scannerP.nextFloat();
+        System.out.println("new type:\t");
+        Scanner scannerT = new Scanner(System.in);
+        String new_type = scannerT.nextLine();
+        ProductController.getInstance().create(new_name,new_price, ProductType.valueOf(new_type),100);
+    }
+
     private static void modifyProduct() {
         // Implementează logica pentru modificarea unui produs
-        System.out.println("Modifying product...");
+        System.out.println("Modifying product...\nEnter an id:\t");
+        Scanner scannerID = new Scanner(System.in);
+        int id = scannerID.nextInt();
+        Product prod=ProductController.getInstance().find(id);
+        System.out.println("new price:\t");
+        Scanner scanner = new Scanner(System.in);
+        float new_price = scanner.nextFloat();
+        ProductController.getInstance().update(prod.getId(), prod.getName(), new_price,prod.getType(),prod.getStoc());
     }
 
     private static void deleteProduct() {
         // Implementează logica pentru ștergerea unui produs
-        System.out.println("Deleting product...");
+        System.out.println("Deleting product...\nEnter an id:\t");
+        Scanner scanner = new Scanner(System.in);
+        int id = scanner.nextInt();
+        ProductController.getInstance().delete(id);
     }
 
     private static boolean validatePassword(String enteredPassword, String correctPassword) {

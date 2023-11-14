@@ -16,12 +16,21 @@ import java.util.List;
 
 //TODO set delivery
 //TODO CURRENT DATE AND TIME LA ORDER SI LA DELIVERY
+//TODO FILTER PENTRU STATUS ORDER
 public class OrderController implements Controller<Order>{
+
+    private static OrderController o_instance;
 
     private OrderRepo orderRepo;
 
-    public OrderController(OrderRepo orderRepo) {
-        this.orderRepo = orderRepo;
+    private OrderController() {
+        orderRepo=new OrderRepo();
+    }
+
+    public static OrderController getInstance(){
+        if(o_instance==null)
+            o_instance=new OrderController();
+        return o_instance;
     }
 
     public void create(int id, Client client, Employee employee, LocalDate date) {

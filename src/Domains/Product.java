@@ -23,6 +23,14 @@ public class Product implements Observable {
     //TODO OBSERVER PT STOC SI PRET
     //reduceri??
 
+    public int getStoc() {
+        return stoc;
+    }
+
+    public void setStoc(int stoc) {
+        this.stoc = stoc;
+    }
+
     public Product(int id, String name, float price, ProductType type, int stoc) {
         this.id = id;
         this.name = name;

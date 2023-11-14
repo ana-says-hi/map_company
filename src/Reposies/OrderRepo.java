@@ -12,7 +12,7 @@ import java.util.List;
 
 public class OrderRepo implements Repository{
 
-    private ArrayList<Order> o_repo;
+    private ArrayList<Order> o_repo=new ArrayList<>();
 
     public void add_to_repo(Order o){
         o_repo.add(o);

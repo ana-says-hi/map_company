@@ -15,6 +15,7 @@ public class ProductRepo implements Repository {
     private ArrayList<Product> p_repo;
 
     public ProductRepo() {
+        p_repo= new ArrayList<>();
         Product p1= ProductFactory.getInstance().make_prod("BioLite Curly Hair Mask",78,hair,5019);
         Product p2= ProductFactory.getInstance().make_prod("BioLite Curly Hair Shampoo",78,hair,20);
         Product p3= ProductFactory.getInstance().make_prod("BioLite Curly Hair Conditioner",65,hair,5021);
