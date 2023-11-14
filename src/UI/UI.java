@@ -1,9 +1,5 @@
 package UI;
 
-import Controll.ProductController;
-import Reposies.ProductRepo;
-
-import java.io.IOException;
 import java.util.Scanner;
 
 public class UI {
@@ -11,13 +7,11 @@ public class UI {
     private static final String STEF_PASSWORD = "Stef2205";
     private static final String BOGDAN_PASSWORD = "hokedo"; // Parola pentru Bogdan
 
-    public UI() {
+    public static void main(String[] args) {
+        mainMenu();
     }
 
-    public static void main_menu()
-    {
-        test_validatePassword();
-
+    private static void mainMenu() {
         System.out.println("Welcome to BioLite!");
         System.out.println("Please select your identity:");
 
@@ -28,34 +22,51 @@ public class UI {
 
         int option = scanner.nextInt();
 
-        if (option == 1)
-        {
-            displayCustomerMenu(scanner);
-        }
-        else if (option == 2)
-        {
+        if (option == 1) {
+            displayCustomerOptionsMenu(scanner);
+        } else if (option == 2) {
             managerLogin(scanner);
-        }
-        else
-        {
+        } else {
             System.out.println("Invalid option.");
         }
 
         scanner.close();
     }
 
-    private static void displayCustomerMenu(Scanner scanner)
-    {
+    private static void displayCustomerOptionsMenu(Scanner scanner) {
         System.out.println("Customer Menu:");
-        System.out.println("1. Hair");
-        System.out.println("2. Body");
-        System.out.println("3. Face");
+        System.out.println("1. View Products");
+        System.out.println("2. View Feedbacks");
+        System.out.println("3. Place Order");
 
         int customerChoice = scanner.nextInt();
         scanner.nextLine();
 
-        switch (customerChoice)
-        {
+        switch (customerChoice) {
+            case 1:
+                displayProductCategoryMenu(scanner);
+                break;
+            case 2:
+                viewFeedbacks();
+                break;
+            case 3:
+                placeOrder(scanner);
+                break;
+            default:
+                System.out.println("Invalid option.");
+        }
+    }
+
+    private static void displayProductCategoryMenu(Scanner scanner) {
+        System.out.println("Select a Category:");
+        System.out.println("1. Hair");
+        System.out.println("2. Body");
+        System.out.println("3. Face");
+
+        int categoryChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (categoryChoice) {
             case 1:
                 displayHairProducts();
                 break;
@@ -70,46 +81,32 @@ public class UI {
         }
     }
 
-    private static void displayHairProducts()
-    {
+    private static void displayHairProducts() {
         System.out.println("Hair Products:");
-        System.out.println("1. Shampoo");
-        System.out.println("2. Conditioner");
-        System.out.println("3. Hair Mask");
-        System.out.println("4. Towel");
-        System.out.println("5. Oil");
-        System.out.println("6. LeaveIn");
-
+        // Implementează logica pentru afișarea produselor de tip Hair
     }
 
-    private static void displayBodyProducts()
-    {
+    private static void displayBodyProducts() {
         System.out.println("Body Products:");
-        System.out.println("1. Shower Gel");
-        System.out.println("2. Sponge");
-        System.out.println("3. Body Spray");
-        System.out.println("4. Body Cream");
+        // Implementează logica pentru afișarea produselor de tip Body
     }
 
-/*    private static void displayMenProducts()
-    {
-        System.out.println("Only Men can understand:");
-        System.out.println("1. Shower Gel");
-        System.out.println("2. Sponge");
-        System.out.println("3. Spray for your car");
-        System.out.println("4. Fairy");
-    }*/
-
-    private static void displayFaceProducts()
-    {
+    private static void displayFaceProducts() {
         System.out.println("Face Products:");
-        System.out.println("1. Makeup Remover");
-        System.out.println("2. Face Wash Gel");
-        System.out.println("3. Salicylic Acid");
+        // Implementează logica pentru afișarea produselor de tip Face
     }
 
-    private static void managerLogin(Scanner scanner)
-    {
+    private static void viewFeedbacks() {
+        // Implementează logica pentru afișarea feedback-urilor
+        System.out.println("Viewing feedbacks...");
+    }
+
+    private static void placeOrder(Scanner scanner) {
+        // Implementează logica pentru plasarea unei comenzi
+        System.out.println("Placing an order...");
+    }
+
+    private static void managerLogin(Scanner scanner) {
         System.out.println("Welcome to the Manager section, please choose your identity:");
         System.out.println("1. Ana");
         System.out.println("2. Stef");
@@ -118,8 +115,7 @@ public class UI {
         int managerOption = scanner.nextInt();
         scanner.nextLine();
 
-        switch (managerOption)
-        {
+        switch (managerOption) {
             case 1:
                 managerLoginWithPassword(scanner, "Ana", ANA_PASSWORD);
                 break;
@@ -134,23 +130,18 @@ public class UI {
         }
     }
 
-    private static void managerLoginWithPassword(Scanner scanner, String managerName, String correctPassword)
-    {
+    private static void managerLoginWithPassword(Scanner scanner, String managerName, String correctPassword) {
         System.out.println("Welcome " + managerName + ", please enter your password:");
         String enteredPassword = scanner.next();
 
-        if (validatePassword(enteredPassword, correctPassword))
-        {
+        if (validatePassword(enteredPassword, correctPassword)) {
             displayManagerSubMenu(scanner);
-        }
-        else
-        {
+        } else {
             System.out.println("Incorrect password. Access denied.");
         }
     }
 
-    private static void displayManagerSubMenu(Scanner scanner)
-    {
+    private static void displayManagerSubMenu(Scanner scanner) {
         System.out.println("Manager Menu:");
         System.out.println("1. Orders");
         System.out.println("2. Products");
@@ -158,57 +149,123 @@ public class UI {
         int managerChoice = scanner.nextInt();
         scanner.nextLine();
 
-        switch (managerChoice)
-        {
+        switch (managerChoice) {
             case 1:
                 displayOrdersSubMenu(scanner);
                 break;
             case 2:
-                try {
-                    displayProductsSubMenu(scanner);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                displayProductsSubMenu(scanner);
                 break;
             default:
                 System.out.println("Invalid option.");
         }
     }
 
-    private static void displayOrdersSubMenu(Scanner scanner)
-    {
+    private static void displayOrdersSubMenu(Scanner scanner) {
         System.out.println("Orders Submenu:");
         System.out.println("1. Previous Orders");
         System.out.println("2. Current Orders");
         System.out.println("3. Canceled Orders");
         System.out.println("4. Returns");
+
+        int ordersChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (ordersChoice) {
+            case 1:
+                displayPreviousOrders();
+                break;
+            case 2:
+                displayCurrentOrders();
+                break;
+            case 3:
+                displayCanceledOrders();
+                break;
+            case 4:
+                displayReturns();
+                break;
+            default:
+                System.out.println("Invalid option.");
+        }
     }
 
-    private static void displayProductsSubMenu(Scanner scanner) throws IOException {
+    private static void displayPreviousOrders() {
+        // Implementează logica pentru afișarea comenzilor anterioare
+        System.out.println("Displaying previous orders...");
+    }
+
+    private static void displayCurrentOrders() {
+        // Implementează logica pentru afișarea comenzilor curente
+        System.out.println("Displaying current orders...");
+    }
+
+    private static void displayCanceledOrders() {
+        // Implementează logica pentru afișarea comenzilor anulate
+        System.out.println("Displaying canceled orders...");
+    }
+
+    private static void displayReturns() {
+        // Implementează logica pentru afișarea returnărilor
+        System.out.println("Displaying returns...");
+    }
+
+    private static void displayProductsSubMenu(Scanner scanner) {
         System.out.println("Products Submenu:");
-        System.out.println("1. Add Product");
-        System.out.println("2. Modify Product");
-        System.out.println("3. See Product");
-        System.out.println("4. Delete Product");
+        System.out.println("1. Modify Product");
+        System.out.println("2. Delete Product");
 
-        Scanner scanner1= new Scanner(System.in);
-        int choice = scanner1.nextInt();
-        scanner1.nextLine();
-        if(choice==3)
-            //singleton apelat
-            System.out.println(ProductController.getInstance().getStuff());
+        int productsChoice = scanner.nextInt();
+        scanner.nextLine();
 
+        switch (productsChoice) {
+            case 1:
+                modifyProduct();
+                break;
+            case 2:
+                deleteProduct();
+                break;
+            default:
+                System.out.println("Invalid option.");
+        }
     }
 
-    private static boolean validatePassword(String enteredPassword, String correctPassword)
-    {
+    private static void modifyProduct() {
+        // Implementează logica pentru modificarea unui produs
+        System.out.println("Modifying product...");
+    }
+
+    private static void deleteProduct() {
+        // Implementează logica pentru ștergerea unui produs
+        System.out.println("Deleting product...");
+    }
+
+    private static boolean validatePassword(String enteredPassword, String correctPassword) {
         return enteredPassword.equals(correctPassword);
     }
-
-    private static void test_validatePassword()
-    {
-        String pas1="ok";
-        String pas2="ok";
-        assert validatePassword(pas1,pas2);
-    }
 }
+
+
+/*
+o sa avem pentru client sectiunea de ales produse care tin de order, unde
+o sa avem zona de ales produse deja existents, iar acestea odata alese o sa
+se deschida un alt submeniu pentru livrare
+ o sa avem nevoie sa bagam pentru delivery un meniu cu intrebare
+ Doriti o livrare preferentiala? 1.da/2.nu
+ 1 - merge in mod automat la normal
+ 2 - merge la meniul asta:
+      1.fragil
+      2.same day
+      3.ultra safe
+Odata terminat procesul de ales produse+metode de livrare poti fie
+    -sa vezi pretul
+    -sa termini cumparaturile
+  odata ce vezi pretul apara asta:
+  Doresti sa plasezi comanda? 1.da/2.nu
+  -da -> se trimite mai departe la controller ca e gata comanda
+  -nu -> te lasa sa stergi produse sau sa mai adaugi ceva si putem folosi update de la comanda
+  care include atat remove/delete cat si add products
+ */
+
+/*
+
+ */

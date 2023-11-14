@@ -19,7 +19,7 @@ public class DeliveryFactory {
 
     //basic delivery
     public Delivery make_deliv(LocalDate expectedDate){
-        Delivery delivery= new Delivery(id, Couriers.FanCurier,expectedDate);
+        Delivery delivery= new Delivery(id,expectedDate);
         id++;
         return delivery;
         //return null;
