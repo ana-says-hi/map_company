@@ -3,6 +3,7 @@ package Controll;
 import Domains.*;
 import Domains.Deliveries.BasicDelivery;
 import Domains.Deliveries.Delivery;
+import FactoryPattern.OrderFactory;
 import Reposies.OrderRepo;
 
 import java.io.BufferedReader;
@@ -33,9 +34,11 @@ public class OrderController implements Controller<Order>{
         return o_instance;
     }
 
-    public void create(int id, Client client, Employee employee, LocalDate date) {
-        Order o=new Order(id,client,employee,date);
+    public Order create(Client client) {
+        //Order o=new Order(id,client,employee,date);
+        Order o= OrderFactory.getInstance().make_ord(client);
         orderRepo.add_to_repo(o);
+        return o;
     }
 
 //TODO SCHIMBAT UPDATE, SA RAMANA CUMVA PRODUSELE SI SA SE SCHIMBE STATUSUL

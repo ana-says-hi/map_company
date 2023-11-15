@@ -31,9 +31,10 @@ public class ClientController implements Controller<Client>{
     }
 
 
-    public void create(String name, String address) {
+    public Client create(String name, String address) {
         Client client=ClientFactory.getInstance().make_cl(name, address);
         clientRepo.add_to_repo(client);
+        return client;
     }
 
     public void update(int id, String name, String address) {

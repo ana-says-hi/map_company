@@ -5,12 +5,14 @@ import java.util.ArrayList;
 public class Feedback {
     private static List<Product> productsWithFeedbacks = new ArrayList<>();
 
+    private int id;
     private Client client;
     private Product product;
     private String message;
     private boolean type; // true pentru pozitiv, false pentru negativ
 
-    public Feedback(Client client, Product product, String message, boolean type) {
+    public Feedback(int id, Client client, Product product, String message, boolean type) {
+        this.id=id;
         this.client = client;
         this.product = product;
         this.message = message;
@@ -60,15 +62,33 @@ public class Feedback {
         this.type = type;
     }
 
-    public void displayFeedback() {
-        System.out.println("Client: " + client.getName());
-        System.out.println("Product: " + product.getName());
-        System.out.println("Message: " + message);
-        System.out.println("Type: " + (type ? "Positive" : "Negative"));
+//    public void displayFeedback() {
+//        System.out.println("Client: " + client.getName());
+//        System.out.println("Product: " + product.getName());
+//        System.out.println("Message: " + message);
+//        System.out.println("Type: " + (type ? "Positive" : "Negative"));
+//    }
+
+    public boolean isType() {
+        return type;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "FEEDBCK: " +
+                + id +
+                "," + client +
+                "," + product +
+                ",'" + message +
+                "," + type ;
     }
 }
 
-    /* sa avem o lista declarata initial cu 2 feedbackuri pozitive si unul negativ
-    iar dupa ce rulam programul putem direct sa bagam in lista alte feedbackuri care
-    sa poate fi vazute dupa aceea cu un display
-     */

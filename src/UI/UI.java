@@ -1,9 +1,11 @@
 package UI;
 
+import Controll.ClientController;
+import Controll.FeedbackController;
 import Controll.OrderController;
 import Controll.ProductController;
-import Domains.Product;
-import Domains.ProductType;
+import Domains.*;
+import FactoryPattern.OrderFactory;
 import FactoryPattern.ProductFactory;
 
 import java.util.Scanner;
@@ -113,15 +115,49 @@ public class UI {
     }
 
     private static void viewFeedbacks() {
-        // Implementează logica pentru afișarea feedback-urilor
-        System.out.println("Viewing feedbacks...");
+
+        System.out.println("Viewing feedbacks:");
+        for(Feedback feedback: FeedbackController.getInstance().getFeedbackRepo().getF_repo())
+            System.out.println(feedback);
     }
 
     private static void placeOrder(Scanner scanner) {
         // Implementează logica pentru plasarea unei comenzi
         System.out.println("Placing an order...");
+        System.out.println("Can you help us? What is your name?\t");
+        Scanner scannerN = new Scanner(System.in);
+        String new_name = scannerN.nextLine();
+        System.out.println("What is your address?\t");
+        Scanner scannerA = new Scanner(System.in);
+        String new_addr = scannerN.nextLine();
+            Client cl=ClientController.getInstance().create(new_name,new_addr);
+            Order order=OrderController.getInstance().create(cl);
+        System.out.println("Adding products...");
+        System.out.println("What would you like to buy? Enter IDs:\t");
+            //citit mai multe id
+        Scanner scannerIDS = new Scanner(System.in);
+        String input = scannerIDS.nextLine();
+        String[] valoriString = input.split(" ");
+        for (String valoare : valoriString) {
+            int valoareInt = Integer.parseInt(valoare);
+            //addProduct si in order Controller?
+            order.addProduct(ProductController.getInstance().find(valoareInt));
+        }
+        scannerIDS.close();
+        System.out.println("The products have been added! With our basic delivery, your costs will be: "+order.getTotalPrice());
+        System.out.println("Would you like to change the delivery type? [0-no, 1-yes]");
+        Scanner scannerYN = new Scanner(System.in);
+        int answer = scannerYN.nextInt();
+        if(answer==0)
+            order.finishOrder();
+        if (answer==1)
+        {
+            //switch pt tipul de livrari
+            //order.setDelivery();
+        }
 
     }
+
 
     private static void managerLogin(Scanner scanner) {
         System.out.println("Welcome to the Manager section, please choose your identity:");

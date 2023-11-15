@@ -18,8 +18,9 @@ public class ProductController implements Controller<Product>{
     }
 
     public static ProductController getInstance(){
-        if(p_instance==null)
-            p_instance=new ProductController();
+        if(p_instance==null) {
+            p_instance = new ProductController();
+        }
         return p_instance;
     }
 

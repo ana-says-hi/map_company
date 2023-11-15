@@ -6,6 +6,7 @@ import ObserverPattern.Observer;
 import java.util.ArrayList;
 
 public class Product implements Observable {
+    Observer<Product> Company;
     private int id;
     private String name;
     private float price;
@@ -37,6 +38,7 @@ public class Product implements Observable {
         this.price = price;
         this.type = type;
         this.stoc=stoc;
+        registerObserver(Company);
     }
 
     public int getId() {
