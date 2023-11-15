@@ -41,16 +41,17 @@ public class EmployeeController implements Controller<Employee>{
     }
 
     public Employee find(int id) {
-        for(Employee employee: EmployeeRepo.getE_repo()) {
+        for(Employee employee: employeeRepo.getE_repo()) {
             if (employee.getId()==id)
                 return employee;
         }
         return null;
     }
     //nu il apelam :)
+    @Override
     public void delete(int id) {
         Employee employee=find(id);
         if(employee!=null)
-            EmployeeRepo.remove_from_repo(employee);
+            employeeRepo.remove_from_repo(employee);
     }
 }

@@ -8,17 +8,21 @@ import java.util.List;
 
 public class EmployeeRepo implements Repository {
 
-    private ArrayList<Employee> e_repo=new ArrayList<>();
+    private ArrayList<Employee> e_repo;
+
+    public EmployeeRepo(){
+        e_repo=new ArrayList<>();
+    }
 
     public void add_to_repo(Employee e){
         e_repo.add(e);
     }
 
-    public static void remove_from_repo(Employee e){
+    public void remove_from_repo(Employee e){
         e_repo.remove(e);
     }
 
-    public static ArrayList<Employee> getE_repo() {
+    public ArrayList<Employee> getE_repo() {
         return e_repo;
     }
 }

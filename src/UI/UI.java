@@ -62,14 +62,15 @@ public class UI {
                 placeOrder(scanner);
                 break;
             case 4:
-                findoutmore(scanner);
+                findOutMore(scanner);
                 break;
             default:
                 System.out.println("Invalid option.");
         }
     }
 
-    private static void findoutmore(Scanner scanner) {
+    private static void findOutMore(Scanner scanner) {
+
 
     }
 
