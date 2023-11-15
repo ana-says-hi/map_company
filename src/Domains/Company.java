@@ -10,15 +10,16 @@ public class Company implements Observer<Product> {
     String name;
     ArrayList<Employee> employees;
     String about_us;
-    //ArrayList<Product> products;
+    ArrayList<Product> products;
 
     public Company(String name, ArrayList<Employee> employees, String about_us) {
         this.name = name;
+        //TODO controller si repo pt employees
         this.employees = employees;
         this.about_us = about_us;
-//        ProductRepo productRepo=new ProductRepo();
-//        this.products=productRepo.getP_repo();
-        //this.products=ProductController.getInstance().getStuff();
+        this.products=ProductController.getInstance().getStuff();
+        for (Product product:products)
+            product.registerObserver(this);
     }
 
     public String getName() {

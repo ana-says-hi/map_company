@@ -46,6 +46,7 @@ public class UI {
         System.out.println("1. View Products");
         System.out.println("2. View Feedbacks");
         System.out.println("3. Place Order");
+        System.out.println("4. Find out more about us");
 
         int customerChoice = scanner.nextInt();
         scanner.nextLine();
@@ -60,9 +61,16 @@ public class UI {
             case 3:
                 placeOrder(scanner);
                 break;
+            case 4:
+                findoutmore(scanner);
+                break;
             default:
                 System.out.println("Invalid option.");
         }
+    }
+
+    private static void findoutmore(Scanner scanner) {
+
     }
 
     private static void displayProductCategoryMenu(Scanner scanner) {

@@ -47,7 +47,7 @@ public class FeedbackController implements Controller<Feedback>{
         }
         return null;
     }
-//nu il apelam :)
+    //nu il apelam :)
     public void delete(int id) {
         Feedback f=find(id);
         if(f!=null)
