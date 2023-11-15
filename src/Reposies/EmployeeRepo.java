@@ -2,6 +2,7 @@ package Reposies;
 
 import Domains.Client;
 import Domains.Employee;
+import FactoryPattern.EmployeeFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,12 @@ public class EmployeeRepo implements Repository {
 
     public EmployeeRepo(){
         e_repo=new ArrayList<>();
+        Employee e1= EmployeeFactory.getInstance().make_cl("Annaaa","Ania1234");
+        Employee e2= EmployeeFactory.getInstance().make_cl("Steff","Stef2205");
+        Employee e3= EmployeeFactory.getInstance().make_cl("Bogdie","hokedo");
+        e_repo.add(e1);
+        e_repo.add(e2);
+        e_repo.add(e3);
     }
 
     public void add_to_repo(Employee e){

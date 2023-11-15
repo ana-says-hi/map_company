@@ -70,8 +70,8 @@ public class UI {
     }
 
     private static void findOutMore(Scanner scanner) {
-
-
+        Company.getInstance().getAbout_us();
+        Company.getInstance().getEmployees();
     }
 
     private static void displayProductCategoryMenu(Scanner scanner) {
