@@ -71,6 +71,7 @@ public class UI {
 
     private static void findOutMore(Scanner scanner) {
         //Company.getInstance().getAbout_us();
+        System.out.println("Say HI to our employees!");
         for(Employee e:Company.getInstance().getEmployees())
             System.out.println(e);
     }
