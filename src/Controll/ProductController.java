@@ -53,24 +53,17 @@ public class ProductController implements Controller<Product>{
         productRepo.remove_from_repo(prod);
     }
 
-    public ArrayList<Product> getFilteredProducts(int produs_choise) {
-        ProductType type=null;
-        switch (produs_choise) {
-            case 1:
-                type = ProductType.face;
-                break;
-            case 2:
-                type = ProductType.hair;
-                break;
-            case 3:
-                type = ProductType.body;
-                break;
-            default:
-                System.out.println("Invalid option.");
+    public ArrayList<Product> filterProductsByType(ProductType type) {
+        ArrayList<Product> filteredProducts = new ArrayList<>();
+        ArrayList<Product> products = getStuff();
+        for (Product product : products) {
+            if (product.getType() == type) {
+                filteredProducts.add(product);
+            }
         }
-
-        return getProductRepo().filterProductsByType(type);
+        return filteredProducts;
     }
+
 
 
 //    public ProductController() throws IOException {

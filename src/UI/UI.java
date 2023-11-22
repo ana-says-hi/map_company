@@ -6,6 +6,7 @@ import Controll.OrderController;
 import Controll.ProductController;
 import Domains.*;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UI {
@@ -99,6 +100,14 @@ public class UI {
                 break;
             default:
                 System.out.println("Invalid option.");
+        }
+    }
+
+    private static void displayProducts(ProductType type) {
+        ArrayList<Product> filterproducts=ProductController.getInstance().filterProductsByType(type);
+        System.out.println("Produsele filtrate sunt:");
+        for (Product product : filterproducts) {
+            System.out.println(product.getId() + ". " + product.getName() + " - " + product.getPrice());
         }
     }
 /*
