@@ -4,7 +4,7 @@ import Domains.*;
 
 import java.util.ArrayList;
 
-public class FeedbackRepo implements Repository{
+public class FeedbackRepo implements Repository<Feedback>{
 
     private ArrayList<Feedback> f_repo=new ArrayList<>();
 
@@ -16,7 +16,7 @@ public class FeedbackRepo implements Repository{
         f_repo.remove(f);
     }
 
-    public ArrayList<Feedback> getF_repo() {
+    public ArrayList<Feedback> get_repo() {
         return f_repo;
     }
 

@@ -41,7 +41,7 @@ public class FeedbackController implements Controller<Feedback>{
     }
 
     public Feedback find(int id) {
-        for(Feedback f: feedbackRepo.getF_repo()) {
+        for(Feedback f: feedbackRepo.get_repo()) {
             if (f.getId()==id)
                 return f;
         }

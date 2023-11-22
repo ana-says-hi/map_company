@@ -5,8 +5,6 @@ import Controll.FeedbackController;
 import Controll.OrderController;
 import Controll.ProductController;
 import Domains.*;
-import FactoryPattern.OrderFactory;
-import FactoryPattern.ProductFactory;
 
 import java.util.Scanner;
 
@@ -106,7 +104,7 @@ public class UI {
 
     private static void displayAllProducts(){
         System.out.println("All products:");
-        for(Product product: ProductController.getInstance().getProductRepo().getP_repo())
+        for(Product product: ProductController.getInstance().getProductRepo().get_repo())
             System.out.println(product);
     }
 
@@ -128,7 +126,7 @@ public class UI {
     private static void viewFeedbacks() {
 
         System.out.println("Viewing feedbacks:");
-        for(Feedback feedback: FeedbackController.getInstance().getFeedbackRepo().getF_repo())
+        for(Feedback feedback: FeedbackController.getInstance().getFeedbackRepo().get_repo())
             System.out.println(feedback);
     }
 

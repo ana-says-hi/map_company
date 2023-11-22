@@ -5,7 +5,7 @@ import Domains.Client;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ClientRepo implements Repository {
+public class ClientRepo implements Repository<Client> {
 
     private ArrayList<Client> c_repo=new ArrayList<>();
 
@@ -17,7 +17,7 @@ public class ClientRepo implements Repository {
         c_repo.remove(c);
     }
 
-    public ArrayList<Client> getC_repo() {
+    public ArrayList<Client> get_repo() {
         return c_repo;
     }
 

@@ -2,8 +2,6 @@ package Controll;
 
 import Domains.Product;
 import Domains.ProductType;
-import ObserverPattern.Observable;
-import ObserverPattern.Observer;
 import Reposies.ProductRepo;
 import FactoryPattern.ProductFactory;
 import java.util.ArrayList;
@@ -26,7 +24,7 @@ public class ProductController implements Controller<Product>{
 
     public ArrayList<Product> getStuff()
     {
-        return getProductRepo().getP_repo();
+        return getProductRepo().get_repo();
     }
 
     public void create(String name, float price, ProductType type, int stoc){
@@ -43,7 +41,7 @@ public class ProductController implements Controller<Product>{
     }
 
     public Product find(int id) {
-        for(Product prod: productRepo.getP_repo())
+        for(Product prod: productRepo.get_repo())
             if(prod.getId()==id)
                 return prod;
         return null;
@@ -55,6 +53,24 @@ public class ProductController implements Controller<Product>{
         productRepo.remove_from_repo(prod);
     }
 
+    public ArrayList<Product> getFilteredProducts(int produs_choise) {
+        ProductType type=null;
+        switch (produs_choise) {
+            case 1:
+                type = ProductType.face;
+                break;
+            case 2:
+                type = ProductType.hair;
+                break;
+            case 3:
+                type = ProductType.body;
+                break;
+            default:
+                System.out.println("Invalid option.");
+        }
+
+        return getProductRepo().filterProductsByType(type);
+    }
 
 
 //    public ProductController() throws IOException {

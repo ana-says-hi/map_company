@@ -2,7 +2,6 @@ package Controll;
 
 import Domains.Client;
 import Reposies.ClientRepo;
-import Reposies.EmployeeRepo;
 import FactoryPattern.ClientFactory;
 import java.util.ArrayList;
 
@@ -18,7 +17,7 @@ public class ClientController implements Controller<Client>{
         clientRepo = new ClientRepo();
     }
 
-    public ArrayList<Client> getClients(){return getClientRepo().getC_repo();}
+    public ArrayList<Client> getClients(){return getClientRepo().get_repo();}
 
     public static ClientController getInstance(){
         if(c_instance==null)
@@ -46,7 +45,7 @@ public class ClientController implements Controller<Client>{
 
 
     public Client find(int id) {
-        for(Client c: clientRepo.getC_repo()) {
+        for(Client c: clientRepo.get_repo()) {
             if (c.getId()==id)
                 return c;
         }

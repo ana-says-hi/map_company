@@ -1,13 +1,11 @@
 package Reposies;
 
-import Domains.Client;
 import Domains.Employee;
 import FactoryPattern.EmployeeFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class EmployeeRepo implements Repository {
+public class EmployeeRepo implements Repository<Employee> {
 
     private ArrayList<Employee> e_repo;
 
@@ -29,7 +27,7 @@ public class EmployeeRepo implements Repository {
         e_repo.remove(e);
     }
 
-    public ArrayList<Employee> getE_repo() {
+    public ArrayList<Employee> get_repo() {
         return e_repo;
     }
 }

@@ -1,16 +1,14 @@
 package Reposies;
 
-import Domains.Client;
 import Domains.Product;
 import Domains.ProductType;
 import FactoryPattern.ProductFactory;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import static Domains.ProductType.hair;
 
-public class ProductRepo implements Repository {
+public class ProductRepo implements Repository <Product>{
 
     private ArrayList<Product> p_repo;
 
@@ -36,8 +34,18 @@ public class ProductRepo implements Repository {
         p_repo.remove(p);
     }
 
-    public ArrayList<Product> getP_repo() {
+    public ArrayList<Product> get_repo() {
         return p_repo;
+    }
+
+    public ArrayList<Product> filterProductsByType(ProductType type) {
+        ArrayList<Product> filteredProducts = new ArrayList<>();
+        for (Product product : p_repo) {
+            if (product.getType() == type) {
+                filteredProducts.add(product);
+            }
+        }
+        return filteredProducts;
     }
 
 //O sa avem o metoda de filtrat produse dupa tipul lor,, la controller

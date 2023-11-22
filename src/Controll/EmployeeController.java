@@ -1,15 +1,7 @@
 package Controll;
 
-import Domains.Client;
 import Domains.Employee;
-import Domains.Feedback;
-import Domains.Product;
-import FactoryPattern.FeedbackFactory;
 import Reposies.EmployeeRepo;
-import Reposies.FeedbackRepo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EmployeeController implements Controller<Employee>{
     //ca sa nu facem acum implementare de comenzi bagam mesaj cum ca suntem
@@ -41,7 +33,7 @@ public class EmployeeController implements Controller<Employee>{
     }
 
     public Employee find(int id) {
-        for(Employee employee: employeeRepo.getE_repo()) {
+        for(Employee employee: employeeRepo.get_repo()) {
             if (employee.getId()==id)
                 return employee;
         }

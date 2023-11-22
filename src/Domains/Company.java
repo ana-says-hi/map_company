@@ -2,11 +2,9 @@ package Domains;
 
 import java.util.ArrayList;
 
-import Controll.ClientController;
 import Controll.EmployeeController;
 import Controll.ProductController;
 import ObserverPattern.Observer;
-import Reposies.ProductRepo;
 
 public class Company implements Observer<Product> {
     String name;
@@ -27,7 +25,7 @@ public class Company implements Observer<Product> {
 
     private Company() {
         this.name="BioLite";
-        this.employees = EmployeeController.getInstance().getEmployeeRepo().getE_repo();
+        this.employees = EmployeeController.getInstance().getEmployeeRepo().get_repo();
         this.products=ProductController.getInstance().getStuff();
         for (Product product:products)
             product.registerObserver(this);

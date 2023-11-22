@@ -1,19 +1,11 @@
 package Controll;
 
 import Domains.*;
-import Domains.Deliveries.BasicDelivery;
 import Domains.Deliveries.Delivery;
 import FactoryPattern.OrderFactory;
 import Reposies.OrderRepo;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 //TODO set delivery
 //TODO CURRENT DATE AND TIME LA ORDER SI LA DELIVERY
@@ -50,7 +42,7 @@ public class OrderController implements Controller<Order>{
     }
 
     public Order find(int id){
-        for(Order ord: orderRepo.getO_repo())
+        for(Order ord: orderRepo.get_repo())
             if(ord.getId()==id)
                 return ord;
         return null;

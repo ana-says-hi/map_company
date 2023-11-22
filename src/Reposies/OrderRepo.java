@@ -1,16 +1,10 @@
 package Reposies;
 
-import Domains.Client;
 import Domains.Order;
-import Domains.Product;
-import Domains.Status;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.List;
 
-public class OrderRepo implements Repository{
+public class OrderRepo implements Repository<Order>{
 
     private ArrayList<Order> o_repo=new ArrayList<>();
 
@@ -22,7 +16,7 @@ public class OrderRepo implements Repository{
         o_repo.remove(o);
     }
 
-    public ArrayList<Order> getO_repo() {
+    public ArrayList<Order> get_repo() {
         return o_repo;
     }
 
