@@ -1,31 +1,61 @@
 package Domains;
 
+import Domains.Deliveries.BasicDelivery;
+import Domains.Deliveries.Delivery;
+import Domains.Deliveries.SameDayDelivery;
+import FactoryPattern.DeliveryFactory;
+
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class Order {
+    int id;
     private Employee employee;
     private Client client;
     private ArrayList<Domains.Product> products;
     private float totalPrice;
-    private Date date;
+    private LocalDate date;
     private Status status;
     private Delivery delivery;
 
-    public Order(Client client,Employee employee, Date date, Status status) {
+    public Order(int id,Client client,Employee employee, LocalDate date) {
+        this.id=id;
         this.employee = employee;
         this.client=client;
-        //this.products = products; TODO LE IA DIN REPO
         this.date = date;
-        this.status = status;
-        //TODO initializat un delivery aici
-        //this.delivery = delivery;
-        //TODO TOTAL PRICE= PRODUSE+TAXA TRANSPORT
+        this.products= new ArrayList<>();
+        this.status = Status.PENDING;
+        //this.delivery = DeliveryFactory.getInstance().make_deliv(date);
+        this.delivery= new BasicDelivery(id, date);
+        this.totalPrice=0;
     }
 
-    //TODO ADD PRODUCT+ TOTAL PRICE
-    //change order
-    //validdare produse pe stoc
+    public Order(int id,Client client,Employee employee,ArrayList<Product> products,Delivery delivery,LocalDate date, Status status) {
+        this.id=id;
+        this.employee = employee;
+        this.client=client;
+        this.date = date;
+        this.products= products;
+        this.status = status;
+        this.delivery = delivery;
+        this.totalPrice=0;
+        for(Product product:products)
+        {
+            totalPrice+=product.getPrice();
+        }
+        totalPrice+=delivery.getShippinfFee();
+    }
+
+    public void addProduct(Product prod1){
+        products.add(prod1);
+        totalPrice+= prod1.getPrice();
+    }
+    public void deleteProduct(Product prod1){
+        if(products.contains(prod1)) {
+            products.remove(prod1);
+            totalPrice-= prod1.getPrice();
+        }
+    }
 
     public Employee getEmployee() {
         return employee;
@@ -39,10 +69,6 @@ public class Order {
         return products;
     }
 
-//    public void setProducts(ArrayList<Product> products) {
-//        this.products = products;
-//    }
-
     public float getTotalPrice() {
         return totalPrice;
     }
@@ -51,20 +77,12 @@ public class Order {
         this.totalPrice = totalPrice;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 
     public Delivery getDelivery() {
@@ -82,7 +100,45 @@ public class Order {
                 }
             }
         }
-        return employee.getId() + "," + client.getId() + "," + productIds + ","+ totalPrice + "," + date + "," + status + ","+ delivery.getId();
+        return "ORDER: " + employee.getId()+ "," + client.getId() + "," + productIds + ","+ totalPrice + "," + date + "," + status + ","+ delivery.getExpectedDate();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+
+    public void setDelivery(Delivery delivery) {
+        this.delivery = delivery;
+    }
+
+
+    //probabil la controller
+    public void finishOrder(){
+        //se calculeaza iar shipping fee
+        this.totalPrice+=delivery.getShippinfFee();
+        this.status=Status.CONFIRMED;
     }
 
 }
+
+

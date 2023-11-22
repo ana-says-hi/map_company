@@ -2,15 +2,34 @@ package Domains;
 
 import java.util.ArrayList;
 
-public class Company {
+import Controll.EmployeeController;
+import Controll.ProductController;
+import ObserverPattern.Observer;
+
+public class Company implements Observer<Product> {
     String name;
     ArrayList<Employee> employees;
     String about_us;
+    ArrayList<Product> products;
+    private static Company cmp_instance;
 
-    public Company(String name, ArrayList<Employee> employees, String about_us) {
+/*    public Company(String name, ArrayList<Employee> employees, String about_us) {
         this.name = name;
+        //TODO controller si repo pt employees
         this.employees = employees;
         this.about_us = about_us;
+        this.products=ProductController.getInstance().getStuff();
+        for (Product product:products)
+            product.registerObserver(this);
+    }*/
+
+    private Company() {
+        this.name="BioLite";
+        this.employees = EmployeeController.getInstance().getEmployeeRepo().get_repo();
+        this.products=ProductController.getInstance().getStuff();
+        for (Product product:products)
+            product.registerObserver(this);
+
     }
 
     public String getName() {
@@ -31,5 +50,17 @@ public class Company {
 
     public String getAbout_us() {
         return about_us;
+    }
+
+    @Override
+    public void update(Product product) {
+        System.out.println("MAI CUMPARA CHESTII FRA");
+        //TODO contrsct curier sau ce era cu order niu ig
+    }
+    public static Company getInstance(){
+       //Company cmp_instance;
+        if(cmp_instance==null)
+            cmp_instance=new Company();
+        return cmp_instance;
     }
 }

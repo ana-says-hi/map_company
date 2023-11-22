@@ -1,22 +1,24 @@
 package Domains;
 
-import java.util.ArrayList;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Return extends Order {
-    private Date returnDate;
+    private LocalDate returnDate;
     private float moneyBack;
-    public Return(Employee employee, ArrayList<Product> products, Date date, Status status) {
-        //retr date= date+ o luna idk
-        //money back= idk
-        super(employee, products, date, status);
+
+    public Return(int id, Client client, Employee employee, LocalDate date, Status status, LocalDate returnDate, float moneyBack) {
+        super(id, client, employee, date);
+        this.returnDate = returnDate;
+        this.moneyBack = moneyBack;
     }
 
-    public Date getReturnDate() {
+
+    public LocalDate getReturnDate() {
         return returnDate;
     }
 
-    public void setReturnDate(Date returnDate) {
+    public void setReturnDate(LocalDate returnDate) {
         this.returnDate = returnDate;
     }
 

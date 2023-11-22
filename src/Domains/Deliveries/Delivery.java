@@ -1,19 +1,24 @@
-package Domains;
+package Domains.Deliveries;
 
+import Domains.Couriers;
+import Domains.Order;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Delivery {
 
     //private Order order;
-    private int id;
-    private Couriers curier;
-    private float shippinfFee;
-    private Date expectedDate;
+    protected int id;
+    protected Couriers curier;
+    protected float shippinfFee=15;
+    protected LocalDate expectedDate;
 
-    public Delivery(int id, Couriers curier, float shippinfFee, Date expectedDate) {
+    //ID SI DATEinitial ACELEASI CA LA ORDER
+    public Delivery(int id, LocalDate expectedDate) {
         this.id=id;
-        this.curier = curier;
-        this.shippinfFee = shippinfFee;
+        //this.curier = curier;
+        //this.shippinfFee = shippinfFee;
         this.expectedDate = expectedDate;
     }
 
@@ -33,24 +38,17 @@ public class Delivery {
         this.shippinfFee = shippinfFee;
     }
 
-    public Date getExpectedDate() {
+    public LocalDate getExpectedDate() {
         return expectedDate;
     }
 
-    public void setExpectedDate(Date expectedDate) {
+    public void setExpectedDate(LocalDate expectedDate) {
         this.expectedDate = expectedDate;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     @Override
     public String toString() {
         return id + "\t" + curier + "\t" + shippinfFee + "\t" + expectedDate;
     }
+
 }
