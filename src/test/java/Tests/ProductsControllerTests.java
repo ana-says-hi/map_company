@@ -3,10 +3,14 @@ package Tests;
 import Controll.ProductController;
 import Domains.Product;
 import Domains.ProductType;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+//import org.junit.jupiter.api.Test;
+import org.testng.AssertJUnit;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+//import static org.junit.jupiter.api.Assertions.*;
+//import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.testng.AssertJUnit.assertEquals;
+import static org.testng.AssertJUnit.assertNull;
 
 public class ProductsControllerTests {
 
@@ -41,6 +45,6 @@ public class ProductsControllerTests {
         Product lastProduct = productController.getStuff().get(productController.getStuff().size() - 1);
         productController.delete(lastProduct.getId());
         Product deletedProduct = productController.find(lastProduct.getId());
-        assertNull(deletedProduct);
+        AssertJUnit.assertNull(deletedProduct);
     }
 }

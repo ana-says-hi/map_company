@@ -1,5 +1,6 @@
 package UI;
 
+//import Controll.ClientController;
 import Controll.ClientController;
 import Controll.FeedbackController;
 import Controll.OrderController;
@@ -170,7 +171,7 @@ Odata terminat procesul de ales produse+metode de livrare poti fie
         System.out.println("What is your address?\t");
         Scanner scannerA = new Scanner(System.in);
         String new_addr = scannerN.nextLine();
-            Client cl=ClientController.getInstance().create(new_name,new_addr);
+            Client cl= ClientController.getInstance().create(new_name,new_addr);
             Order order=OrderController.getInstance().create(cl);
         System.out.println("Adding products...");
         System.out.println("What would you like to buy? Enter IDs:\t");
