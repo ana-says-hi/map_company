@@ -3,6 +3,8 @@ package Controll;
 import Domains.Client;
 import Reposies.ClientRepo;
 import FactoryPattern.ClientFactory;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ClientController implements Controller<Client>{
@@ -14,7 +16,11 @@ public class ClientController implements Controller<Client>{
     private ClientRepo clientRepo;
 
     private ClientController() {
-        clientRepo = new ClientRepo();
+        try {
+            clientRepo = new ClientRepo();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ArrayList<Client> getClients(){return getClientRepo().get_repo();}

@@ -2,23 +2,45 @@ package Reposies;
 
 import Domains.Client;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ClientRepo implements Repository<Client> {
 
-    private ArrayList<Client> c_repo=new ArrayList<>();
+    private ArrayList<Client> c_repo;
+    Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+    Statement select=connection.createStatement();
+
+    public ClientRepo() throws SQLException {
+        c_repo=get_from_db();
+    }
 
     public void add_to_repo(Client c){
         c_repo.add(c);
     }
 
-    public void remove_from_repo(Client c){
+    public void remove_from_repo(Client c) throws SQLException {
+        select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
         c_repo.remove(c);
     }
 
     public ArrayList<Client> get_repo() {
         return c_repo;
+    }
+
+    @Override
+    public ArrayList<Client> get_from_db() throws SQLException {
+        ArrayList<Client> our_clients=new ArrayList<>();
+        ResultSet selcted_stuff= select.executeQuery("SELECT * FROM \"Client\"");
+        while(selcted_stuff.next()){
+            int id=selcted_stuff.getInt("id");
+            String name=selcted_stuff.getString("name");
+            String address=selcted_stuff.getString("address");
+            Client client=new Client(id,name,address);
+            our_clients.add(client);
+        }
+        return our_clients;
     }
 
     public String covertToString(List<Client> liste) {
