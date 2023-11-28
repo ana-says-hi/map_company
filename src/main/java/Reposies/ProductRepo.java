@@ -15,8 +15,9 @@ public class ProductRepo implements Repository <Product>{
 
     private ArrayList<Product> p_repo;
 
-    Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
-    Statement select=connection.createStatement();
+    //fiecare cu conexiunea  lui ca sa nu se blocheze
+//    Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+//    Statement select=connection.createStatement();
 
     public ProductRepo() throws SQLException {
         p_repo=get_from_db();
@@ -31,16 +32,64 @@ public class ProductRepo implements Repository <Product>{
 //        p_repo.add(p4);
 //        p_repo.add(p5);
     }
+
+    public void add_to_repo(Product p) {
+        try (
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "admin","S3cret");
+                //Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("insert into Client (id,name,price,stoc,type) values (?, ?, ?)")
+        ) {
+            statement.setInt(1, p.getId());
+            statement.setString(2, p.getName());
+            statement.setInt(3, (int) p.getPrice());
+            statement.setInt(4,p.getStoc());
+            statement.setString(5, String.valueOf(p.getType()));
+           // statement.setString(3, p.getAddress());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Database Error");
+        }
+        p_repo.add(p);
+        //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
+    }
+
+    public void remove_from_repo(Product p){
+        try (
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "admin","S3cret");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("delete from Product where id=(?)")
+        ){
+            statement.setInt(1, p.getId());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Database Error");
+        }
+        //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
+        p_repo.remove(p);
+    }
+
+    @Override
+    public ArrayList<Product> get_repo() {
+        return p_repo;
+    }
+
+
+/*
     public void add_to_repo(Product p) throws SQLException {
+        Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+        Statement select=connection.createStatement();
         p_repo.add(p);
         select.execute("INSERT INTO \"Product\"(id,name,price,stoc) VALUES (\"p.id\",\"p.name\",\"p.price\",\"p.stoc\") ");
     }
+*/
 
 
-    public void remove_from_repo(Product p) throws SQLException {
-        select.execute("DELETE FROM \"Product\" WHERE id=\"p.id\" ");
-        p_repo.remove(p);
-    }
+//    public void remove_from_repo(Product p) throws SQLException {
+//        Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+//        Statement select=connection.createStatement();
+//        select.execute("DELETE FROM \"Product\" WHERE id=\"p.id\" ");
+//        p_repo.remove(p);
+//    }
 
 
  /*   public void add_to_repo(Product p){
@@ -50,26 +99,30 @@ public class ProductRepo implements Repository <Product>{
 //    public void remove_from_repo(Product p){
 //        p_repo.remove(p);
 //    }
-
-    public ArrayList<Product> get_repo() {
-        return p_repo;
-    }
-
-    public ArrayList<Product> get_from_db() throws SQLException {
+//TODO BUILD CONFIG, trb pus driverul acolo cumva nush cum, dar trb
+    public ArrayList<Product> get_from_db() {
         ArrayList<Product> our_products=new ArrayList<>();
-        ResultSet selcted_stuff= select.executeQuery("SELECT * FROM \"Product\"");
-        while(selcted_stuff.next()){
-            int id=selcted_stuff.getInt("id");
-            String name=selcted_stuff.getString("name");
-            String type=selcted_stuff.getString("type");
-            float price=selcted_stuff.getInt("price");
-            int stoc=selcted_stuff.getInt("stoc");
-            Product product=new Product(id,name,price, ProductType.valueOf(type),stoc);
-            our_products.add(product);
+        try (
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "admin","S3cret"); ///AICI CRAPA
+                PreparedStatement statement = connection.prepareStatement("select * from Product")
+        ){
+            ResultSet selected_stuff= statement.executeQuery();
+            while(selected_stuff.next()){
+                int id=selected_stuff.getInt("id");
+                String name=selected_stuff.getString("name");
+                float price=selected_stuff.getInt("price");
+                int stoc=selected_stuff.getInt("stoc");
+                String type=selected_stuff.getString("type");
+                Product product=new Product(id,name,price,ProductType.valueOf(type),stoc);
+                our_products.add(product);
+            }
+
+        }
+        catch(SQLException ex) {
+            throw new RuntimeException("Database Error");
         }
         return our_products;
     }
-
     public ArrayList<Product> filterProductsByType(ProductType type) {
         ArrayList<Product> filteredProducts = new ArrayList<>();
         for (Product product : p_repo) {

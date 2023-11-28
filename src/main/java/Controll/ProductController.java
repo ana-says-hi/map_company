@@ -13,8 +13,12 @@ public class ProductController implements Controller<Product>{
     private static ProductController p_instance;
     private ProductRepo productRepo;
 
-    private ProductController() {
-        productRepo = new ProductRepo();
+    private ProductController(){
+        try {
+            productRepo = new ProductRepo();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static ProductController getInstance() {
@@ -31,11 +35,7 @@ public class ProductController implements Controller<Product>{
 
     public void create(String name, float price, ProductType type, int stoc){
         Product p =  ProductFactory.getInstance().make_prod(name, price, type, stoc);
-        try {
-            productRepo.add_to_repo(p);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        productRepo.add_to_repo(p);
     }
 
 
@@ -43,11 +43,7 @@ public class ProductController implements Controller<Product>{
         delete(id);
         //create(name,price,type,stoc);
         Product p = new Product(id, name, price, type, stoc);
-        try {
-            productRepo.add_to_repo(p);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        productRepo.add_to_repo(p);
     }
 
     public Product find(int id) {
@@ -60,11 +56,7 @@ public class ProductController implements Controller<Product>{
     @Override
     public void delete(int id) {
         Product prod=find(id);
-        try {
-            productRepo.remove_from_repo(prod);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        productRepo.remove_from_repo(prod);
     }
 
     public ArrayList<Product> filterProductsByType(ProductType type) {
