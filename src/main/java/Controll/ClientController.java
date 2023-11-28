@@ -38,7 +38,11 @@ public class ClientController implements Controller<Client>{
 
     public Client create(String name, String address) {
         Client client=ClientFactory.getInstance().make_cl(name, address);
-        clientRepo.add_to_repo(client);
+        try {
+            clientRepo.add_to_repo(client);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return client;
     }
 
@@ -46,7 +50,11 @@ public class ClientController implements Controller<Client>{
         delete(id);
         //create(name,address);
         Client client= new Client(id,name,address);
-        clientRepo.add_to_repo(client);
+        try {
+            clientRepo.add_to_repo(client);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -60,7 +68,12 @@ public class ClientController implements Controller<Client>{
 
     public void delete(int id) {
         Client c=find(id);
-        if(c!=null)
-            clientRepo.remove_from_repo(c);
+        if(c!=null) {
+            try {
+                clientRepo.remove_from_repo(c);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

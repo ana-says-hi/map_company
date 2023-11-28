@@ -16,8 +16,9 @@ public class ClientRepo implements Repository<Client> {
         c_repo=get_from_db();
     }
 
-    public void add_to_repo(Client c){
+    public void add_to_repo(Client c) throws SQLException {
         c_repo.add(c);
+        select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
     }
 
     public void remove_from_repo(Client c) throws SQLException {

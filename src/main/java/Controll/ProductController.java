@@ -4,6 +4,8 @@ import Domains.Product;
 import Domains.ProductType;
 import Reposies.ProductRepo;
 import FactoryPattern.ProductFactory;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class ProductController implements Controller<Product>{
@@ -15,7 +17,7 @@ public class ProductController implements Controller<Product>{
         productRepo = new ProductRepo();
     }
 
-    public static ProductController getInstance(){
+    public static ProductController getInstance() {
         if(p_instance==null) {
             p_instance = new ProductController();
         }
@@ -29,7 +31,11 @@ public class ProductController implements Controller<Product>{
 
     public void create(String name, float price, ProductType type, int stoc){
         Product p =  ProductFactory.getInstance().make_prod(name, price, type, stoc);
-        productRepo.add_to_repo(p);
+        try {
+            productRepo.add_to_repo(p);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 
@@ -37,7 +43,11 @@ public class ProductController implements Controller<Product>{
         delete(id);
         //create(name,price,type,stoc);
         Product p = new Product(id, name, price, type, stoc);
-        productRepo.add_to_repo(p);
+        try {
+            productRepo.add_to_repo(p);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Product find(int id) {
@@ -50,7 +60,11 @@ public class ProductController implements Controller<Product>{
     @Override
     public void delete(int id) {
         Product prod=find(id);
-        productRepo.remove_from_repo(prod);
+        try {
+            productRepo.remove_from_repo(prod);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ArrayList<Product> filterProductsByType(ProductType type) {

@@ -8,8 +8,8 @@ import UI.UI;
 public class Main {
     public static void main(String[] args) {
        // runTests();
-        //UI ui = new UI();
-        //ui.mainMenu();
+        UI ui = new UI();
+        ui.mainMenu();
         System.out.println("merge");
     }
 //ala bun

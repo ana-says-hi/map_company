@@ -5,6 +5,7 @@ import Domains.Deliveries.Delivery;
 import FactoryPattern.OrderFactory;
 import Reposies.OrderRepo;
 
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 //TODO set delivery
@@ -17,7 +18,11 @@ public class OrderController implements Controller<Order>{
     private OrderRepo orderRepo;
 
     private OrderController() {
-        orderRepo=new OrderRepo();
+        try {
+            orderRepo=new OrderRepo();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static OrderController getInstance(){
@@ -29,7 +34,11 @@ public class OrderController implements Controller<Order>{
     public Order create(Client client) {
         //Order o=new Order(id,client,employee,date);
         Order o= OrderFactory.getInstance().make_ord(client);
-        orderRepo.add_to_repo(o);
+        try {
+            orderRepo.add_to_repo(o);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
         return o;
     }
 
@@ -38,7 +47,11 @@ public class OrderController implements Controller<Order>{
         Order old_ord= find(id);
         delete(id);
         Order o=new Order(id,client,employee,old_ord.getProducts(),delivery,date,status);
-        orderRepo.add_to_repo(o);
+        try {
+            orderRepo.add_to_repo(o);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Order find(int id){
@@ -51,7 +64,11 @@ public class OrderController implements Controller<Order>{
     @Override
     public void delete(int id) {
         Order ord= find(id);
-        orderRepo.remove_from_repo(ord);
+        try {
+            orderRepo.remove_from_repo(ord);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void chooseDelivery(int deliv){

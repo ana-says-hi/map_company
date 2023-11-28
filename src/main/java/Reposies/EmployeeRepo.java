@@ -3,6 +3,7 @@ package Reposies;
 import Domains.Employee;
 import FactoryPattern.EmployeeFactory;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class EmployeeRepo implements Repository<Employee> {
@@ -29,6 +30,11 @@ public class EmployeeRepo implements Repository<Employee> {
 
     public ArrayList<Employee> get_repo() {
         return e_repo;
+    }
+
+    @Override
+    public ArrayList<Employee> get_from_db() throws SQLException {
+        return null;
     }
 }
 
