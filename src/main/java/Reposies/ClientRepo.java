@@ -16,9 +16,9 @@ public class ClientRepo implements Repository<Client> {
 
     public void add_to_repo(Client c) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
                 //Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
-                PreparedStatement statement = connection.prepareStatement("insert into Client (id,name,address) values (?, ?, ?)")
+                PreparedStatement statement = connection.prepareStatement("insert into \"Client\" (id,name,address) values (?, ?, ?)")
         ) {
             statement.setInt(1, c.getId());
             statement.setString(2, c.getName());
@@ -33,9 +33,9 @@ public class ClientRepo implements Repository<Client> {
 
     public void remove_from_repo(Client c){
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
-                PreparedStatement statement = connection.prepareStatement("delete from Client where id=(?)")
+                PreparedStatement statement = connection.prepareStatement("delete from \"Client\" where id=(?)")
         ){
             statement.setInt(1, c.getId());
             statement.executeUpdate();
@@ -54,9 +54,9 @@ public class ClientRepo implements Repository<Client> {
     public ArrayList<Client> get_from_db() throws SQLException {
         ArrayList<Client> our_clients=new ArrayList<>();
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
-                PreparedStatement statement = connection.prepareStatement("select * from Client")
+                PreparedStatement statement = connection.prepareStatement("select * from \"Client\"")
         ){
             ResultSet selected_stuff= statement.executeQuery();
             while(selected_stuff.next()){
@@ -73,27 +73,4 @@ public class ClientRepo implements Repository<Client> {
         return our_clients;
     }
 
-    public String covertToString(List<Client> liste) {
-        List<String> lines = new ArrayList<>();
-        for (Client client : liste) {
-            lines.add(client.toString());
-        }
-        return String.join("\n", lines);
-    }
-
-
-    public List<Client> convertFromString(String string) {
-        List<Client> liste = new ArrayList<>();
-        if (!string.isEmpty()) {
-            String[] lines = string.split("\n");
-            for (String line : lines) {
-                String[] parts = line.split(",");
-                if (parts.length == 3) {
-                    Client client = new Client(Integer.parseInt(parts[0]), parts[1], parts[2]);
-                    liste.add(client);
-                }
-            }
-        }
-        return liste;
-    }
 }
