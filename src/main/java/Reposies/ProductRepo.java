@@ -33,21 +33,26 @@ public class ProductRepo implements Repository <Product>{
 //        p_repo.add(p5);
     }
 
-    public void add_to_repo(Product p) {
+    public void add_to_repo(Product p){
         try (
                 Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
                 //Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
-                PreparedStatement statement = connection.prepareStatement("insert into \"Product\" (id,name,price,stoc,type) values (?, ?, ?)")
+                PreparedStatement statement = connection.prepareStatement("insert into \"Product\" (id,name,price,stoc,type) values (?, ?, ?,?,?)")
         ) {
             statement.setInt(1, p.getId());
             statement.setString(2, p.getName());
-            statement.setInt(3, (int) p.getPrice());
+            statement.setFloat(3, p.getPrice());
             statement.setInt(4,p.getStoc());
             statement.setString(5, String.valueOf(p.getType()));
            // statement.setString(3, p.getAddress());
             statement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Database Error");
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            //throw new RuntimeException("Database Error");
         }
         p_repo.add(p);
         //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");

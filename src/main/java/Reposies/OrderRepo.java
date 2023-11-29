@@ -26,10 +26,10 @@ public class OrderRepo implements Repository<Order>{
     }
 
     public void remove_from_repo(Order o) throws SQLException {
-        Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
-        Statement select=connection.createStatement();
-        select.execute("DELETE FROM \"Order\" WHERE id=\"o.id\" ");
-        o_repo.remove(o);
+//        Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+//        Statement select=connection.createStatement();
+//        select.execute("DELETE FROM \"Order\" WHERE id=\"o.id\" ");
+//        o_repo.remove(o);
     }
 
 
