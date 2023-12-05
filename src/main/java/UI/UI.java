@@ -182,7 +182,8 @@ Odata terminat procesul de ales produse+metode de livrare poti fie
         for (String valoare : valoriString) {
             int valoareInt = Integer.parseInt(valoare);
             //addProduct si in order Controller?
-            order.addProduct(ProductController.getInstance().find(valoareInt));
+            //TODO NU E BN PE AICI
+            order.addProduct(ProductController.getInstance().find_by_id(valoareInt));
         }
         scannerIDS.close();
         System.out.println("The products have been added! With our basic delivery, your costs will be: "+order.getTotalPrice());
@@ -345,7 +346,7 @@ Odata terminat procesul de ales produse+metode de livrare poti fie
         System.out.println("Modifying product...\nEnter an id:\t");
         Scanner scannerID = new Scanner(System.in);
         int id = scannerID.nextInt();
-        Product prod=ProductController.getInstance().find(id);
+        Product prod=ProductController.getInstance().find_by_id(id);
         System.out.println("new price:\t");
         Scanner scanner = new Scanner(System.in);
         float new_price = scanner.nextFloat();

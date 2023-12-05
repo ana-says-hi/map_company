@@ -32,7 +32,7 @@ public class EmployeeController implements Controller<Employee>{
         employeeRepo.add_to_repo(employee);
     }
 
-    public Employee find(int id) {
+    public Employee find_by_id(int id) {
         for(Employee employee: employeeRepo.get_repo()) {
             if (employee.getId()==id)
                 return employee;
@@ -42,7 +42,7 @@ public class EmployeeController implements Controller<Employee>{
     //nu il apelam :)
     @Override
     public void delete(int id) {
-        Employee employee=find(id);
+        Employee employee= find_by_id(id);
         if(employee!=null)
             employeeRepo.remove_from_repo(employee);
     }

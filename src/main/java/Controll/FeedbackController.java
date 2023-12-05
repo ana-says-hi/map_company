@@ -34,13 +34,13 @@ public class FeedbackController implements Controller<Feedback>{
     }
 
     public void create(int clientID, int productID, String message, boolean type) {
-        Client c=ClientController.getInstance().find(clientID);
-        Product p=ProductController.getInstance().find(productID);
+        Client c=ClientController.getInstance().find_by_id(clientID);
+        Product p=ProductController.getInstance().find_by_id(productID);
         Feedback feedback= FeedbackFactory.getFf_instance().make_feedb(c, p, message, type);
         feedbackRepo.add_to_repo(feedback);
     }
 
-    public Feedback find(int id) {
+    public Feedback find_by_id(int id) {
         for(Feedback f: feedbackRepo.get_repo()) {
             if (f.getId()==id)
                 return f;
@@ -49,7 +49,7 @@ public class FeedbackController implements Controller<Feedback>{
     }
     //nu il apelam :)
     public void delete(int id) {
-        Feedback f=find(id);
+        Feedback f= find_by_id(id);
         if(f!=null)
             feedbackRepo.remove_from_repo(f);
     }

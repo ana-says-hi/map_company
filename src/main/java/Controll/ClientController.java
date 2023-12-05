@@ -50,7 +50,7 @@ public class ClientController implements Controller<Client>{
     }
 
 
-    public Client find(int id) {
+    public Client find_by_id(int id) {
         for(Client c: clientRepo.get_repo()) {
             if (c.getId()==id)
                 return c;
@@ -58,8 +58,16 @@ public class ClientController implements Controller<Client>{
         return null;
     }
 
+    public Client find_by_name(String name){
+        for(Client c: clientRepo.get_repo()) {
+            if (c.getName()==name)
+                return c;
+        }
+        return null;
+    }
+
     public void delete(int id) {
-        Client c=find(id);
+        Client c= find_by_id(id);
         if(c!=null) {
             clientRepo.remove_from_repo(c);
         }

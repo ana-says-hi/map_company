@@ -6,7 +6,7 @@ public interface Controller<T>{
   //  public void create(kwag*  args**);  Object... x
 //    public void update();
     // TODO get instance get stuff
-    public T find(int id);
+    public T find_by_id(int id);
     public void delete(int id);
 
 }

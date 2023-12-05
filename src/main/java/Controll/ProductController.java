@@ -46,7 +46,7 @@ public class ProductController implements Controller<Product>{
         productRepo.add_to_repo(p);
     }
 
-    public Product find(int id) {
+    public Product find_by_id(int id) {
         for(Product prod: productRepo.get_repo())
             if(prod.getId()==id)
                 return prod;
@@ -55,7 +55,7 @@ public class ProductController implements Controller<Product>{
 
     @Override
     public void delete(int id) {
-        Product prod=find(id);
+        Product prod= find_by_id(id);
         productRepo.remove_from_repo(prod);
     }
 

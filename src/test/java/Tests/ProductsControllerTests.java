@@ -32,7 +32,7 @@ public class ProductsControllerTests {
         productController.create("TestProduct", 10.5f, ProductType.hair, 5);
         Product lastProduct = productController.getStuff().get(productController.getStuff().size() - 1);
         productController.update(lastProduct.getId(), "UpdatedProduct", 15.0f, ProductType.hair, 10);
-        Product updatedProduct = productController.find(lastProduct.getId());
+        Product updatedProduct = productController.find_by_id(lastProduct.getId());
         assertEquals("UpdatedProduct", updatedProduct.getName());
         assertEquals(15.0f, updatedProduct.getPrice(), 0.01);
         assertEquals(ProductType.hair, updatedProduct.getType());
@@ -44,7 +44,7 @@ public class ProductsControllerTests {
         productController.create("TestProduct", 10.5f, ProductType.hair, 5);
         Product lastProduct = productController.getStuff().get(productController.getStuff().size() - 1);
         productController.delete(lastProduct.getId());
-        Product deletedProduct = productController.find(lastProduct.getId());
+        Product deletedProduct = productController.find_by_id(lastProduct.getId());
         AssertJUnit.assertNull(deletedProduct);
     }
 }
