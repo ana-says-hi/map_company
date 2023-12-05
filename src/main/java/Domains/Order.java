@@ -2,9 +2,8 @@ package Domains;
 
 import Domains.Deliveries.BasicDelivery;
 import Domains.Deliveries.Delivery;
-import Domains.Deliveries.SameDayDelivery;
-import FactoryPattern.DeliveryFactory;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -30,21 +29,22 @@ public class Order {
         this.totalPrice=0;
     }
 
-    public Order(int id,Client client,Employee employee,ArrayList<Product> products,Delivery delivery,LocalDate date, Status status) {
+    public Order(int id,Client client,Employee employee,float totalprice,LocalDate date, Status status) {
         this.id=id;
         this.employee = employee;
         this.client=client;
         this.date = date;
-        this.products= products;
+        //this.products= products;
         this.status = status;
-        this.delivery = delivery;
-        this.totalPrice=0;
+        //this.delivery = delivery;
+        this.totalPrice=totalprice;
         for(Product product:products)
         {
             totalPrice+=product.getPrice();
         }
         totalPrice+=delivery.getShippinfFee();
     }
+
 
     public void addProduct(Product prod1){
         products.add(prod1);
