@@ -1,7 +1,13 @@
 package Controll;
 
+import Domains.Client;
 import Domains.Employee;
+import FactoryPattern.ClientFactory;
+import FactoryPattern.EmployeeFactory;
+import Reposies.ClientRepo;
 import Reposies.EmployeeRepo;
+
+import java.sql.SQLException;
 
 public class EmployeeController implements Controller<Employee>{
     //ca sa nu facem acum implementare de comenzi bagam mesaj cum ca suntem
@@ -27,8 +33,8 @@ public class EmployeeController implements Controller<Employee>{
         return employeeRepo;
     }
 
-    public void create(int clientID, String name, String password) {
-        Employee employee=new Employee(clientID,name,password);
+    public void create(String name, String password) {
+        Employee employee= EmployeeFactory.getInstance().make_cl(name,password);
         employeeRepo.add_to_repo(employee);
     }
 
