@@ -50,7 +50,7 @@ public class OrderController implements Controller<Order>{
     public void update(int id, Client client, Employee employee,Delivery delivery, LocalDate date, Status status) {
         Order old_ord= find_by_id(id);
         delete(id);
-        Order o=new Order(id,client,employee,old_ord.getProducts(),delivery,date,status);
+        Order o=new Order(id,client,employee,old_ord.getTotalPrice(),date,status);
         try {
             orderRepo.add_to_repo(o);
         } catch (SQLException e) {
