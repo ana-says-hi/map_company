@@ -111,7 +111,6 @@ public class OrderController implements Controller<Order>{
         switch (deliv){
             case 1:
                 //fragil
-                //Order the_order=find_last_order_unplaced(this_guy);
                 delivery=new FragileStuffDelivery(the_order.getId(),the_order.getDate());
                 the_order.setDelivery(delivery);
                 the_order.finishOrder();
