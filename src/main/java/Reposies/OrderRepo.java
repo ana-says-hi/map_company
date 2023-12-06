@@ -3,7 +3,7 @@ package Reposies;
 import Controll.ClientController;
 import Controll.EmployeeController;
 import Domains.*;
-import org.checkerframework.checker.units.qual.C;
+//import org.checkerframework.checker.units.qual.C;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -29,11 +29,6 @@ public class OrderRepo implements Repository<Order>{
             statement.setFloat(4, o.getTotalPrice());
             statement.setDate(5,Date.valueOf(o.getDate()));
             statement.setString(7,"PENDING");
-           /* statement.setString(2, o.getName());
-            statement.setFloat(3, o.getPrice());
-            statement.setInt(4, o.getStoc());
-            statement.setString(5, String.valueOf(o.getType()));*/
-            // statement.setString(3, p.getAddress());
             statement.executeUpdate();
         } catch (SQLException e) {
             try {
@@ -60,21 +55,40 @@ public class OrderRepo implements Repository<Order>{
         }
         //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
         o_repo.remove(o);
-
     }
 
     public void add_product_to_order(Order o, Product p) throws SQLException {
-        Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
-        Statement select=connection.createStatement();
+        try (
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
+                PreparedStatement statement = connection.prepareStatement("INSERT INTO \"Order_Product\"(idfactura,idproduct,cantitate) VALUES (?,?,1)")
+        ) {
+            statement.setInt(1, o.getId());
+            statement.setInt(2, p.getId());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            try {
+                throw e;
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
         o.addProduct(p);
-        select.execute("INSERT INTO \"Order_Product\"(idfactura,idproduct,cantitate) VALUES (\"o.getId\",\"p.getId()\",1) ");
     }
 
     public void delete_product_from_order(Order o, Product p) throws SQLException {
-        Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
-        Statement select=connection.createStatement();
+        try (
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM \"Order_Product\" WHERE idfactura=(?) and idproduct=(?)")
+        ){
+            statement.setInt(1, o.getId());
+            statement.setInt(2, p.getId());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Database Error");
+        }
         o.deleteProduct(p);
-        select.execute("DELETE FROM \"Order_Product\" WHERE idfactura=\"o.id\" and idproduct=\"p.id\" ");
+        //select.execute("DELETE FROM \"Order_Product\" WHERE idfactura=\"o.id\" and idproduct=\"p.id\" ");
     }
 
     public ArrayList<Order> get_repo() {
