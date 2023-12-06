@@ -3,7 +3,7 @@ package Reposies;
 import Controll.ClientController;
 import Controll.EmployeeController;
 import Domains.*;
-//import org.checkerframework.checker.units.qual.C;
+import org.checkerframework.checker.units.qual.C;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -17,18 +17,19 @@ public class OrderRepo implements Repository<Order>{
     }
 
 
-    public void add_to_repo(Order o) throws SQLException {
+    public void add_to_repo(Order o) {
         try (
                 Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
                 //Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
-                PreparedStatement statement = connection.prepareStatement("insert into \"Order\" (id,idemployee,idclient,totalprice,date,status,delivery) values (?, ?, ?,?,?)")
+                PreparedStatement statement = connection.prepareStatement("insert into \"Order\" (id,idemployee,idclient,totalprice,date,status,delivery) values (?, ?, ?,?,?,?,?)")
         ) {
             statement.setInt(1, o.getId());
             statement.setInt(2, o.getEmployee().getId());
             statement.setInt(3, o.getClient().getId());
             statement.setFloat(4, o.getTotalPrice());
             statement.setDate(5,Date.valueOf(o.getDate()));
-            statement.setString(7,"PENDING");
+            statement.setString(6,o.getStatus().toString());
+            statement.setString(7,"NULL");
             statement.executeUpdate();
         } catch (SQLException e) {
             try {
@@ -42,7 +43,7 @@ public class OrderRepo implements Repository<Order>{
         //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
     }
 
-    public void remove_from_repo(Order o) throws SQLException {
+    public void remove_from_repo(Order o) {
         try (
                 Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
@@ -55,10 +56,11 @@ public class OrderRepo implements Repository<Order>{
         }
         //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
         o_repo.remove(o);
+
     }
 
 
-    public void add_product_to_order(Order o, Product p) throws SQLException {
+    public void add_product_to_order(Order o, Product p){
         try (
                 Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO \"Order_Product\"(idfactura,idproduct,cantitate) VALUES (?,?,1)")
@@ -76,7 +78,7 @@ public class OrderRepo implements Repository<Order>{
         o.addProduct(p);
     }
 
-    public void delete_product_from_order(Order o, Product p) throws SQLException {
+    public void delete_product_from_order(Order o, Product p) {
         try (
                 Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
@@ -98,7 +100,7 @@ public class OrderRepo implements Repository<Order>{
 
 
     @Override
-    public ArrayList<Order> get_from_db() throws SQLException {
+    public ArrayList<Order> get_from_db() {
         ArrayList<Order> our_orders=new ArrayList<>();
         try (
                 Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");

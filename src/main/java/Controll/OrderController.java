@@ -38,11 +38,7 @@ public class OrderController implements Controller<Order>{
     public Order create(Client client) {
         //Order o=new Order(id,client,employee,date);
         Order o= OrderFactory.getInstance().make_ord(client);
-        try {
-            orderRepo.add_to_repo(o);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        orderRepo.add_to_repo(o);
         return o;
     }
 
@@ -51,11 +47,7 @@ public class OrderController implements Controller<Order>{
         Order old_ord= find_by_id(id);
         delete(id);
         Order o=new Order(id,client,employee,old_ord.getTotalPrice(),date,status);
-        try {
-            orderRepo.add_to_repo(o);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        orderRepo.add_to_repo(o);
     }
 
     public Order find_by_id(int id){
@@ -107,11 +99,7 @@ public class OrderController implements Controller<Order>{
     @Override
     public void delete(int id) {
         Order ord= find_by_id(id);
-        try {
-            orderRepo.remove_from_repo(ord);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        orderRepo.remove_from_repo(ord);
     }
 
     public void chooseDelivery(int deliv){
