@@ -2,6 +2,9 @@ package Controll;
 
 import Domains.*;
 import Domains.Deliveries.Delivery;
+import Domains.Deliveries.FragileStuffDelivery;
+import Domains.Deliveries.SameDayDelivery;
+import Domains.Deliveries.SuperSafeDelivery;
 import FactoryPattern.OrderFactory;
 import Reposies.OrderRepo;
 
@@ -102,18 +105,33 @@ public class OrderController implements Controller<Order>{
         orderRepo.remove_from_repo(ord);
     }
 
-    public void chooseDelivery(int deliv){
+    public void chooseDelivery(String this_guy,int deliv){
+        Order the_order=find_last_order_unplaced(this_guy);
+        Delivery delivery=null;
         switch (deliv){
             case 1:
-           //     BasicDelivery dev= new BasicDelivery();
+                //fragil
+                //Order the_order=find_last_order_unplaced(this_guy);
+                delivery=new FragileStuffDelivery(the_order.getId(),the_order.getDate());
+                the_order.setDelivery(delivery);
+                the_order.finishOrder();
                 break;
             case 2:
+                //same day
+                delivery=new SameDayDelivery(the_order.getId(),the_order.getDate());
+                the_order.setDelivery(delivery);
+                the_order.finishOrder();
                 break;
             case 3:
-                break;
-            case 4:
+                //super safe
+                delivery=new SuperSafeDelivery(the_order.getId(),the_order.getDate());
+                the_order.setDelivery(delivery);
+                the_order.finishOrder();
                 break;
             default:
+                //basic
+                the_order.finishOrder();
+                break;
         }
     }
 }
