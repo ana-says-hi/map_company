@@ -29,14 +29,14 @@ public class Order {
         this.totalPrice=0;
     }
 
-    public Order(int id,Client client,Employee employee,float totalprice,LocalDate date, Status status) {
+    public Order(int id,Client client,Employee employee,float totalprice,LocalDate date, Status status,Delivery delivery, ArrayList<Product>products) {
         this.id=id;
         this.employee = employee;
         this.client=client;
         this.date = date;
-        //this.products= products;
+        this.products= products;
         this.status = status;
-        //this.delivery = delivery;
+        this.delivery = delivery;
         this.totalPrice=totalprice;
         for(Product product:products)
         {

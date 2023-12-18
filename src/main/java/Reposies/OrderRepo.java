@@ -3,6 +3,7 @@ package Reposies;
 import Controll.ClientController;
 import Controll.EmployeeController;
 import Domains.*;
+import Domains.Deliveries.BasicDelivery;
 //import org.checkerframework.checker.units.qual.C;
 
 import java.sql.*;
@@ -116,7 +117,7 @@ public class OrderRepo implements Repo<Order> {
                 LocalDate date= selected_stuff.getDate("date").toLocalDate();
                 Employee employee=EmployeeController.getInstance().find_by_id(idemployee);
                 Client client= ClientController.getInstance().find_by_id(idclient);
-                Order order=new Order(id,client,employee,totalprie,date, Status.valueOf(status));
+                Order order=new Order(id,client,employee,totalprie,date,Status.valueOf(status),new BasicDelivery(id,date),new ArrayList<>());
                 our_orders.add(order);
             }
         }
