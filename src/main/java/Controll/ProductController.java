@@ -25,19 +25,6 @@ public class ProductController implements Controller<Product>{
     @Autowired
     private ProductRepo productRepo;
 
-//    private ProductController(){
-//        try {
-//            productRepo = new ProductRepo();
-//        } catch (SQLException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//    public static ProductController getInstance() {
-//        if(p_instance==null) {
-//            p_instance = new ProductController();
-//        }
-//        return p_instance;
-//    }
     @GetMapping
     public ArrayList<Product> getStuff()
     {
