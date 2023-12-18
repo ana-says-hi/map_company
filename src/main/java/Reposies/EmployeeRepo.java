@@ -1,14 +1,11 @@
 package Reposies;
 
-import Domains.Client;
 import Domains.Employee;
-import Domains.Order;
-import FactoryPattern.EmployeeFactory;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class EmployeeRepo implements Repository<Employee> {
+public class EmployeeRepo implements Repo<Employee> {
 
     private ArrayList<Employee> e_repo;
 

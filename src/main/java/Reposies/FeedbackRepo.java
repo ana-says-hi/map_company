@@ -5,7 +5,7 @@ import Domains.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class FeedbackRepo implements Repository<Feedback>{
+public class FeedbackRepo implements Repo<Feedback> {
 
     private ArrayList<Feedback> f_repo=new ArrayList<>();
 

@@ -1,12 +1,11 @@
 package Reposies;
 
-import Domains.Client;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.List;
+//import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface Repository <T>{
+//public interface Repository extends JpaRepository<T>{
+public interface Repo<T>{
     public void add_to_repo(T c) throws SQLException;
     public void remove_from_repo(T c) throws SQLException;
     public ArrayList<T> get_repo();

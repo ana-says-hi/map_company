@@ -6,12 +6,15 @@ import Domains.ProductType;
 import FactoryPattern.ProductFactory;
 import com.sun.jdi.Value;
 
+import java.lang.annotation.Annotation;
 import java.sql.*;
 import java.util.ArrayList;
 
 import static Domains.ProductType.hair;
+import org.springframework.stereotype.Repository;
 
-public class ProductRepo implements Repository<Product> {
+@Repository
+public class ProductRepo implements Repo<Product> {
 
     private ArrayList<Product> p_repo;
 
@@ -21,16 +24,6 @@ public class ProductRepo implements Repository<Product> {
 
     public ProductRepo() throws SQLException {
         p_repo = get_from_db();
-//        Product p1= ProductFactory.getInstance().make_prod("BioLite Curly Hair Mask",78,hair,5019);
-//        Product p2= ProductFactory.getInstance().make_prod("BioLite Curly Hair Shampoo",78,hair,20);
-//        Product p3= ProductFactory.getInstance().make_prod("BioLite Curly Hair Conditioner",65,hair,5021);
-//        Product p4= ProductFactory.getInstance().make_prod("BioLite Soft Bath Towel",95,hair,502);
-//        Product p5= ProductFactory.getInstance().make_prod("BioLite Organic Argan Oil",50,hair,50);
-//        p_repo.add(p1);
-//        p_repo.add(p2);
-//        p_repo.add(p3);
-//        p_repo.add(p4);
-//        p_repo.add(p5);
     }
 
     public void add_to_repo(Product p){
@@ -113,5 +106,21 @@ public class ProductRepo implements Repository<Product> {
         return filteredProducts;
     }
 
+    public void add(Product pr) {
+        p_repo.add(pr);
+    }
+
+
+    public void delete(Product pr) {
+        p_repo.remove(pr);
+    }
+
+    public void deleteAll() {
+        p_repo.clear();
+    }
+
+    public void printAll() {
+        System.out.println(p_repo);
+    }
 
 }

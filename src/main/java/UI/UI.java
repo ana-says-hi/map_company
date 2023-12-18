@@ -105,7 +105,8 @@ public class UI {
     }
 
     private static void displayProducts(ProductType type) {
-        ArrayList<Product> filterproducts=ProductController.getInstance().filterProductsByType(type);
+        ProductController pc=new ProductController();
+        ArrayList<Product> filterproducts=pc.filterProductsByType(type);
         System.out.println("Produsele filtrate sunt:");
         for (Product product : filterproducts) {
             System.out.println(product.getId() + ". " + product.getName() + " - " + product.getPrice());
@@ -136,7 +137,8 @@ Odata terminat procesul de ales produse+metode de livrare poti fie
 
     private static void displayAllProducts(){
         System.out.println("All products:");
-        for(Product product: ProductController.getInstance().getProductRepo().get_repo())
+        ProductController pc=new ProductController();
+        for(Product product: pc.getProductRepo().get_repo())
             System.out.println(product);
     }
 
@@ -179,11 +181,12 @@ Odata terminat procesul de ales produse+metode de livrare poti fie
         Scanner scannerIDS = new Scanner(System.in);
         String input = scannerIDS.nextLine();
         String[] valoriString = input.split(" ");
+        ProductController pc=new ProductController();
         for (String valoare : valoriString) {
             int valoareInt = Integer.parseInt(valoare);
             //addProduct si in order Controller?
             //TODO NU E BN PE AICI
-            order.addProduct(ProductController.getInstance().find_by_id(valoareInt));
+            order.addProduct(pc.find_by_id(valoareInt));
         }
         scannerIDS.close();
         System.out.println("The products have been added! With our basic delivery, your costs will be: "+order.getTotalPrice());
@@ -338,19 +341,21 @@ Odata terminat procesul de ales produse+metode de livrare poti fie
         System.out.println("new type:\t");
         Scanner scannerT = new Scanner(System.in);
         String new_type = scannerT.nextLine();
-        ProductController.getInstance().create(new_name,new_price, ProductType.valueOf(new_type),100);
+        ProductController pc=new ProductController();
+        pc.create(new_name,new_price, ProductType.valueOf(new_type),100);
     }
 
     private static void modifyProduct() {
+        ProductController pc=new ProductController();
         // Implementează logica pentru modificarea unui produs
         System.out.println("Modifying product...\nEnter an id:\t");
         Scanner scannerID = new Scanner(System.in);
         int id = scannerID.nextInt();
-        Product prod=ProductController.getInstance().find_by_id(id);
+        Product prod=pc.find_by_id(id);
         System.out.println("new price:\t");
         Scanner scanner = new Scanner(System.in);
         float new_price = scanner.nextFloat();
-        ProductController.getInstance().update(prod.getId(), prod.getName(), new_price,prod.getType(),prod.getStoc());
+        pc.update(prod.getId(), prod.getName(), new_price,prod.getType(),prod.getStoc());
     }
 
     private static void deleteProduct() {
@@ -358,7 +363,8 @@ Odata terminat procesul de ales produse+metode de livrare poti fie
         System.out.println("Deleting product...\nEnter an id:\t");
         Scanner scanner = new Scanner(System.in);
         int id = scanner.nextInt();
-        ProductController.getInstance().delete(id);
+        ProductController pc=new ProductController();
+        pc.delete(id);
     }
 
     private static boolean validatePassword(String enteredPassword, String correctPassword) {

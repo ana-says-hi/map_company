@@ -35,7 +35,8 @@ public class FeedbackController implements Controller<Feedback>{
 
     public void create(int clientID, int productID, String message, boolean type) {
         Client c=ClientController.getInstance().find_by_id(clientID);
-        Product p=ProductController.getInstance().find_by_id(productID);
+        ProductController pc=new ProductController();
+        Product p=pc.find_by_id(productID);
         Feedback feedback= FeedbackFactory.getFf_instance().make_feedb(c, p, message, type);
         feedbackRepo.add_to_repo(feedback);
     }

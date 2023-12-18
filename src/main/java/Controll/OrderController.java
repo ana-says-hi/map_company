@@ -81,10 +81,11 @@ public class OrderController implements Controller<Order>{
     public void for_client_add_product(String this_guy, ArrayList<Integer> i_wanna_buy) throws SQLException {
         if(ClientController.getInstance().find_by_name(this_guy)!=null)
         {
+            ProductController pc=new ProductController();
             Order here_we_buy=find_last_order_unplaced(this_guy);
             if(here_we_buy!=null)
                 for (Integer id_prod: i_wanna_buy) {
-                    Product product=ProductController.getInstance().find_by_id(id_prod);
+                    Product product=pc.find_by_id(id_prod);
                     orderRepo.add_product_to_order(here_we_buy,product);
                 }
         }
@@ -92,9 +93,10 @@ public class OrderController implements Controller<Order>{
 
     public void for_client_delete_product(String this_guy, ArrayList<Integer> i_wanna_buy) throws SQLException {
         Order here_we_buy=find_last_order_unplaced(this_guy);
+        ProductController pc=new ProductController();
         if(here_we_buy!=null)
             for (Integer id_prod: i_wanna_buy) {
-                Product product=ProductController.getInstance().find_by_id(id_prod);
+                Product product=pc.find_by_id(id_prod);
                 orderRepo.delete_product_from_order(here_we_buy,product);
             }
     }

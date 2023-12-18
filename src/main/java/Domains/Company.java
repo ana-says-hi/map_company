@@ -27,7 +27,8 @@ public class Company implements Observer<Product> {
     private Company() {
         this.name="BioLite";
         this.employees = EmployeeController.getInstance().getEmployeeRepo().get_repo();
-        this.products=ProductController.getInstance().getStuff();
+        ProductController pc=new ProductController();
+        this.products=pc.getStuff();
         for (Product product:products)
             product.registerObserver(this);
 

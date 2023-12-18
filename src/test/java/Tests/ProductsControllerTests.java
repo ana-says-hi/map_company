@@ -17,10 +17,11 @@ public class ProductsControllerTests {
     @Test
     public void testAddProduct() {
         //ProductController productController = ProductController.getInstance();
-        int initialSize = ProductController.getInstance().getStuff().size();
-        ProductController.getInstance().create("TestProduct", 10.5f, ProductType.hair, 5);
-        assertEquals(initialSize + 1, ProductController.getInstance().getStuff().size());
-        Product lastProduct = ProductController.getInstance().getStuff().get(ProductController.getInstance().getStuff().size() - 1);
+        ProductController pc=new ProductController();
+        int initialSize = pc.getStuff().size();
+        pc.create("TestProduct", 10.5f, ProductType.hair, 5);
+        assertEquals(initialSize + 1, pc.getStuff().size());
+        Product lastProduct = pc.getStuff().get(pc.getStuff().size() - 1);
         assertEquals("TestProduct", lastProduct.getName());
         assertEquals(10.5f, lastProduct.getPrice(), 0.01);
         assertEquals(ProductType.hair, lastProduct.getType());
@@ -28,7 +29,8 @@ public class ProductsControllerTests {
 
     @Test
     void testUpdateProduct() {
-        ProductController productController = ProductController.getInstance();
+        //ProductController productController = ProductController.getInstance();
+        ProductController productController=new ProductController();
         productController.create("TestProduct", 10.5f, ProductType.hair, 5);
         Product lastProduct = productController.getStuff().get(productController.getStuff().size() - 1);
         productController.update(lastProduct.getId(), "UpdatedProduct", 15.0f, ProductType.hair, 10);
@@ -40,7 +42,7 @@ public class ProductsControllerTests {
 
     @Test
     void testDeleteProduct() {
-        ProductController productController = ProductController.getInstance();
+        ProductController productController=new ProductController();
         productController.create("TestProduct", 10.5f, ProductType.hair, 5);
         Product lastProduct = productController.getStuff().get(productController.getStuff().size() - 1);
         productController.delete(lastProduct.getId());

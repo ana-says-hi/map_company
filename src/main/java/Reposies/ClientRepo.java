@@ -4,9 +4,8 @@ import Domains.Client;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
 
-public class ClientRepo implements Repository<Client> {
+public class ClientRepo implements Repo<Client> {
 
     private ArrayList<Client> c_repo;
 

@@ -9,7 +9,7 @@ import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class OrderRepo implements Repository<Order>{
+public class OrderRepo implements Repo<Order> {
     private ArrayList<Order> o_repo;
 
     public OrderRepo() throws SQLException {
