@@ -1,5 +1,6 @@
 package Controll;
 
+import CommandProcessPattern.OrderProcessor;
 import Domains.*;
 import Domains.Deliveries.Delivery;
 import Domains.Deliveries.FragileStuffDelivery;
@@ -30,12 +31,11 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class OrderController implements Controller<Order>{
+    OrderProcessor orderProcessor;
 
-
-
-    //private static OrderController o_instance;
     ClientController cc=new ClientController();
     ProductController pc=new ProductController();
+
 
     @Autowired
     private OrderRepo orderRepo;
@@ -121,7 +121,7 @@ public class OrderController implements Controller<Order>{
         orderRepo.remove_from_repo(ord);
     }
 
-    public void chooseDelivery(String this_guy,int deliv){
+    public void chooseDelivery(String this_guy,int deliv) throws SQLException {
         Order the_order=find_last_order_unplaced(this_guy);
         Delivery delivery=null;
         switch (deliv){
@@ -129,24 +129,24 @@ public class OrderController implements Controller<Order>{
                 //fragil
                 delivery=new FragileStuffDelivery(the_order.getId(),the_order.getDate());
                 the_order.setDelivery(delivery);
-                the_order.finishOrder();
                 break;
             case 2:
                 //same day
                 delivery=new SameDayDelivery(the_order.getId(),the_order.getDate());
                 the_order.setDelivery(delivery);
-                the_order.finishOrder();
                 break;
             case 3:
                 //super safe
                 delivery=new SuperSafeDelivery(the_order.getId(),the_order.getDate());
                 the_order.setDelivery(delivery);
-                the_order.finishOrder();
                 break;
             default:
                 //basic
-                the_order.finishOrder();
                 break;
         }
+        orderProcessor=new OrderProcessor(the_order);
+        orderProcessor.processCommand();
+        //@ int id,@ Client client,@ Employee employee,@ LocalDate date,@ Status status
+        //the_order.finishOrder();
     }
 }

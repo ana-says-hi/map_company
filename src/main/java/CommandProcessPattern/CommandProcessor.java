@@ -1,4 +1,4 @@
-package Controll.CommandProcessPattern;
+package CommandProcessPattern;
 
 abstract class CommandProcessor {
     // Metoda șablon

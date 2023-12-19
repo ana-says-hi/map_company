@@ -137,14 +137,13 @@ public class Order implements Observable {
 
 
     //probabil la controller
-    public void finishOrder(){
-        //se calculeaza iar shipping fee
-        this.totalPrice+=delivery.getShippinfFee();
-        this.status=Status.CONFIRMED;
-    }
+//    public void finishOrder(){
+//        this.totalPrice+=delivery.getShippinfFee();
+//    }
 
     //memento
     public OrderMemento saveToMemento() {
+
         return new OrderMemento(status);
     }
 
