@@ -1,6 +1,8 @@
 package Domains;
 
-public class Client {
+import ObserverPattern.Observer;
+
+public class Client implements Observer <Order>{
     int id;
     String name;
     String address;
@@ -39,6 +41,13 @@ public class Client {
     @Override
     public String toString() {
         return "CLIENT: " + id + ',' + name + ','+ address;
+    }
+
+    @Override
+    public void update(Order order) {
+        if(order.getClient()==this)
+            System.out.println("Comanda este: "+order.getStatus());
+        else System.out.println("Comanda nu va apartine");
     }
 
 }
