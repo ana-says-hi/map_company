@@ -66,7 +66,7 @@ public class ClientController implements Controller<Client>{
         return null;
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{id}/client")
     public void delete(int id) {
         Client c= find_by_id(id);
         if(c!=null) {

@@ -15,29 +15,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
-@RequestMapping("/api/product")
 @Getter
 @Setter
-@NoArgsConstructor
+//@NoArgsConstructor
+@RestController
+@RequestMapping("/api/product")
 public class ProductController implements Controller<Product>{
 
-    //private static ProductController p_instance;
-
-    private ProductRepo productRepo;
     @Autowired
-    public ProductController(ProductRepo productRepo) {
-        this.productRepo = productRepo;
-    }
+    private ProductRepo productRepo;
 
     @GetMapping
     public ArrayList<Product> getStuff() throws SQLException {
-        return getProductRepo().get_repo();
+        return productRepo.get_repo();
         //return productRepo.get_from_db();
     }
 
-    //TODO schimmbat sa se fooseasca asta, nu getStuff
-    @GetMapping
     public ProductRepo getProductRepo() {
         return productRepo;
     }

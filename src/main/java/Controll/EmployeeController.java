@@ -10,10 +10,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -29,12 +26,12 @@ public class EmployeeController implements Controller<Employee> {
     @Autowired
     private EmployeeRepo employeeRepo;
 
-   @GetMapping
+    //@GetMapping
     public EmployeeRepo getEmployeeRepo() {
         return employeeRepo;
     }
 
-    //w@GetMapping
+    @GetMapping
     public ArrayList<Employee> getEmployees() {
         return getEmployeeRepo().get_repo();
     }
@@ -55,6 +52,7 @@ public class EmployeeController implements Controller<Employee> {
 
     //nu il apelam :)
     @Override
+    @DeleteMapping("/{id}/employee")
     public void delete(int id) {
         Employee employee = find_by_id(id);
         if (employee != null)

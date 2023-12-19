@@ -10,6 +10,7 @@ import Reposies.OrderRepo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,10 +43,12 @@ public class OrderController implements Controller<Order>{
     @Autowired
     private OrderRepo orderRepo;
 
-    @GetMapping
     public OrderRepo getOrderRepo() {
         return orderRepo;
     }
+
+    @GetMapping
+    public ArrayList<Order> getOrders(){return orderRepo.get_repo();}
 
     @PostMapping
     public Order create(Client client) {
