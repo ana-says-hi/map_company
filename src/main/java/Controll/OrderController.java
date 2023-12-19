@@ -12,10 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.Array;
 import java.sql.SQLException;
@@ -51,29 +48,32 @@ public class OrderController implements Controller<Order>{
     public ArrayList<Order> getOrders(){return orderRepo.get_repo();}
 
     @PostMapping
-    public Order create(Client client) {
+    public Order create(@RequestBody Client client) {
         //Order o=new Order(id,client,employee,date);
         Order o= OrderFactory.getInstance().make_ord(client);
         orderRepo.add_to_repo(o);
         return o;
     }
 
-//TODO SCHIMBAT UPDATE, SA RAMANA CUMVA PRODUSELE SI SA SE SCHIMBE STATUSUL
-    public void update(int id, Client client, Employee employee,Delivery delivery, LocalDate date, Status status) {
+    @PutMapping
+    public void update(@RequestBody int id,@RequestBody Client client,@RequestBody Employee employee,@RequestBody LocalDate date,@RequestBody Status status) {
         Order old_ord= find_by_id(id);
         delete(id);
         Order o=new Order(id,client,employee,old_ord.getTotalPrice(),date,status,old_ord.getDelivery(),old_ord.getProducts());
         orderRepo.add_to_repo(o);
     }
 
-    public Order find_by_id(int id){
+
+    @GetMapping("/{id}/order")
+    public Order find_by_id(@RequestBody int id){
         for(Order ord: orderRepo.get_repo())
             if(ord.getId()==id)
                 return ord;
         return null;
     }
 
-    public ArrayList<Order>find_by_client(String name){
+    @GetMapping("/{name}/order")
+    public ArrayList<Order>find_by_client(@RequestBody String name){
         ArrayList<Order> them_products=new ArrayList<>();
         Client our_client=cc.find_by_name(name);
         if(our_client!=null)
@@ -115,7 +115,8 @@ public class OrderController implements Controller<Order>{
     }
 
     @Override
-    public void delete(int id) {
+    @DeleteMapping("/{id}/order")
+    public void delete(@PathVariable int id) {
         Order ord= find_by_id(id);
         orderRepo.remove_from_repo(ord);
     }
