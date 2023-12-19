@@ -30,10 +30,12 @@ public class FeedbackController implements Controller<Feedback>{
     @Autowired
     private FeedbackRepo feedbackRepo;
 
-    @GetMapping
     public FeedbackRepo getFeedbackRepo() {
         return feedbackRepo;
     }
+
+    @GetMapping
+    public ArrayList<Feedback> getFeedbacks(){return feedbackRepo.get_repo();}
 
     @PostMapping
     public void create(int clientID, int productID, String message, boolean type) {
