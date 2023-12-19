@@ -3,12 +3,15 @@ package Domains;
 import Domains.Deliveries.BasicDelivery;
 import Domains.Deliveries.Delivery;
 import MementoPattern.OrderMemento;
+import ObserverPattern.Observable;
+import ObserverPattern.Observer;
 
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Order {
+public class Order implements Observable {
+    private ArrayList<Observer> observers= new ArrayList<>();
     int id;
     private Employee employee;
     private Client client;
@@ -149,6 +152,25 @@ public class Order {
         this.status = Status.valueOf(memento.getState());
     }
 
+
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public boolean removeObserver(Observer observer) {
+        if(observers.contains(observer)) {
+            observers.remove(observer);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void notifyObservers() {
+        for(Observer observer: observers)
+            observer.update(this);
+    }
 }
 
 
