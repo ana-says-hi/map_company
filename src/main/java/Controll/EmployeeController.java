@@ -37,12 +37,13 @@ public class EmployeeController implements Controller<Employee> {
     }
 
     @PostMapping
-    public void create(String name, String password) {
+    public void create(@RequestBody String name,@RequestBody String password) {
         Employee employee = EmployeeFactory.getInstance().make_cl(name, password);
         employeeRepo.add_to_repo(employee);
     }
 
-    public Employee find_by_id(int id) {
+    @GetMapping("/{id}/employee")
+    public Employee find_by_id(@PathVariable int id) {
         for (Employee employee : employeeRepo.get_repo()) {
             if (employee.getId() == id)
                 return employee;
@@ -53,7 +54,7 @@ public class EmployeeController implements Controller<Employee> {
     //nu il apelam :)
     @Override
     @DeleteMapping("/{id}/employee")
-    public void delete(int id) {
+    public void delete(@PathVariable int id) {
         Employee employee = find_by_id(id);
         if (employee != null)
             employeeRepo.remove_from_repo(employee);

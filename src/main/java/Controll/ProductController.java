@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Getter
 @Setter
-//@NoArgsConstructor
+@NoArgsConstructor
 @RestController
 @RequestMapping("/api/product")
 public class ProductController implements Controller<Product>{
@@ -42,7 +42,7 @@ public class ProductController implements Controller<Product>{
     }
 
     @PutMapping
-    public void update(int id, String name, float price, ProductType type, int stoc) {
+    public void update(@RequestBody int id,@RequestBody String name,@RequestBody float price,@RequestBody ProductType type,@RequestBody int stoc) {
         delete(id);
         //create(name,price,type,stoc);
         Product p = new Product(id, name, price, type, stoc);
@@ -50,7 +50,7 @@ public class ProductController implements Controller<Product>{
     }
 
     @GetMapping("/{id}/product")
-    public Product find_by_id(int id) {
+    public Product find_by_id(@PathVariable int id) {
         for(Product prod: productRepo.get_repo())
             if(prod.getId()==id)
                 return prod;
@@ -59,17 +59,18 @@ public class ProductController implements Controller<Product>{
 
     @Override
     @DeleteMapping("/{id}/product")
-    public void delete(int id) {
+    public void delete(@PathVariable int id) {
         Product prod= find_by_id(id);
         productRepo.remove_from_repo(prod);
     }
 
-
-    public ArrayList<Product> filterProductsByType(ProductType type) throws SQLException {
+    @GetMapping("/{type}/product")
+    public ArrayList<Product> filterProductsByType(@PathVariable String type) throws SQLException {
         ArrayList<Product> filteredProducts = new ArrayList<>();
         ArrayList<Product> products = getStuff();
+        ProductType tiup=ProductType.valueOf(type);
         for (Product product : products) {
-            if (product.getType() == type) {
+            if (product.getType() == tiup) {
                 filteredProducts.add(product);
             }
         }
