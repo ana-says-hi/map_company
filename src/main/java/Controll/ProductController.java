@@ -23,8 +23,12 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController implements Controller<Product>{
 
     //private static ProductController p_instance;
-    @Autowired
+
     private ProductRepo productRepo;
+    @Autowired
+    public ProductController(ProductRepo productRepo) {
+        this.productRepo = productRepo;
+    }
 
     @GetMapping
     public ArrayList<Product> getStuff() throws SQLException {

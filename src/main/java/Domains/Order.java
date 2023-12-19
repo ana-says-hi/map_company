@@ -2,6 +2,7 @@ package Domains;
 
 import Domains.Deliveries.BasicDelivery;
 import Domains.Deliveries.Delivery;
+import MementoPattern.OrderMemento;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -137,6 +138,15 @@ public class Order {
         //se calculeaza iar shipping fee
         this.totalPrice+=delivery.getShippinfFee();
         this.status=Status.CONFIRMED;
+    }
+
+    //memento
+    public OrderMemento saveToMemento() {
+        return new OrderMemento(status);
+    }
+
+    public void restoreFromMemento(OrderMemento memento) {
+        this.status = Status.valueOf(memento.getState());
     }
 
 }
