@@ -34,7 +34,8 @@ public class FeedbackController implements Controller<Feedback>{
     }
 
     public void create(int clientID, int productID, String message, boolean type) {
-        Client c=ClientController.getInstance().find_by_id(clientID);
+        ClientController cc=new ClientController();
+        Client c=cc.find_by_id(clientID);
         ProductController pc=new ProductController();
         Product p=pc.find_by_id(productID);
         Feedback feedback= FeedbackFactory.getFf_instance().make_feedb(c, p, message, type);

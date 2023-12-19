@@ -21,6 +21,10 @@ import java.util.List;
 public class OrderController implements Controller<Order>{
 
     private static OrderController o_instance;
+    ClientController cc=new ClientController();
+    ProductController pc=new ProductController();
+
+
 
     private OrderRepo orderRepo;
 
@@ -62,7 +66,7 @@ public class OrderController implements Controller<Order>{
 
     public ArrayList<Order>find_by_client(String name){
         ArrayList<Order> them_products=new ArrayList<>();
-        Client our_client=ClientController.getInstance().find_by_name(name);
+        Client our_client=cc.find_by_name(name);
         if(our_client!=null)
             for(Order ord: orderRepo.get_repo())
                 if(ord.getClient()==our_client)
@@ -79,7 +83,7 @@ public class OrderController implements Controller<Order>{
     }
 
     public void for_client_add_product(String this_guy, ArrayList<Integer> i_wanna_buy) throws SQLException {
-        if(ClientController.getInstance().find_by_name(this_guy)!=null)
+        if(cc.find_by_name(this_guy)!=null)
         {
             ProductController pc=new ProductController();
             Order here_we_buy=find_last_order_unplaced(this_guy);

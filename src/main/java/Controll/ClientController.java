@@ -3,33 +3,34 @@ package Controll;
 import Domains.Client;
 import Reposies.ClientRepo;
 import FactoryPattern.ClientFactory;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+@RestController
+@RequestMapping("/api/client")
+@Getter
+@Setter
+@NoArgsConstructor
 public class ClientController implements Controller<Client>{
     //ca sa nu facem acum implementare de comenzi bagam mesaj cum ca suntem
     //inafara progrramului/se fac x/modificari la sistem si revenim in 2 saptamani
 
-    private static ClientController c_instance;
+    //private static ClientController c_instance;
 
+    @Autowired
     private ClientRepo clientRepo;
 
-    private ClientController() {
-        try {
-            clientRepo = new ClientRepo();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
+    @GetMapping
     public ArrayList<Client> getClients(){return getClientRepo().get_repo();}
 
-    public static ClientController getInstance(){
-        if(c_instance==null)
-            c_instance=new ClientController();
-        return c_instance;
-    }
 
     public ClientRepo getClientRepo() {
         return clientRepo;

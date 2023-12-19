@@ -102,6 +102,8 @@ public class OrderRepo implements Repo<Order> {
     @Override
     public ArrayList<Order> get_from_db() {
         ArrayList<Order> our_orders=new ArrayList<>();
+        ClientController cc=new ClientController();
+
         try (
                 Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
@@ -116,7 +118,7 @@ public class OrderRepo implements Repo<Order> {
                 String status=selected_stuff.getString("status");
                 LocalDate date= selected_stuff.getDate("date").toLocalDate();
                 Employee employee=EmployeeController.getInstance().find_by_id(idemployee);
-                Client client= ClientController.getInstance().find_by_id(idclient);
+                Client client= cc.find_by_id(idclient);
                 Order order=new Order(id,client,employee,totalprie,date,Status.valueOf(status),new BasicDelivery(id,date),new ArrayList<>());
                 our_orders.add(order);
             }
