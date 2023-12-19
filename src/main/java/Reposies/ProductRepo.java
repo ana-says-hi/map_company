@@ -11,6 +11,8 @@ import java.sql.*;
 import java.util.ArrayList;
 
 import static Domains.ProductType.hair;
+
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -26,9 +28,11 @@ public class ProductRepo implements Repo<Product> {
         p_repo = get_from_db();
     }
 
+    @Transactional
     public void add_to_repo(Product p){
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef", "castravete"); ///AICI CRAPA
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
                 //Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("insert into \"Product\" (id,name,price,stoc,type) values (?, ?, ?,?,?)")
         ) {
@@ -51,9 +55,11 @@ public class ProductRepo implements Repo<Product> {
         //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
     }
 
+    @Transactional
     public void remove_from_repo(Product p) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef", "castravete"); ///AICI CRAPA
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("delete from \"Product\" where id=(?)")
         ) {
@@ -66,15 +72,17 @@ public class ProductRepo implements Repo<Product> {
         p_repo.remove(p);
     }
 
+    @Transactional
     public ArrayList<Product> get_repo() {
         return p_repo;
     }
 
 
+    @Transactional
     public ArrayList<Product> get_from_db() throws SQLException {
         ArrayList<Product> our_products = new ArrayList<>();
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret"); ///AICI CRAPA
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef", "castravete"); ///AICI CRAPA
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "admin","S3cret"); ///AICI CRAPA
                 PreparedStatement statement = connection.prepareStatement("select * from \"Product\"")
         ) {
@@ -96,6 +104,7 @@ public class ProductRepo implements Repo<Product> {
         return our_products;
     }
 
+    @Transactional
     public ArrayList<Product> filterProductsByType(ProductType type) {
         ArrayList<Product> filteredProducts = new ArrayList<>();
         for (Product product : p_repo) {
@@ -106,11 +115,13 @@ public class ProductRepo implements Repo<Product> {
         return filteredProducts;
     }
 
+    @Transactional
     public void add(Product pr) {
         p_repo.add(pr);
     }
 
 
+    @Transactional
     public void delete(Product pr) {
         p_repo.remove(pr);
     }

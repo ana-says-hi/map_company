@@ -26,13 +26,12 @@ public class ProductController implements Controller<Product>{
     private ProductRepo productRepo;
 
     @GetMapping
-    public ArrayList<Product> getStuff()
-    {
-        return getProductRepo().get_repo();
+    public ArrayList<Product> getStuff() throws SQLException {
+        return productRepo.get_from_db();
     }
 
     @PostMapping
-    public void create(String name, float price, ProductType type, int stoc){
+    public void create(@RequestBody String name,@RequestBody float price,@RequestBody ProductType type,@RequestBody int stoc){
         Product p =  ProductFactory.getInstance().make_prod(name, price, type, stoc);
         productRepo.add_to_repo(p);
     }
@@ -45,7 +44,6 @@ public class ProductController implements Controller<Product>{
         productRepo.add_to_repo(p);
     }
 
-    @GetMapping
     public Product find_by_id(int id) {
         for(Product prod: productRepo.get_repo())
             if(prod.getId()==id)
@@ -60,8 +58,8 @@ public class ProductController implements Controller<Product>{
         productRepo.remove_from_repo(prod);
     }
 
-    @GetMapping
-    public ArrayList<Product> filterProductsByType(ProductType type) {
+
+    public ArrayList<Product> filterProductsByType(ProductType type) throws SQLException {
         ArrayList<Product> filteredProducts = new ArrayList<>();
         ArrayList<Product> products = getStuff();
         for (Product product : products) {
@@ -72,7 +70,6 @@ public class ProductController implements Controller<Product>{
         return filteredProducts;
     }
 
-    @GetMapping
     public ProductRepo getProductRepo() {
         return productRepo;
     }
