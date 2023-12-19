@@ -9,13 +9,15 @@ import org.testng.AssertJUnit;
 
 //import static org.junit.jupiter.api.Assertions.*;
 //import static org.junit.jupiter.api.Assertions.assertNull;
+import java.sql.SQLException;
+
 import static org.testng.AssertJUnit.assertEquals;
 import static org.testng.AssertJUnit.assertNull;
 
 public class ProductsControllerTests {
 
     @Test
-    public void testAddProduct() {
+    public void testAddProduct() throws SQLException {
         //ProductController productController = ProductController.getInstance();
         ProductController pc=new ProductController();
         int initialSize = pc.getStuff().size();
@@ -28,7 +30,7 @@ public class ProductsControllerTests {
     }
 
     @Test
-    void testUpdateProduct() {
+    void testUpdateProduct() throws SQLException {
         //ProductController productController = ProductController.getInstance();
         ProductController productController=new ProductController();
         productController.create("TestProduct", 10.5f, ProductType.hair, 5);
@@ -41,7 +43,7 @@ public class ProductsControllerTests {
     }
 
     @Test
-    void testDeleteProduct() {
+    void testDeleteProduct() throws SQLException {
         ProductController productController=new ProductController();
         productController.create("TestProduct", 10.5f, ProductType.hair, 5);
         Product lastProduct = productController.getStuff().get(productController.getStuff().size() - 1);

@@ -5,34 +5,37 @@ import Domains.Feedback;
 import Domains.Product;
 import FactoryPattern.FeedbackFactory;
 import Reposies.FeedbackRepo;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+@RestController
+@RequestMapping("/api/feedback")
+@Getter
+@Setter
+@NoArgsConstructor
 public class FeedbackController implements Controller<Feedback>{
     //ca sa nu facem acum implementare de comenzi bagam mesaj cum ca suntem
     //inafara progrramului/se fac renovari/modificari la sistem si revenim in 2 saptamani
 
-    private static FeedbackController f_instance;
-
+    @Autowired
     private FeedbackRepo feedbackRepo;
 
-    private FeedbackController() {
-        feedbackRepo = new FeedbackRepo();
-    }
-
-    //public ArrayList<Client> getClients(){return getClientRepo().getC_repo();}
-    private static List<Product> productsWithFeedbacks = new ArrayList<>();
-    public static FeedbackController getInstance(){
-        if(f_instance==null)
-            f_instance=new FeedbackController();
-        return f_instance;
-    }
-
+    @GetMapping
     public FeedbackRepo getFeedbackRepo() {
         return feedbackRepo;
     }
 
+    @PostMapping
     public void create(int clientID, int productID, String message, boolean type) {
         ClientController cc=new ClientController();
         Client c=cc.find_by_id(clientID);

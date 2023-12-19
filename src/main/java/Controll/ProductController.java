@@ -21,13 +21,21 @@ import org.springframework.web.bind.annotation.*;
 @Setter
 @NoArgsConstructor
 public class ProductController implements Controller<Product>{
+
     //private static ProductController p_instance;
     @Autowired
     private ProductRepo productRepo;
 
     @GetMapping
     public ArrayList<Product> getStuff() throws SQLException {
-        return productRepo.get_from_db();
+        return getProductRepo().get_repo();
+        //return productRepo.get_from_db();
+    }
+
+    //TODO schimmbat sa se fooseasca asta, nu getStuff
+    @GetMapping
+    public ProductRepo getProductRepo() {
+        return productRepo;
     }
 
     @PostMapping
@@ -44,6 +52,7 @@ public class ProductController implements Controller<Product>{
         productRepo.add_to_repo(p);
     }
 
+    @GetMapping("/{id}/product")
     public Product find_by_id(int id) {
         for(Product prod: productRepo.get_repo())
             if(prod.getId()==id)
@@ -68,10 +77,6 @@ public class ProductController implements Controller<Product>{
             }
         }
         return filteredProducts;
-    }
-
-    public ProductRepo getProductRepo() {
-        return productRepo;
     }
 
 }

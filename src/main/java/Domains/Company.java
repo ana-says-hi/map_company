@@ -24,9 +24,10 @@ public class Company implements Observer<Product> {
             product.registerObserver(this);
     }*/
 
-    private Company() {
+    private Company() throws SQLException {
         this.name="BioLite";
-        this.employees = EmployeeController.getInstance().getEmployeeRepo().get_repo();
+        EmployeeController ec=new EmployeeController();
+        this.employees = ec.getEmployeeRepo().get_repo();
         ProductController pc=new ProductController();
         this.products=pc.getStuff();
         for (Product product:products)
@@ -59,7 +60,7 @@ public class Company implements Observer<Product> {
         System.out.println("MAI CUMPARA CHESTII FRA");
         //TODO contrsct curier sau ce era cu order niu ig
     }
-    public static Company getInstance(){
+    public static Company getInstance() throws SQLException {
        //Company cmp_instance;
         if(cmp_instance==null)
             cmp_instance=new Company();

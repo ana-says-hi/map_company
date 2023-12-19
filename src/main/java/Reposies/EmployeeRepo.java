@@ -1,10 +1,13 @@
 package Reposies;
 
 import Domains.Employee;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 
+@Repository
 public class EmployeeRepo implements Repo<Employee> {
 
     private ArrayList<Employee> e_repo;
@@ -19,10 +22,11 @@ public class EmployeeRepo implements Repo<Employee> {
 //        e_repo.add(e3);
     }
 
+    @Transactional
     public void add_to_repo(Employee e) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
-                //Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("insert into \"Employee\" (id,name,password) values (?, ?, ?)")
         ) {
             statement.setInt(1, e.getId());
@@ -36,10 +40,11 @@ public class EmployeeRepo implements Repo<Employee> {
         //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
     }
 
+    @Transactional
     public void remove_from_repo(Employee e){
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
-                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("delete from \"Employee\" where id=(?)")
         ){
             statement.setInt(1, e.getId());
@@ -52,23 +57,16 @@ public class EmployeeRepo implements Repo<Employee> {
     }
 
 
+    @Transactional
     public ArrayList<Employee> get_repo() {
         return e_repo;
     }
 
     @Override
+    @Transactional
     public ArrayList<Employee> get_from_db() throws SQLException {
         return null;
     }
 }
 
-//    public String covertToString(List<Employee> liste) {
-//        List<String> lines = new ArrayList<>();
-//        for (Employee employee : liste) {
-//            lines.add(employee.toString());
-//        }
-//        return String.join("\n", lines);
-   // }
-
-//TODO foloseste repo.tostring nu ProdustToString
 

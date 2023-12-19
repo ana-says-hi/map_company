@@ -7,9 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -36,13 +34,14 @@ public class ClientController implements Controller<Client>{
         return clientRepo;
     }
 
-
+    @PostMapping
     public Client create(String name, String address) {
         Client client=ClientFactory.getInstance().make_cl(name, address);
             clientRepo.add_to_repo(client);
         return client;
     }
 
+    @PutMapping
     public void update(int id, String name, String address) {
         delete(id);
         //create(name,address);
@@ -67,6 +66,7 @@ public class ClientController implements Controller<Client>{
         return null;
     }
 
+    @DeleteMapping
     public void delete(int id) {
         Client c= find_by_id(id);
         if(c!=null) {

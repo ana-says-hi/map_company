@@ -7,6 +7,14 @@ import Domains.Deliveries.SameDayDelivery;
 import Domains.Deliveries.SuperSafeDelivery;
 import FactoryPattern.OrderFactory;
 import Reposies.OrderRepo;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.Array;
 import java.sql.SQLException;
@@ -18,30 +26,26 @@ import java.util.List;
 //TODO set delivery
 //TODO CURRENT DATE AND TIME LA ORDER SI LA DELIVERY
 //TODO FILTER PENTRU STATUS ORDER
+@RestController
+@RequestMapping("/api/order")
+@Getter
+@Setter
+@NoArgsConstructor
 public class OrderController implements Controller<Order>{
 
-    private static OrderController o_instance;
+    //private static OrderController o_instance;
     ClientController cc=new ClientController();
     ProductController pc=new ProductController();
 
-
-
+    @Autowired
     private OrderRepo orderRepo;
 
-    private OrderController() {
-        try {
-            orderRepo=new OrderRepo();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+    @GetMapping
+    public OrderRepo getOrderRepo() {
+        return orderRepo;
     }
 
-    public static OrderController getInstance(){
-        if(o_instance==null)
-            o_instance=new OrderController();
-        return o_instance;
-    }
-
+    @PostMapping
     public Order create(Client client) {
         //Order o=new Order(id,client,employee,date);
         Order o= OrderFactory.getInstance().make_ord(client);

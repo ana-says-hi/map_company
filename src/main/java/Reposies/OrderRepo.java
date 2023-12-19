@@ -4,12 +4,14 @@ import Controll.ClientController;
 import Controll.EmployeeController;
 import Domains.*;
 import Domains.Deliveries.BasicDelivery;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Repository;
 //import org.checkerframework.checker.units.qual.C;
 
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
-
+@Repository
 public class OrderRepo implements Repo<Order> {
     private ArrayList<Order> o_repo;
 
@@ -17,10 +19,11 @@ public class OrderRepo implements Repo<Order> {
         o_repo=get_from_db();
     }
 
+    @Transactional
     public void add_to_repo(Order o) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
-                //Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
+                Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("insert into \"Order\" (id,idemployee,idclient,totalprice,date,status,delivery) values (?, ?, ?,?,?,?,?)")
         ) {
             statement.setInt(1, o.getId());
@@ -43,10 +46,11 @@ public class OrderRepo implements Repo<Order> {
         //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
     }
 
+    @Transactional
     public void remove_from_repo(Order o) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
-                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("delete from \"Order\" where id=(?)")
         ){
             statement.setInt(1, o.getId());
@@ -60,9 +64,11 @@ public class OrderRepo implements Repo<Order> {
     }
 
 
+    @Transactional
     public void add_product_to_order(Order o, Product p){
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO \"Order_Product\"(idfactura,idproduct,cantitate) VALUES (?,?,1)")
         ) {
             statement.setInt(1, o.getId());
@@ -78,10 +84,11 @@ public class OrderRepo implements Repo<Order> {
         o.addProduct(p);
     }
 
+    @Transactional
     public void delete_product_from_order(Order o, Product p) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
-                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("DELETE FROM \"Order_Product\" WHERE idfactura=(?) and idproduct=(?)")
         ){
             statement.setInt(1, o.getId());
@@ -94,19 +101,21 @@ public class OrderRepo implements Repo<Order> {
         //select.execute("DELETE FROM \"Order_Product\" WHERE idfactura=\"o.id\" and idproduct=\"p.id\" ");
     }
 
+    @Transactional
     public ArrayList<Order> get_repo() {
         return o_repo;
     }
 
-
+    @Transactional
     @Override
     public ArrayList<Order> get_from_db() {
         ArrayList<Order> our_orders=new ArrayList<>();
         ClientController cc=new ClientController();
+        EmployeeController ec=new EmployeeController();
 
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
-                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("select * from \"Order\"")
         ){
             ResultSet selected_stuff= statement.executeQuery();
@@ -117,7 +126,7 @@ public class OrderRepo implements Repo<Order> {
                 float totalprie=selected_stuff.getFloat("totalprice");
                 String status=selected_stuff.getString("status");
                 LocalDate date= selected_stuff.getDate("date").toLocalDate();
-                Employee employee=EmployeeController.getInstance().find_by_id(idemployee);
+                Employee employee=ec.find_by_id(idemployee);
                 Client client= cc.find_by_id(idclient);
                 Order order=new Order(id,client,employee,totalprie,date,Status.valueOf(status),new BasicDelivery(id,date),new ArrayList<>());
                 our_orders.add(order);

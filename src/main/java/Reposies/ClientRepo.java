@@ -1,10 +1,13 @@
 package Reposies;
 
 import Domains.Client;
+import jakarta.transaction.Transactional;
+import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 import java.util.ArrayList;
 
+@Repository
 public class ClientRepo implements Repo<Client> {
 
     private ArrayList<Client> c_repo;
@@ -13,10 +16,11 @@ public class ClientRepo implements Repo<Client> {
         c_repo=get_from_db();
     }
 
+    @Transactional
     public void add_to_repo(Client c) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
-                //Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("insert into \"Client\" (id,name,address) values (?, ?, ?)")
         ) {
             statement.setInt(1, c.getId());
@@ -30,10 +34,11 @@ public class ClientRepo implements Repo<Client> {
         //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
     }
 
+    @Transactional
     public void remove_from_repo(Client c){
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
-                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("delete from \"Client\" where id=(?)")
         ){
             statement.setInt(1, c.getId());
@@ -45,16 +50,18 @@ public class ClientRepo implements Repo<Client> {
         c_repo.remove(c);
     }
 
+    @Transactional
     public ArrayList<Client> get_repo() {
         return c_repo;
     }
 
     @Override
+    @Transactional
     public ArrayList<Client> get_from_db() throws SQLException {
         ArrayList<Client> our_clients=new ArrayList<>();
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
-                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("select * from \"Client\"")
         ){
             ResultSet selected_stuff= statement.executeQuery();
