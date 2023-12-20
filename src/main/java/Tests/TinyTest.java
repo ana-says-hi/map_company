@@ -1,13 +1,12 @@
 package Tests;
 
-import Domains.Client;
-import Domains.Deliveries.BasicDelivery;
-import Domains.Deliveries.SameDayDelivery;
-import Domains.Employee;
-import Domains.Order;
-import Domains.Product;
-import Reposies.ProductRepo;
-import FactoryPattern.ProductFactory;
+import src.Domains.Client;
+import src.Domains.Deliveries.BasicDelivery;
+import src.Domains.Deliveries.SameDayDelivery;
+import src.Domains.Employee;
+import src.Domains.Order;
+import src.Domains.Product;
+import src.Reposies.ProductRepo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -16,7 +15,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-import static Domains.ProductType.hair;
+import static src.Domains.ProductType.hair;
 
 public class TinyTest {
     public void test_delivery() {

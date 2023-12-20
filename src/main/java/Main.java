@@ -1,7 +1,7 @@
-import Domains.ContractCourier;
-import Domains.ContractEmployee;
 //import Tests.ContractCourierTest;
 import Tests.*;
+import src.Controll.ProductController;
+import src.Domains.ProductType;
 //import Tests.TinyTest;
 //import UI.UI;
 //import org.springframework.boot.SpringApplication;
@@ -10,6 +10,8 @@ import Tests.*;
 public class Main {
     public static void main(String[] args) {
         runTests();
+        ProductController pc=new ProductController();
+        //pc.create("Balsam", 12.3F, ProductType.hair,78);
 //        UI ui = new UI();
 //        ui.mainMenu();
         System.out.println("merge");

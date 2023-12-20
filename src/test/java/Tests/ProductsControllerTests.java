@@ -1,8 +1,8 @@
 package Tests;
 
-import Controll.ProductController;
-import Domains.Product;
-import Domains.ProductType;
+import src.Controll.ProductController;
+import src.Domains.Product;
+import src.Domains.ProductType;
 import org.junit.Test;
 //import org.junit.jupiter.api.Test;
 import org.testng.AssertJUnit;

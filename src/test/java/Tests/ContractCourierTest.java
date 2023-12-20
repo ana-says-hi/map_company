@@ -1,7 +1,7 @@
 package Tests;
 
-import Domains.ContractCourier;
-import Domains.Couriers;
+import src.Domains.ContractCourier;
+import src.Domains.Couriers;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
