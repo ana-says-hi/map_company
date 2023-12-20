@@ -1,7 +1,7 @@
 package src.Controll;
 
 import org.springframework.http.ResponseEntity;
-import src.Domains.Product;
+import src.Domains.Employee;
 
 public interface Controller<T>{
     /**
@@ -10,7 +10,7 @@ public interface Controller<T>{
   //  public void create(kwag*  args**);  Object... x
 //    public void update();
     // TODO get instance get stuff
-    public ResponseEntity<Product> find_by_id(int id);
+    public ResponseEntity<Employee> find_by_id(int id);
     public ResponseEntity<Void> delete(int id);
 
 }

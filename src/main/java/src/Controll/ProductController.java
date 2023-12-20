@@ -1,6 +1,7 @@
 package src.Controll;
 
 import org.springframework.http.ResponseEntity;
+import src.Domains.Employee;
 import src.Domains.Product;
 import src.Domains.ProductType;
 import src.Reposies.ProductRepo;
@@ -45,6 +46,7 @@ public class ProductController implements Controller<Product> {
         ProductType type = request.getType();
         Integer stoc = request.getStoc();
         Product p = ProductFactory.getInstance().make_prod(name, price, type, stoc);
+        productRepo.save(p);
         //productRepo.add_to_repo(p);
     }
 
@@ -69,7 +71,7 @@ public class ProductController implements Controller<Product> {
 
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<Product> find_by_id(@PathVariable int id) {
+    public ResponseEntity<Employee> find_by_id(@PathVariable int id) {
         Optional<Product> optionalProduct = productRepo.findById(id);
         if (optionalProduct.isPresent()) {
             return ResponseEntity.ok(optionalProduct.get());

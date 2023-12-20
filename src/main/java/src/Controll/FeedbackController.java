@@ -2,6 +2,7 @@ package src.Controll;
 
 import org.springframework.http.ResponseEntity;
 import src.Domains.Client;
+import src.Domains.Employee;
 import src.Domains.Feedback;
 import src.Domains.Product;
 import src.FactoryPattern.FeedbackFactory;
@@ -43,7 +44,7 @@ public class FeedbackController implements Controller<Feedback> {
     }
 
     @GetMapping("/{id}/feedback")
-    public ResponseEntity<Product> find_by_id(@PathVariable int id) {
+    public ResponseEntity<Employee> find_by_id(@PathVariable int id) {
         for (Feedback f : feedbackRepo.get_repo()) {
             if (f.getId() == id)
                 return f;

@@ -2,7 +2,7 @@ package src.Controll;
 
 import org.springframework.http.ResponseEntity;
 import src.Domains.Client;
-import src.Domains.Product;
+import src.Domains.Employee;
 import src.Reposies.ClientRepo;
 import src.FactoryPattern.ClientFactory;
 import lombok.Getter;
@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import src.RequestStuff.ClientRequest;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/client")
@@ -28,54 +30,85 @@ public class ClientController implements Controller<Client> {
     private ClientRepo clientRepo;
 
     @GetMapping
-    public ArrayList<Client> getClients() {
-        return getClientRepo().get_repo();
+    public ResponseEntity<List<Client>> getClients() {
+        List<Client> clients = getClientRepo().findAll();
+
+        if (!clients.isEmpty()) {
+            // Returnează lista de clienți în corpul răspunsului
+            return ResponseEntity.ok(clients);
+        } else {
+            // Returnează un răspuns 404 Not Found dacă lista de clienți este goală
+            return ResponseEntity.notFound().build();
+        }
     }
+
 
     public ClientRepo getClientRepo() {
         return clientRepo;
     }
 
+
     @PostMapping
-    public Client create(@RequestBody String name, @RequestBody String address) {
+    public void create(@RequestBody ClientRequest request) {
+        String name = request.getName();
+        String address = request.getAddress();
+
         Client client = ClientFactory.getInstance().make_cl(name, address);
-        clientRepo.add_to_repo(client);
-        return client;
+        clientRepo.save(client);
+        //clientRepo.add_to_repo(client);
+        //return ResponseEntity.status(HttpStatus.CREATED).body(client);
     }
 
-    @PutMapping
-    public void update(@RequestBody int id, @RequestBody String name, @RequestBody String address) {
-        delete(id);
-        //create(name,address);
-        Client client = new Client(id, name, address);
-        clientRepo.add_to_repo(client);
-    }
+    @PutMapping("/{id}")
+    public ResponseEntity<Void> update(@PathVariable int id, @RequestBody ClientRequest request) {
+        Optional<Client> optionalClient = clientRepo.findById(id);
 
+        if (optionalClient.isPresent()) {
+            Client existingClient = optionalClient.get();
+
+            existingClient.setName(request.getName());
+            existingClient.setAddress(request.getAddress());
+
+            clientRepo.save(existingClient);
+
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
     @GetMapping("/{id}/client")
-    public ResponseEntity<Product> find_by_id(@PathVariable int id) {
-        for (Client c : clientRepo.get_repo()) {
-            if (c.getId() == id)
-                return c;
+    public ResponseEntity<Employee> find_by_id(@PathVariable int id) {
+        Optional<Client> optionalClient = clientRepo.findById(id);
+
+        if (optionalClient.isPresent()) {
+            return ResponseEntity.ok(optionalClient.get());
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return null;
     }
 
-    @GetMapping("/{name}/client")
-    public Client find_by_name(@PathVariable String name) {
-        for (Client c : clientRepo.get_repo()) {
-            if (c.getName() == name)
-                return c;
-        }
-        return null;
-    }
+    //@GetMapping("/{name}/client")
+//    public Client find_by_name(@PathVariable String name) {
+//        for (Client c : clientRepo.get_repo()) {
+//            if (c.getName() == name)
+//                return c;
+//        }
+//        return null;
+//    }
 
     @DeleteMapping("/{id}/client")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        Client c = find_by_id(id);
-        if (c != null) {
-            clientRepo.remove_from_repo(c);
+        Optional<Client> optionalClient = clientRepo.findById(id);
+
+        if (optionalClient.isPresent()) {
+            clientRepo.deleteById(id);
+
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return null;
     }
+
+
 }

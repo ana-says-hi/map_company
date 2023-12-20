@@ -27,9 +27,9 @@ public class Company implements Observer<Product> {
     private Company() throws SQLException {
         this.name="BioLite";
         EmployeeController ec=new EmployeeController();
-        this.employees = ec.getEmployeeRepo().get_repo();
+        this.employees = (ArrayList<Employee>) ec.getEmployeeRepo().findAll();
         ProductController pc=new ProductController();
-        this.products=pc.getStuff();
+        this.products= (ArrayList<Product>) pc.getStuff();
         for (Product product:products)
             product.registerObserver(this);
 
