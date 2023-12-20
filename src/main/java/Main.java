@@ -1,7 +1,6 @@
 //import Tests.ContractCourierTest;
-import Tests.*;
-import src.Controll.ProductController;
-import src.Domains.ProductType;
+//import Tests.*;
+import the_spring_src.Controll.ProductController;
 //import Tests.TinyTest;
 //import UI.UI;
 //import org.springframework.boot.SpringApplication;
@@ -18,9 +17,9 @@ public class Main {
     }
 //ala bun
     private static void runTests() {
-        TinyTest tinyTest = new TinyTest();
-        tinyTest.test_delivery();
-        tinyTest.test_repo_conn();
+//        TinyTest tinyTest = new TinyTest();
+//        tinyTest.test_delivery();
+//        tinyTest.test_repo_conn();
 //        ProductsControllerTests pct = new ProductsControllerTests();
 //        pct.testAddProduct();
 //        ContractEmployeeTest contractEmployeeTest = new ContractEmployeeTest();

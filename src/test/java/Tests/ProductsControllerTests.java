@@ -1,8 +1,8 @@
 package Tests;
 
-import src.Controll.ProductController;
-import src.Domains.Product;
-import src.Domains.ProductType;
+import the_spring_src.Controll.ProductController;
+import the_spring_src.Domains.Product;
+import the_spring_src.Domains.ProductType;
 import org.junit.Test;
 //import org.junit.jupiter.api.Test;
 import org.testng.AssertJUnit;
@@ -21,7 +21,7 @@ public class ProductsControllerTests {
         //ProductController productController = ProductController.getInstance();
         ProductController pc=new ProductController();
         int initialSize = pc.getStuff().size();
-        pc.create("TestProduct", 10.5f, ProductType.hair, 5);
+        //pc.create("TestProduct", 10.5f, ProductType.hair, 5);
         assertEquals(initialSize + 1, pc.getStuff().size());
         Product lastProduct = pc.getStuff().get(pc.getStuff().size() - 1);
         assertEquals("TestProduct", lastProduct.getName());

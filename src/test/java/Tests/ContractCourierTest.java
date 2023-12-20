@@ -1,7 +1,7 @@
 package Tests;
 
-import src.Domains.ContractCourier;
-import src.Domains.Couriers;
+import the_spring_src.Domains.ContractCourier;
+import the_spring_src.Domains.Couriers;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
