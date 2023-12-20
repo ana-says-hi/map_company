@@ -21,9 +21,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class FeedbackController implements Controller<Feedback> {
-    //ca sa nu facem acum implementare de comenzi bagam mesaj cum ca suntem
-    //inafara progrramului/se fac renovari/modificari la sistem si revenim in 2 saptamani
-
     @Autowired
     private FeedbackRepo feedbackRepo;
 
@@ -55,7 +52,6 @@ public class FeedbackController implements Controller<Feedback> {
         return null;
     }
 
-    //nu il apelam :)
     public void delete(@PathVariable int id) {
         Feedback f = find_by_id(id);
         if (f != null)
