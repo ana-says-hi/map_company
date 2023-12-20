@@ -20,7 +20,7 @@ public class OrderProcessor extends CommandProcessor{
         if (!order.getProducts().isEmpty()) {
             System.out.println("Comanda a fost validata.");
         } else {
-            System.out.println("Nu s-a putt valida comanda. Nu exista produse.");
+            System.out.println("Nu s-a putut valida comanda. Nu exista produse.");
             throw new IllegalStateException("Cumparati macar un produs!");
         }
     }
