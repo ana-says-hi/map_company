@@ -63,7 +63,7 @@ public class OrderController implements Controller<Order>{
 
 
     @GetMapping("/{id}/order")
-    public ResponseEntity<Employee> find_by_id(@RequestBody int id){
+    public ResponseEntity<Client> find_by_id(@RequestBody int id){
         for(Order ord: orderRepo.get_repo())
             if(ord.getId()==id)
                 return ord;

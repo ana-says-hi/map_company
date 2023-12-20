@@ -1,7 +1,7 @@
 package src.Controll;
 
 import org.springframework.http.ResponseEntity;
-import src.Domains.Employee;
+import src.Domains.Client;
 import src.Domains.Product;
 import src.Domains.ProductType;
 import src.Reposies.ProductRepo;
@@ -50,6 +50,7 @@ public class ProductController implements Controller<Product> {
         //productRepo.add_to_repo(p);
     }
 
+    @PutMapping
     public ResponseEntity<Void> update(@PathVariable int id, @RequestBody ProductRequest request) {
         Optional<Product> optionalProduct = productRepo.findById(id);
 
@@ -71,7 +72,7 @@ public class ProductController implements Controller<Product> {
 
 
     @GetMapping("/product/{id}")
-    public ResponseEntity<Employee> find_by_id(@PathVariable int id) {
+    public ResponseEntity<Product> find_by_id(@PathVariable int id) {
         Optional<Product> optionalProduct = productRepo.findById(id);
         if (optionalProduct.isPresent()) {
             return ResponseEntity.ok(optionalProduct.get());
@@ -81,7 +82,7 @@ public class ProductController implements Controller<Product> {
     }
 
 
-    @DeleteMapping("/{id}/product")
+    @DeleteMapping("/product/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Product prod = find_by_id(id).getBody();
         if (prod != null) {

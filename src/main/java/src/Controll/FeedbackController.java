@@ -2,18 +2,21 @@ package src.Controll;
 
 import org.springframework.http.ResponseEntity;
 import src.Domains.Client;
-import src.Domains.Employee;
 import src.Domains.Feedback;
 import src.Domains.Product;
 import src.FactoryPattern.FeedbackFactory;
+import src.Reposies.ClientRepo;
 import src.Reposies.FeedbackRepo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import src.Reposies.ProductRepo;
+import src.RequestStuff.FeedbackRequest;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/feedback")
@@ -23,6 +26,8 @@ import java.util.ArrayList;
 public class FeedbackController implements Controller<Feedback> {
     @Autowired
     private FeedbackRepo feedbackRepo;
+    private ClientRepo clientRepo;
+    private ProductRepo productRepo;
 
     public FeedbackRepo getFeedbackRepo() {
         return feedbackRepo;
@@ -30,32 +35,40 @@ public class FeedbackController implements Controller<Feedback> {
 
     @GetMapping
     public ArrayList<Feedback> getFeedbacks() {
-        return feedbackRepo.get_repo();
+        return (ArrayList<Feedback>) feedbackRepo.findAll();
     }
 
     @PostMapping
-    public void create(@RequestBody int clientID, @RequestBody int productID, @RequestBody String message, @RequestBody boolean type) {
-        ClientController cc = new ClientController();
-        Client c = cc.find_by_id(clientID);
-        ProductController pc = new ProductController();
-        Product p = pc.find_by_id(productID);
-        Feedback feedback = FeedbackFactory.getFf_instance().make_feedb(c, p, message, type);
-        feedbackRepo.add_to_repo(feedback);
+    public void create(@RequestBody FeedbackRequest request) throws Throwable {
+        Integer clientID = request.getClientID();
+        Integer productID = request.getProductID();
+        String message = request.getMessage();
+        Boolean type = request.isType();
+        Client client = clientRepo.findById(clientID)
+                .orElseThrow(() -> new RuntimeException("Nu s-a gasit client cu id-ul: " + clientID));
+        Product product = (Product) productRepo.findById(productID)
+                .orElseThrow(() -> new RuntimeException("Nu s-a gasit produs cu id-ul: " + productID));
+        Feedback feedback = FeedbackFactory.getFf_instance().make_feedb(client, product, message, type);
+        feedbackRepo.save(feedback);
     }
 
-    @GetMapping("/{id}/feedback")
-    public ResponseEntity<Employee> find_by_id(@PathVariable int id) {
-        for (Feedback f : feedbackRepo.get_repo()) {
-            if (f.getId() == id)
-                return f;
+    @GetMapping("/feedback/{id}")
+    public ResponseEntity<Feedback> find_by_id(@PathVariable int id) {
+        Optional<Feedback> optionalFeedback = feedbackRepo.findById(id);
+        if (optionalFeedback.isPresent()) {
+            return ResponseEntity.ok(optionalFeedback.get());
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return null;
     }
 
+    @DeleteMapping("/feedback/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        Feedback f = find_by_id(id);
-        if (f != null)
-            feedbackRepo.remove_from_repo(f);
-        return null;
+        Feedback f = find_by_id(id).getBody();
+        if (f != null) {
+            // feedbackRepo.remove_from_repo(f);
+            return ResponseEntity.noContent().build();
+        } else
+            return ResponseEntity.notFound().build();
     }
 }

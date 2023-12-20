@@ -2,7 +2,6 @@ package src.Controll;
 
 import org.springframework.http.ResponseEntity;
 import src.Domains.Client;
-import src.Domains.Employee;
 import src.Reposies.ClientRepo;
 import src.FactoryPattern.ClientFactory;
 import lombok.Getter;
@@ -59,7 +58,7 @@ public class ClientController implements Controller<Client> {
         //return ResponseEntity.status(HttpStatus.CREATED).body(client);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/client/{id}")
     public ResponseEntity<Void> update(@PathVariable int id, @RequestBody ClientRequest request) {
         Optional<Client> optionalClient = clientRepo.findById(id);
 
@@ -77,12 +76,11 @@ public class ClientController implements Controller<Client> {
         }
     }
 
-    @GetMapping("/{id}/client")
-    public ResponseEntity<Employee> find_by_id(@PathVariable int id) {
+    @GetMapping("/client/{id}")
+    public ResponseEntity<Client> find_by_id(@PathVariable int id) {
         Optional<Client> optionalClient = clientRepo.findById(id);
-
         if (optionalClient.isPresent()) {
-            return ResponseEntity.ok(optionalClient.get());
+            return (ResponseEntity<Client>) ResponseEntity.ok();
         } else {
             return ResponseEntity.notFound().build();
         }

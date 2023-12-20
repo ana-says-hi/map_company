@@ -1,6 +1,7 @@
 package src.Controll;
 
 import org.springframework.http.ResponseEntity;
+import src.Domains.Client;
 import src.Domains.Employee;
 import src.FactoryPattern.EmployeeFactory;
 import src.Reposies.EmployeeRepo;
@@ -30,10 +31,8 @@ public class EmployeeController implements Controller<Employee> {
         List<Employee> employees = getEmployeeRepo().findAll();
 
         if (!employees.isEmpty()) {
-            // Returnează lista de angajați în corpul răspunsului
             return ResponseEntity.ok(employees);
         } else {
-            // Returnează un răspuns 404 Not Found dacă lista de angajați este goală
             return ResponseEntity.notFound().build();
         }
     }
@@ -46,24 +45,20 @@ public class EmployeeController implements Controller<Employee> {
         Employee employee = EmployeeFactory.getInstance().make_cl(name, password);
         //employeeRepo.add_to_repo(employee);
         employeeRepo.save(employee);
-        // Returnează un răspuns 201 Created și angajatul creat în corpul răspunsului
-        //return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping("/{id}/employee")
+    @GetMapping("/employee/{id}")
     public ResponseEntity<Employee> find_by_id(@PathVariable int id) {
         Optional<Employee> optionalEmployee = employeeRepo.findById(id);
 
         if (optionalEmployee.isPresent()) {
-            // Returnează un răspuns 200 OK și angajatul găsit în corpul răspunsului
             return ResponseEntity.ok(optionalEmployee.get());
         } else {
-            // Returnează un răspuns 404 Not Found dacă angajatul nu a fost găsit
             return ResponseEntity.notFound().build();
         }
     }
 
-    @DeleteMapping("/{id}/employee")
+    @DeleteMapping("/employee/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Optional<Employee> optionalEmployee = employeeRepo.findById(id);
 
