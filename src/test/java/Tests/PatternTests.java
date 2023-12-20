@@ -1,5 +1,5 @@
 package Tests;
-import src.Domains.Status;
+import the_spring_src.Domains.Status;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 public class PatternTests {
