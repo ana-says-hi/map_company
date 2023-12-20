@@ -1,7 +1,7 @@
 package Tests;
 
-import src.Domains.ContractEmployee;
-import src.Domains.EmployeeType;
+import the_spring_src.Domains.ContractEmployee;
+import the_spring_src.Domains.EmployeeType;
 import org.junit.Test;
 //import org.junit.jupiter.api.Test;
 
