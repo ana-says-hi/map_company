@@ -7,7 +7,7 @@ import java.util.ArrayList;
 //import org.springframework.data.jpa.repository.JpaRepository;
 
 //public interface Repo extends JpaRepository<T>{
-public interface Repo<T> extends JpaRepository<T,Integer> {
+public interface Repo<T>{
     public void add_to_repo(T c) throws SQLException;
     public void remove_from_repo(T c) throws SQLException;
     public ArrayList<T> get_repo();
