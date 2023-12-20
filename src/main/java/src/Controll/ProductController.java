@@ -1,6 +1,7 @@
 package src.Controll;
 
 import org.springframework.http.ResponseEntity;
+import src.Domains.Client;
 import src.Domains.Product;
 import src.Domains.ProductType;
 import src.Reposies.ProductRepo;
@@ -45,9 +46,11 @@ public class ProductController implements Controller<Product> {
         ProductType type = request.getType();
         Integer stoc = request.getStoc();
         Product p = ProductFactory.getInstance().make_prod(name, price, type, stoc);
+        productRepo.save(p);
         //productRepo.add_to_repo(p);
     }
 
+    @PutMapping
     public ResponseEntity<Void> update(@PathVariable int id, @RequestBody ProductRequest request) {
         Optional<Product> optionalProduct = productRepo.findById(id);
 
@@ -79,7 +82,7 @@ public class ProductController implements Controller<Product> {
     }
 
 
-    @DeleteMapping("/{id}/product")
+    @DeleteMapping("/product/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Product prod = find_by_id(id).getBody();
         if (prod != null) {

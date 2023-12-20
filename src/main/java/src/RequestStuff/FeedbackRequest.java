@@ -1,25 +1,17 @@
 package src.RequestStuff;
 
-import src.Domains.Client;
-import src.Domains.Product;
-
 public class FeedbackRequest {
-    private int id;
-    private Client client;
-    private Product product;
-    private String message;
-    private boolean type;
+    int clientID;
+    int productID;
+    String message;
+    boolean type;
 
-    public int getId() {
-        return id;
+    public int getClientID() {
+        return clientID;
     }
 
-    public Client getClient() {
-        return client;
-    }
-
-    public Product getProduct() {
-        return product;
+    public int getProductID() {
+        return productID;
     }
 
     public String getMessage() {

@@ -1,8 +1,9 @@
 package src.RequestStuff;
 
 public class ClientRequest {
-    String name;
-    String address;
+    private String name;
+    private String address;
+
 
     public String getName() {
         return name;
