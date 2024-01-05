@@ -70,7 +70,7 @@ public class ProductController implements Controller<Product> {
     }
 
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Product> find_by_id(@PathVariable int id) {
         Optional<Product> optionalProduct = productRepo.findById(id);
         if (optionalProduct.isPresent()) {
@@ -81,7 +81,7 @@ public class ProductController implements Controller<Product> {
     }
 
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Product prod = find_by_id(id).getBody();
         if (prod != null) {
@@ -93,7 +93,7 @@ public class ProductController implements Controller<Product> {
         }
     }
 
-    //@GetMapping("/{type}/product")
+    //@GetMapping("/{type}")
     public ArrayList<Product> filterProductsByType(@PathVariable String type) throws SQLException {
         ArrayList<Product> filteredProducts = new ArrayList<>();
         ArrayList<Product> products = (ArrayList<Product>) getStuff();
