@@ -1,11 +1,169 @@
 package the_spring_src.Reposies;
 
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 import the_spring_src.Domains.Feedback;
 
+import java.util.List;
+import java.util.Optional;
+import java.util.function.Function;
+
 @Repository
-public abstract class FeedbackRepo implements JpaRepository<Feedback,Integer> {
+public class FeedbackRepo implements JpaRepository<Feedback,Integer> {
+    @Override
+    public void flush() {
+
+    }
+
+    @Override
+    public <S extends Feedback> S saveAndFlush(S entity) {
+        return null;
+    }
+
+    @Override
+    public <S extends Feedback> List<S> saveAllAndFlush(Iterable<S> entities) {
+        return null;
+    }
+
+    @Override
+    public void deleteAllInBatch(Iterable<Feedback> entities) {
+
+    }
+
+    @Override
+    public void deleteAllByIdInBatch(Iterable<Integer> integers) {
+
+    }
+
+    @Override
+    public void deleteAllInBatch() {
+
+    }
+
+    @Override
+    public Feedback getOne(Integer integer) {
+        return null;
+    }
+
+    @Override
+    public Feedback getById(Integer integer) {
+        return null;
+    }
+
+    @Override
+    public Feedback getReferenceById(Integer integer) {
+        return null;
+    }
+
+    @Override
+    public <S extends Feedback> Optional<S> findOne(Example<S> example) {
+        return Optional.empty();
+    }
+
+    @Override
+    public <S extends Feedback> List<S> findAll(Example<S> example) {
+        return null;
+    }
+
+    @Override
+    public <S extends Feedback> List<S> findAll(Example<S> example, Sort sort) {
+        return null;
+    }
+
+    @Override
+    public <S extends Feedback> Page<S> findAll(Example<S> example, Pageable pageable) {
+        return null;
+    }
+
+    @Override
+    public <S extends Feedback> long count(Example<S> example) {
+        return 0;
+    }
+
+    @Override
+    public <S extends Feedback> boolean exists(Example<S> example) {
+        return false;
+    }
+
+    @Override
+    public <S extends Feedback, R> R findBy(Example<S> example, Function<FluentQuery.FetchableFluentQuery<S>, R> queryFunction) {
+        return null;
+    }
+
+    @Override
+    public <S extends Feedback> S save(S entity) {
+        return null;
+    }
+
+    @Override
+    public <S extends Feedback> List<S> saveAll(Iterable<S> entities) {
+        return null;
+    }
+
+    @Override
+    public Optional<Feedback> findById(Integer integer) {
+        return Optional.empty();
+    }
+
+    @Override
+    public boolean existsById(Integer integer) {
+        return false;
+    }
+
+    @Override
+    public List<Feedback> findAll() {
+        return null;
+    }
+
+    @Override
+    public List<Feedback> findAllById(Iterable<Integer> integers) {
+        return null;
+    }
+
+    @Override
+    public long count() {
+        return 0;
+    }
+
+    @Override
+    public void deleteById(Integer integer) {
+
+    }
+
+    @Override
+    public void delete(Feedback entity) {
+
+    }
+
+    @Override
+    public void deleteAllById(Iterable<? extends Integer> integers) {
+
+    }
+
+    @Override
+    public void deleteAll(Iterable<? extends Feedback> entities) {
+
+    }
+
+    @Override
+    public void deleteAll() {
+
+    }
+
+    @Override
+    public List<Feedback> findAll(Sort sort) {
+        return null;
+    }
+
+    @Override
+    public Page<Feedback> findAll(Pageable pageable) {
+        return null;
+    }
 //
 //    private ArrayList<Feedback> f_repo=new ArrayList<>();
 //

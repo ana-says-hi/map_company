@@ -15,10 +15,11 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+//@org.springframework.stereotype.Controller
 @RequestMapping("/api/client")
 @Getter
 @Setter
-@NoArgsConstructor
+//@NoArgsConstructor
 public class ClientController implements Controller<Client> {
     //ca sa nu facem acum implementare de comenzi bagam mesaj cum ca suntem
     //inafara progrramului/se fac x/modificari la sistem si revenim in 2 saptamani
@@ -27,6 +28,9 @@ public class ClientController implements Controller<Client> {
 
     @Autowired
     private ClientRepo clientRepo;
+
+    public ClientController() {
+    }
 
     @GetMapping
     public ResponseEntity<List<Client>> getClients() {
