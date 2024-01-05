@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.FluentQuery;
 import org.springframework.stereotype.Repository;
 import the_spring_src.Domains.Product;
+import the_spring_src.Domains.ProductType;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,6 +23,36 @@ import static net.sf.jsqlparser.parser.feature.Feature.select;
 public class ProductRepo implements JpaRepository<Product, Integer> {
 
     private ArrayList<Product> p_repo;
+
+    public ProductRepo() throws SQLException {
+        this.p_repo = get_from_db();
+    }
+
+
+    private ArrayList<Product> get_from_db() throws SQLException {
+        ArrayList<Product> our_products = new ArrayList<>();
+        try (
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef", "castravete"); ///AICI CRAPA
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "admin","S3cret"); ///AICI CRAPA
+                PreparedStatement statement = connection.prepareStatement("select * from \"Product\"")
+        ) {
+            ResultSet selected_stuff = statement.executeQuery();
+            while (selected_stuff.next()) {
+                int id = selected_stuff.getInt("id");
+                String name = selected_stuff.getString("name");
+                float price = selected_stuff.getInt("price");
+                int stoc = selected_stuff.getInt("stoc");
+                String type = selected_stuff.getString("type");
+                Product product = new Product(id, name, price, ProductType.valueOf(type), stoc);
+                our_products.add(product);
+            }
+
+        } catch (SQLException ex) {
+            throw ex;
+//            throw new RuntimeException("Database Error");
+        }
+        return our_products;
+    }
 
     public Product save(Product p) {
         try (

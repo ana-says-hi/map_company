@@ -86,6 +86,7 @@ public class ProductController implements Controller<Product> {
         Product prod = find_by_id(id).getBody();
         if (prod != null) {
             //productRepo.remove_from_repo(prod);
+            productRepo.delete(prod);
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();
