@@ -277,7 +277,7 @@ public class ClientRepo implements JpaRepository<Client, Integer> {
 //
 //    @Override
 //    @Transactional
-    public ArrayList<Client> get_from_db() throws SQLException {
+    private ArrayList<Client> get_from_db() throws SQLException {
         ArrayList<Client> our_clients=new ArrayList<>();
         try (
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");

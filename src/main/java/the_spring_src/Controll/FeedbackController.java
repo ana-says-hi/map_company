@@ -52,7 +52,7 @@ public class FeedbackController implements Controller<Feedback> {
         feedbackRepo.save(feedback);
     }
 
-    @GetMapping("/feedback/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Feedback> find_by_id(@PathVariable int id) {
         Optional<Feedback> optionalFeedback = feedbackRepo.findById(id);
         if (optionalFeedback.isPresent()) {
@@ -62,11 +62,12 @@ public class FeedbackController implements Controller<Feedback> {
         }
     }
 
-    @DeleteMapping("/feedback/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Feedback f = find_by_id(id).getBody();
         if (f != null) {
             // feedbackRepo.remove_from_repo(f);
+            feedbackRepo.delete(f);
             return ResponseEntity.noContent().build();
         } else
             return ResponseEntity.notFound().build();
