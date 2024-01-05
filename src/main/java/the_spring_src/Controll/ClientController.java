@@ -35,7 +35,6 @@ public class ClientController implements Controller<Client> {
     @GetMapping
     public ResponseEntity<List<Client>> getClients() {
         List<Client> clients = getClientRepo().findAll();
-
         if (!clients.isEmpty()) {
             return ResponseEntity.ok(clients);
         } else {
@@ -60,7 +59,7 @@ public class ClientController implements Controller<Client> {
         //return ResponseEntity.status(HttpStatus.CREATED).body(client);
     }
 
-    @PutMapping("/client/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable int id, @RequestBody ClientRequest request) {
         Optional<Client> optionalClient = clientRepo.findById(id);
 
@@ -78,7 +77,7 @@ public class ClientController implements Controller<Client> {
         }
     }
 
-    @GetMapping("/client/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Client> find_by_id(@PathVariable int id) {
         Optional<Client> optionalClient = clientRepo.findById(id);
         if (optionalClient.isPresent()) {
@@ -88,7 +87,7 @@ public class ClientController implements Controller<Client> {
         }
     }
 
-    //@GetMapping("/{name}/client")
+    //@GetMapping("/{name}")
     public Client find_by_name(@PathVariable String name) {
         for (Client c : clientRepo.findAll()) {
             if (c.getName() == name)
@@ -97,7 +96,7 @@ public class ClientController implements Controller<Client> {
         return null;
     }
 
-    @DeleteMapping("/client/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Optional<Client> optionalClient = clientRepo.findById(id);
 

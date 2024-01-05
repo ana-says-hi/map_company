@@ -8,11 +8,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.FluentQuery;
 import the_spring_src.Domains.Client;
 import org.springframework.stereotype.Repository;
+import the_spring_src.Domains.Product;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -22,6 +20,10 @@ import java.util.function.Function;
 public class ClientRepo implements JpaRepository<Client, Integer> {
 
     private ArrayList<Client> c_repo;
+
+    public ClientRepo() throws SQLException {
+        this.c_repo = get_from_db();
+    }
 
     @Override
     public long count() {
@@ -35,12 +37,34 @@ public class ClientRepo implements JpaRepository<Client, Integer> {
 
     @Override
     public void deleteById(Integer integer) {
-
+        try (
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("delete from \"Client\" where id=(?)")
+        ){
+            statement.setInt(1, integer);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Database Error");
+        }
+        //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
+        c_repo.remove(integer);
     }
 
     @Override
-    public void delete(Client entity) {
-
+    public void delete(Client c) {
+        try (
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("delete from \"Client\" where id=(?)")
+        ){
+            statement.setInt(1, c.getId());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Database Error");
+        }
+        //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
+        c_repo.remove(c);
     }
 
     @Override
@@ -79,7 +103,12 @@ public class ClientRepo implements JpaRepository<Client, Integer> {
     }
 
     @Override
-    public Client getById(Integer integer) {
+    public Client getById(Integer id) {
+        for (Client client : c_repo) {
+            if (client.getId() == id) {
+                return client;
+            }
+        }
         return null;
     }
 
@@ -119,8 +148,22 @@ public class ClientRepo implements JpaRepository<Client, Integer> {
     }
 
     @Override
-    public <S extends Client> S save(S entity) {
-        return null;
+    public <S extends Client> S save(S c) {
+        try (
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("insert into \"Client\" (id,name,address) values (?, ?, ?)")
+        ) {
+            statement.setInt(1, c.getId());
+            statement.setString(2, c.getName());
+            statement.setString(3, c.getAddress());
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Database Error");
+        }
+        c_repo.add(c);
+        //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
+        return c;
     }
 
     @Override
@@ -129,7 +172,12 @@ public class ClientRepo implements JpaRepository<Client, Integer> {
     }
 
     @Override
-    public Optional<Client> findById(Integer integer) {
+    public Optional<Client> findById(Integer id) {
+        for (Client product : c_repo) {
+            if (product.getId() == id) {
+                return Optional.of(product);
+            }
+        }
         return Optional.empty();
     }
 
@@ -140,7 +188,8 @@ public class ClientRepo implements JpaRepository<Client, Integer> {
 
     @Override
     public List<Client> findAll() {
-        return null;
+
+        return c_repo;
     }
 
     @Override
@@ -228,26 +277,26 @@ public class ClientRepo implements JpaRepository<Client, Integer> {
 //
 //    @Override
 //    @Transactional
-//    public ArrayList<Client> get_from_db() throws SQLException {
-//        ArrayList<Client> our_clients=new ArrayList<>();
-//        try (
-//                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
-//                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
-//                PreparedStatement statement = connection.prepareStatement("select * from \"Client\"")
-//        ){
-//            ResultSet selected_stuff= statement.executeQuery();
-//            while(selected_stuff.next()){
-//                int id=selected_stuff.getInt("id");
-//                String name=selected_stuff.getString("name");
-//                String address=selected_stuff.getString("address");
-//                Client client=new Client(id,name,address);
-//                our_clients.add(client);
-//            }
-//        }
-//        catch(SQLException ex) {
-//            throw new RuntimeException("Database Error");
-//        }
-//        return our_clients;
-//    }
+    public ArrayList<Client> get_from_db() throws SQLException {
+        ArrayList<Client> our_clients=new ArrayList<>();
+        try (
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("select * from \"Client\"")
+        ){
+            ResultSet selected_stuff= statement.executeQuery();
+            while(selected_stuff.next()){
+                int id=selected_stuff.getInt("id");
+                String name=selected_stuff.getString("name");
+                String address=selected_stuff.getString("address");
+                Client client=new Client(id,name,address);
+                our_clients.add(client);
+            }
+        }
+        catch(SQLException ex) {
+            throw new RuntimeException("Database Error");
+        }
+        return our_clients;
+    }
 
 }
