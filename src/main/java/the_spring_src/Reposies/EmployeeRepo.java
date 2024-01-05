@@ -8,13 +8,29 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.FluentQuery;
 import the_spring_src.Domains.Employee;
 import org.springframework.stereotype.Repository;
+import the_spring_src.FactoryPattern.EmployeeFactory;
 
+import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
 
 @Repository
 public class EmployeeRepo implements JpaRepository<Employee,Integer> {
+
+    private ArrayList<Employee> e_repo;
+
+    public EmployeeRepo() {
+        this.e_repo = new ArrayList<>();
+        Employee e1= EmployeeFactory.getInstance().make_cl("Annaaa","Ania1234");
+        Employee e2= EmployeeFactory.getInstance().make_cl("Steff","Stef2205");
+        Employee e3= EmployeeFactory.getInstance().make_cl("Bogdie","hokedo");
+        e_repo.add(e1);
+        e_repo.add(e2);
+        e_repo.add(e3);
+    }
+
     @Override
     public void flush() {
 
@@ -51,7 +67,12 @@ public class EmployeeRepo implements JpaRepository<Employee,Integer> {
     }
 
     @Override
-    public Employee getById(Integer integer) {
+    public Employee getById(Integer id) {
+        for (Employee employee : e_repo) {
+            if (employee.getId() == id) {
+                return employee;
+            }
+        }
         return null;
     }
 
@@ -82,7 +103,7 @@ public class EmployeeRepo implements JpaRepository<Employee,Integer> {
 
     @Override
     public <S extends Employee> long count(Example<S> example) {
-        return 0;
+        return e_repo.size();
     }
 
     @Override
@@ -96,8 +117,22 @@ public class EmployeeRepo implements JpaRepository<Employee,Integer> {
     }
 
     @Override
-    public <S extends Employee> S save(S entity) {
-        return null;
+    public <S extends Employee> S save(S e) {
+        try (
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("insert into \"Employee\" (id,name,password) values (?, ?, ?)")
+        ) {
+            statement.setInt(1, e.getId());
+            statement.setString(2, e.getName());
+            statement.setString(3, e.getPassword());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Database Error");
+        }
+        e_repo.add(e);
+        //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
+        return e;
     }
 
     @Override
@@ -106,7 +141,12 @@ public class EmployeeRepo implements JpaRepository<Employee,Integer> {
     }
 
     @Override
-    public Optional<Employee> findById(Integer integer) {
+    public Optional<Employee> findById(Integer id) {
+        for (Employee employee : e_repo) {
+            if (employee.getId() == id) {
+                return Optional.of(employee);
+            }
+        }
         return Optional.empty();
     }
 
@@ -117,7 +157,7 @@ public class EmployeeRepo implements JpaRepository<Employee,Integer> {
 
     @Override
     public List<Employee> findAll() {
-        return null;
+        return e_repo;
     }
 
     @Override
@@ -127,17 +167,39 @@ public class EmployeeRepo implements JpaRepository<Employee,Integer> {
 
     @Override
     public long count() {
-        return 0;
+        return e_repo.size();
     }
 
     @Override
     public void deleteById(Integer integer) {
-
+        try (
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("delete from \"Employee\" where id=(?)")
+        ){
+            statement.setInt(1, integer);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Database Error");
+        }
+        //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
+        e_repo.remove(integer);
     }
 
     @Override
-    public void delete(Employee entity) {
-
+    public void delete(Employee e) {
+        try (
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef","castravete");
+                PreparedStatement statement = connection.prepareStatement("delete from \"Employee\" where id=(?)")
+        ){
+            statement.setInt(1, e.getId());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException("Database Error");
+        }
+        //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
+        e_repo.remove(e);
     }
 
     @Override
@@ -147,12 +209,19 @@ public class EmployeeRepo implements JpaRepository<Employee,Integer> {
 
     @Override
     public void deleteAll(Iterable<? extends Employee> entities) {
-
     }
 
     @Override
     public void deleteAll() {
-
+        try (
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef", "castravete"); ///AICI CRAPA
+                //PreparedStatement statement = connection.prepareStatement("delete from \"Product\" where id=(?)")
+                Statement select = connection.createStatement();
+        ) {
+            select.execute("DELETE FROM \"Employee\"");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
