@@ -164,6 +164,7 @@ public class ProductRepo implements JpaRepository<Product, Integer> {
                 Statement select = connection.createStatement();
         ) {
             select.execute("DELETE FROM \"Product\"");
+            p_repo.removeAll(p_repo);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

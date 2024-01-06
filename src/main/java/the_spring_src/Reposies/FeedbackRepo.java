@@ -221,6 +221,7 @@ public class FeedbackRepo implements JpaRepository<Feedback,Integer> {
                 Statement select = connection.createStatement();
         ) {
             select.execute("DELETE FROM \"Feedback\"");
+            f_repo.removeAll(f_repo);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

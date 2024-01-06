@@ -219,6 +219,7 @@ public class EmployeeRepo implements JpaRepository<Employee,Integer> {
                 Statement select = connection.createStatement();
         ) {
             select.execute("DELETE FROM \"Employee\"");
+            e_repo.removeAll(e_repo);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

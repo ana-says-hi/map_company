@@ -215,6 +215,7 @@ public class ClientRepo implements JpaRepository<Client, Integer> {
                 Statement select = connection.createStatement();
         ) {
             select.execute("DELETE FROM \"Client\"");
+            c_repo.removeAll(c_repo);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

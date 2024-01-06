@@ -169,6 +169,10 @@ public class Order implements Observable {
         for(Observer observer: observers)
             observer.update(this);
     }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
 }
 
 
