@@ -2,20 +2,20 @@ package the_spring_src.Domains;
 
 public class ProdInOrderEntity {
     //private int id;
-    private Order order;    //here we buy
+    private int order;    //here we buy
     private Product product;
 
 
-    public void setOrder(Order order) {
+    public void setOrder(int order) {
         this.order = order;
     }
 
-    public ProdInOrderEntity(Order here_we_buy, Product product) {
+    public ProdInOrderEntity(int here_we_buy, Product product) {
         this.order=here_we_buy;
         this.product=product;
     }
 
-    public Order getOrder() {
+    public int getOrder() {
         return order;
     }
 

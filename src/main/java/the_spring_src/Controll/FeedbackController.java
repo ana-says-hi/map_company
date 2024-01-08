@@ -72,4 +72,9 @@ public class FeedbackController implements Controller<Feedback> {
         } else
             return ResponseEntity.notFound().build();
     }
+
+    @DeleteMapping
+    public void deleteAall(){
+        feedbackRepo.deleteAll();
+    }
 }

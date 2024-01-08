@@ -27,7 +27,7 @@ public class ProdInOrderRepo implements JpaRepository<ProdInOrderEntity, Integer
 
     public ArrayList<ProdInOrderEntity> get_from_db() throws SQLException {
         ArrayList<ProdInOrderEntity> our_pio = new ArrayList<>();
-        OrderRepo or = new OrderRepo();
+        //OrderRepo or = new OrderRepo();
         ProductRepo pr = new ProductRepo();
         try (
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin","S3cret");
@@ -39,7 +39,7 @@ public class ProdInOrderRepo implements JpaRepository<ProdInOrderEntity, Integer
                 int idfactura = selected_stuff.getInt("idfactura");
                 int idproduct = selected_stuff.getInt("idproduct");
                 int cantitate = selected_stuff.getInt("cantitate");
-                ProdInOrderEntity pio = new ProdInOrderEntity(or.getById(idfactura), pr.getById(idproduct));
+                ProdInOrderEntity pio = new ProdInOrderEntity(idfactura, pr.getById(idproduct));
                 //Order order = new Order(id, client, employee, totalprie, date, Status.valueOf(status), new BasicDelivery(id, date), new ArrayList<>());
                 our_pio.add(pio);
             }
@@ -52,7 +52,7 @@ public class ProdInOrderRepo implements JpaRepository<ProdInOrderEntity, Integer
     public ArrayList<Product> looking_for_order(Order order) {
         ArrayList<Product> result_pio = new ArrayList<>();
         for (ProdInOrderEntity pio : pio_repo) {
-            if (pio.getOrder().getId() == order.getId())
+            if (pio.getOrder() == order.getId())
                 result_pio.add(pio.getProduct());
         }
         return result_pio;
@@ -115,9 +115,9 @@ public class ProdInOrderRepo implements JpaRepository<ProdInOrderEntity, Integer
 
         if (probe != null) {
             ArrayList<ProdInOrderEntity> result_pio = new ArrayList<>();
-            Integer idFactura = probe.getOrder().getId();
+            Integer idFactura = probe.getOrder();
             for (ProdInOrderEntity pio : pio_repo) {
-                if (pio.getOrder().getId() == idFactura)
+                if (pio.getOrder()== idFactura)
                     result_pio.add(pio);
             }
             return (List<S>) result_pio;
@@ -158,7 +158,7 @@ public class ProdInOrderRepo implements JpaRepository<ProdInOrderEntity, Integer
                 //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
                 PreparedStatement statement = connection.prepareStatement("INSERT INTO \"Order_Product\"(idfactura,idproduct,cantitate) VALUES (?,?,1)")
         ) {
-            statement.setInt(1, pio.getOrder().getId());
+            statement.setInt(1, pio.getOrder());
             statement.setInt(2, pio.getProduct().getId());
             statement.executeUpdate();
         } catch (SQLException e) {
@@ -168,7 +168,7 @@ public class ProdInOrderRepo implements JpaRepository<ProdInOrderEntity, Integer
                 throw new RuntimeException(ex);
             }
         }
-        pio.getOrder().addProduct(pio.getProduct());
+        //pio.getOrder().addProduct(pio.getProduct());
         pio_repo.add(pio);
         return pio;
     }
@@ -217,7 +217,7 @@ public class ProdInOrderRepo implements JpaRepository<ProdInOrderEntity, Integer
         }
         //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
         for (ProdInOrderEntity pio : pio_repo) {
-            if (pio.getOrder().getId() == idfactura)
+            if (pio.getOrder() == idfactura)
                 pio_repo.remove(pio);
         }
     }
@@ -229,14 +229,14 @@ public class ProdInOrderRepo implements JpaRepository<ProdInOrderEntity, Integer
                 Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef", "castravete");
                 PreparedStatement statement = connection.prepareStatement("delete from \"Order_Product\" where idfactura=(?) and idproduct=(?)")
         ) {
-            statement.setInt(1, pio.getOrder().getId());
+            statement.setInt(1, pio.getOrder());
             statement.setInt(2, pio.getProduct().getId());
             statement.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException("Database Error");
         }
         //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
-        pio.getOrder().deleteProduct(pio.getProduct());
+        //pio.getOrder().deleteProduct(pio.getProduct());
         pio_repo.remove(pio);
     }
 

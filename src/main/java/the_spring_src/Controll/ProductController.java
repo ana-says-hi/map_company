@@ -106,4 +106,9 @@ public class ProductController implements Controller<Product> {
         return filteredProducts;
     }
 
+    @DeleteMapping
+    public void deleteAall(){
+        productRepo.deleteAll();
+    }
+
 }

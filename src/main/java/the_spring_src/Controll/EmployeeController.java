@@ -65,4 +65,9 @@ public class EmployeeController implements Controller<Employee> {
         }
     }
 
+    @DeleteMapping
+    public void deleteAall(){
+        employeeRepo.deleteAll();
+    }
+
 }

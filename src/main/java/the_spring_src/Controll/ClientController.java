@@ -109,5 +109,10 @@ public class ClientController implements Controller<Client> {
         }
     }
 
+    @DeleteMapping
+    public void deleteAall(){
+        clientRepo.deleteAll();
+    }
+
 
 }
