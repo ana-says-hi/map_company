@@ -5,11 +5,12 @@ import the_spring_src.Domains.ProductType;
 public class ProductRequest {
     private String name;
     private Float price;
-    private ProductType type;
+//    private ProductType type;
+    private String type;
     private Integer stoc;
 
     public String getName() {
-        return name;
+        return this.name;
     }
 
     public Float getPrice() {
@@ -17,7 +18,7 @@ public class ProductRequest {
     }
 
     public ProductType getType() {
-        return type;
+        return ProductType.valueOf(type);
     }
 
     public Integer getStoc() {

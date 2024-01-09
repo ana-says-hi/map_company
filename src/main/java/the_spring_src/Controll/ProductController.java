@@ -49,7 +49,7 @@ public class ProductController implements Controller<Product> {
         //productRepo.add_to_repo(p);
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<Void> update(@PathVariable int id, @RequestBody ProductRequest request) {
         Optional<Product> optionalProduct = productRepo.findById(id);
 
