@@ -66,6 +66,8 @@ public class ClientController implements Controller<Client> {
         if (optionalClient.isPresent()) {
             Client existingClient = optionalClient.get();
 
+            clientRepo.delete(existingClient);
+
             existingClient.setName(request.getName());
             existingClient.setAddress(request.getAddress());
 

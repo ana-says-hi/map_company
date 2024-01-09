@@ -56,6 +56,8 @@ public class ProductController implements Controller<Product> {
         if (optionalProduct.isPresent()) {
             Product existingProduct = optionalProduct.get();
 
+            productRepo.delete(existingProduct);
+
             existingProduct.setName(request.getName());
             existingProduct.setPrice(request.getPrice());
             existingProduct.setType(request.getType());
