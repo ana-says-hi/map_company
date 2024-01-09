@@ -24,4 +24,21 @@ public class ProductRequest {
     public Integer getStoc() {
         return stoc;
     }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(Float price) {
+        this.price = price;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public void setStoc(Integer stoc) {
+        this.stoc = stoc;
+    }
 }
+

@@ -56,16 +56,13 @@ public class ProductRepo implements JpaRepository<Product, Integer> {
 
     public Product save(Product p) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef", "castravete"); ///AICI CRAPA
-                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
-                //Connection connection= DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret"); ///AICI CRAPA
                 PreparedStatement statement = connection.prepareStatement("insert into \"Product\" (id,name,price,stoc,type) values (?, ?, ?,?,?)")
         ) {
             statement.setString(2, p.getName());
             statement.setFloat(3, p.getPrice());
             statement.setInt(4, p.getStoc());
             statement.setString(5, String.valueOf(p.getType()));
-            // statement.setString(3, p.getAddress());
             statement.executeUpdate();
         } catch (SQLException e) {
             try {
@@ -73,10 +70,6 @@ public class ProductRepo implements JpaRepository<Product, Integer> {
             } catch (SQLException ex) {
                 throw new RuntimeException(ex);
             }
-            //throw new RuntimeException("Database Error");
-//        }
-//        //select.execute("INSERT INTO \"Client\"(id,name,address) VALUES (\"c.id\",\"c.name\",\"c.address\") ");
-//
         }
         p_repo.add(p);
         return p;
@@ -126,8 +119,6 @@ public class ProductRepo implements JpaRepository<Product, Integer> {
     public void deleteById(Integer integer) {
         try (
                 Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef", "castravete"); ///AICI CRAPA
-                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret");
-                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/postgres", "stef","castravete");
                 PreparedStatement statement = connection.prepareStatement("delete from \"Product\" where id=(?)")
         ) {
             statement.setInt(1, integer);
@@ -135,7 +126,6 @@ public class ProductRepo implements JpaRepository<Product, Integer> {
         } catch (SQLException ex) {
             throw new RuntimeException("Database Error");
         }
-        //select.execute("DELETE FROM \"Client\" WHERE id=\"c.id\" ");
         p_repo.remove(integer);
     }
 
