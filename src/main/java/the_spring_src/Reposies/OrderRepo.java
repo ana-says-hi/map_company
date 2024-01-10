@@ -128,7 +128,7 @@ public class OrderRepo implements JpaRepository<Order, Integer> {
             statement.setFloat(4, o.getTotalPrice());
             statement.setDate(5, Date.valueOf(o.getDate()));
             statement.setString(6, o.getStatus().toString());
-            statement.setString(7, "NULL");
+            statement.setString(7, o.getDelivery().getExpectedDate().toString());
             statement.executeUpdate();
         } catch (SQLException e) {
             try {

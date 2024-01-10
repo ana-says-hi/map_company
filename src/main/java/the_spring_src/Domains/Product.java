@@ -15,10 +15,6 @@ public class Product implements Observable {
 
     private ArrayList<Observer> observers= new ArrayList<>();
 
-    public Product(String name, Float price, ProductType productType, Integer stoc) {
-    }
-
-
     //produsele au cifra de inceput 3 +numarul de 4
     //clientii au cifra de inceput 2 +numarul de 4
     // angajatii au cifra de inceput 1+numarul de 4

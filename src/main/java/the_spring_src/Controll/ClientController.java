@@ -103,8 +103,8 @@ public class ClientController implements Controller<Client> {
         Optional<Client> optionalClient = clientRepo.findById(id);
 
         if (optionalClient.isPresent()) {
-            clientRepo.deleteById(id);
-
+            //clientRepo.deleteById(id);
+            clientRepo.delete(optionalClient.get());
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.notFound().build();

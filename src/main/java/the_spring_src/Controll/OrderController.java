@@ -1,5 +1,6 @@
 package the_spring_src.Controll;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.http.ResponseEntity;
 import the_spring_src.CommandProcessPattern.OrderProcessor;
 import the_spring_src.Domains.*;
@@ -15,50 +16,53 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import the_spring_src.Reposies.ProdInOrderRepo;
+import the_spring_src.RequestStuff.OrderRequest;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
-//TODO set delivery
-//TODO CURRENT DATE AND TIME LA ORDER SI LA DELIVERY
-//TODO FILTER PENTRU STATUS ORDER
 @RestController
-@RequestMapping("/api/order")
+@RequestMapping("/api")
 @Getter
 @Setter
-@NoArgsConstructor
 public class OrderController implements Controller<Order> {
     OrderProcessor orderProcessor;
-
-    ClientController cc = new ClientController();
-    ProductController pc = new ProductController();
-
 
     @Autowired
     private OrderRepo orderRepo;
     private ProdInOrderRepo prodInOrderRepo;
 
+    public OrderController() {
+    }
+
     public OrderRepo getOrderRepo() {
         return orderRepo;
     }
 
-//    @GetMapping
-//    public ArrayList<Order> getOrders(){return orderRepo.get_repo();}
+    @GetMapping("/order")
+    public ResponseEntity<List<Order>> getOrders(){
+        List<Order> orders = orderRepo.findAll();
+        if (!orders.isEmpty()) {
+            return ResponseEntity.ok(orders);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
-    @PostMapping
-    public void create(@RequestBody Client client) {
-        //Order o=new Order(id,client,employee,date);
-        Order o = OrderFactory.getInstance().make_ord(client);
-        //orderRepo.add_to_repo(o);
-        //return o;
+    @PostMapping("/order")
+    public void create(@RequestBody OrderRequest client) {
+        ClientController cc = new ClientController();
+        Client client1= cc.find_by_id(client.getClient()).getBody();
+        Order o = OrderFactory.getInstance().make_ord(client1);
         orderRepo.save(o);
     }
 
-    @PutMapping
-    public void update(@RequestBody int id, @RequestBody Client client, @RequestBody Employee employee, @RequestBody LocalDate date, @RequestBody Status status) {
+    @PutMapping("/order/{id}")
+    public void update(@PathVariable int id, @RequestBody Client client, @RequestBody Employee employee, @RequestBody LocalDate date, @RequestBody Status status) {
         Order old_ord = find_by_id(id).getBody();
         delete(id);
         Order o = new Order(id, client, employee, old_ord.getTotalPrice(), date, status, old_ord.getDelivery(), old_ord.getProducts());
@@ -66,8 +70,8 @@ public class OrderController implements Controller<Order> {
     }
 
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Order> find_by_id(@RequestBody int id) {
+    @GetMapping("/order/{id}")
+    public ResponseEntity<Order> find_by_id(@PathVariable int id) {
         Optional<Order> optionalOrder = orderRepo.findById(id);
         if (optionalOrder.isPresent()) {
             return ResponseEntity.ok(optionalOrder.get());
@@ -78,6 +82,8 @@ public class OrderController implements Controller<Order> {
 
     //@GetMapping("/{name}/order")
     public ArrayList<Order> find_by_client(@RequestBody String name) {
+        ClientController cc = new ClientController();
+
         ArrayList<Order> them_products = new ArrayList<>();
         Client our_client = cc.find_by_name(name);
         if (our_client != null)
@@ -97,6 +103,7 @@ public class OrderController implements Controller<Order> {
 
     //TODO SMTH WITH THIS
     public void for_client_add_product(String this_guy, ArrayList<Integer> i_wanna_buy) throws SQLException {
+        ClientController cc = new ClientController();
         if (cc.find_by_name(this_guy) != null) {
             ProductController pc = new ProductController();
             Order here_we_buy = find_last_order_unplaced(this_guy);
@@ -122,7 +129,7 @@ public class OrderController implements Controller<Order> {
     }
 
     @Override
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/order/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Order ord = find_by_id(id).getBody();
         if (ord != null) {
@@ -161,7 +168,7 @@ public class OrderController implements Controller<Order> {
         //the_order.finishOrder();
     }
 
-    @DeleteMapping
+    @DeleteMapping("/order")
     public void deleteAall() {
         orderRepo.deleteAll();
     }

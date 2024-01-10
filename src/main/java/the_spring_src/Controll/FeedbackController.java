@@ -39,15 +39,15 @@ public class FeedbackController implements Controller<Feedback> {
     }
 
     @PostMapping
-    public void create(@RequestBody FeedbackRequest request) throws Throwable {
+    public void create(@RequestBody FeedbackRequest request) {
         Integer clientID = request.getClientID();
         Integer productID = request.getProductID();
         String message = request.getMessage();
         Boolean type = request.isType();
-        Client client = clientRepo.findById(clientID)
-                .orElseThrow(() -> new RuntimeException("Nu s-a gasit client cu id-ul: " + clientID));
-        Product product = (Product) productRepo.findById(productID)
-                .orElseThrow(() -> new RuntimeException("Nu s-a gasit produs cu id-ul: " + productID));
+        Client client = clientRepo.getById(clientID);
+                //.orElseThrow(() -> new RuntimeException("Nu s-a gasit client cu id-ul: " + clientID));
+        Product product = productRepo.getById(productID);
+                //.orElseThrow(() -> new RuntimeException("Nu s-a gasit produs cu id-ul: " + productID));
         Feedback feedback = FeedbackFactory.getFf_instance().make_feedb(client, product, message, type);
         feedbackRepo.save(feedback);
     }

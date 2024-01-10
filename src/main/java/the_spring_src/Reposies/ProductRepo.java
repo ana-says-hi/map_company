@@ -56,9 +56,11 @@ public class ProductRepo implements JpaRepository<Product, Integer> {
 
     public Product save(Product p) {
         try (
-                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret"); ///AICI CRAPA
+                //Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "admin", "S3cret"); ///AICI CRAPA
+                Connection connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/BioLite", "stef", "castravete"); ///AICI CRAPA
                 PreparedStatement statement = connection.prepareStatement("insert into \"Product\" (id,name,price,stoc,type) values (?, ?, ?,?,?)")
         ) {
+            statement.setInt(1, p.getId());
             statement.setString(2, p.getName());
             statement.setFloat(3, p.getPrice());
             statement.setInt(4, p.getStoc());
